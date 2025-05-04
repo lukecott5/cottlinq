@@ -1,48 +1,9 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Market News</title>
+    <title>Energy News</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Marquee animation for the banner */
@@ -68,7 +29,7 @@
             width: 100%;
             height: 400px;
             object-fit: cover;
-            filter: brightness(0.8);
+            filter: brightness(0.6);
             display: block;
         }
         /* Gradient overlay for hero section */
@@ -198,13 +159,34 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             z-index: 60;
         }
+        /* Sidebar styles */
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        /* Category tag styles */
+        .category-tag {
+            display: inline-block;
+            background: #e5e7eb;
+            color: #374151;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            margin-left: 0.5rem;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Navigation Bar -->
     <nav class="bg-white shadow-md py-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-gray-900">Stock Market News</a>
+            <a href="#" class="text-2xl font-bold text-gray-900">Energy News</a>
             <div class="space-x-6">
                 <a href="#news" class="nav-link text-gray-700 hover:text-blue-600">News</a>
                 <a href="#favorites" id="favoritesTab" class="nav-link text-gray-700 hover:text-blue-600 hidden">Favorites</a>
@@ -215,12 +197,12 @@
         </div>
     </nav>
 
-    <!-- Hero Section with Houston Skyline -->
+    <!-- Hero Section with Custom Background -->
     <section class="hero-section">
-        <img src="https://images.ctfassets.net/0b3xwatv10o9/3vJ5e5a2gG5o5v1p5c5v5v/5e5a2g5o5v1p5c5v5v5e5a2g/houston-skyline.jpg" alt="Houston Skyline" class="hero-image" loading="lazy">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpu4eloCeNICpXaEffHo2EfPEeY2J8bI8Usw&s" alt="Stock Market Background" class="hero-image" loading="lazy">
         <div class="hero-overlay">
             <div id="userGreeting" class="hidden mb-4 text-xl font-semibold text-white"></div>
-            <h1 class="text-5xl font-bold text-white tracking-tight">Stock Market News</h1>
+            <h1 class="text-5xl font-bold text-white tracking-tight">Energy News</h1>
         </div>
     </section>
 
@@ -245,7 +227,7 @@
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">×</span>
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Join Stock Market News</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Join Energy News</h2>
             <p class="text-gray-600 mb-6">Sign up or log in to access exclusive content and personalized updates.</p>
             <div class="space-y-4">
                 <div>
@@ -285,9 +267,13 @@
                 <div>
                     <label for="articleCategory" class="block text-sm font-medium text-gray-700">Category</label>
                     <select id="articleCategory" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" required>
-                        <option value="Tech">Tech</option>
-                        <option value="Oil & Energy">Oil & Energy</option>
-                        <option value="Markets">Markets</option>
+                        <option value="Crude Oil">Crude Oil</option>
+                        <option value="Natural Gas">Natural Gas</option>
+                        <option value="Petrochemicals">Petrochemicals</option>
+                        <option value="Power">Power</option>
+                        <option value="Renewables">Renewables</option>
+                        <option value="Company News">Company News</option>
+                        <option value="Earnings">Earnings</option>
                         <option value="Trending">Trending</option>
                     </select>
                 </div>
@@ -304,17 +290,17 @@
     <div id="termsContent" class="terms-privacy-content">
         <span class="close-btn" onclick="closeTerms()">×</span>
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Terms of Service</h2>
-        <p class="text-gray-700">Welcome to Stock Market News. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. These terms govern your use of the site and any services provided.</p>
+        <p class="text-gray-700">Welcome to Energy News. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. These terms govern your use of the site and any services provided.</p>
         <p class="text-gray-700 mt-4">1. <strong>Acceptance of Terms</strong>: By using this site, you accept these terms in full. If you disagree, please do not use the site.</p>
         <p class="text-gray-700 mt-2">2. <strong>User Conduct</strong>: You agree not to use the site for illegal or unauthorized purposes.</p>
-        <p class="text-gray-700 mt-2">3. <strong>Content Ownership</strong>: All content on this site is owned by Stock Market News or its licensors unless otherwise stated.</p>
+        <p class="text-gray-700 mt-2">3. <strong>Content Ownership</strong>: All content on this site is owned by Energy News or its licensors unless otherwise stated.</p>
         <p class="text-gray-700 mt-2">4. <strong>Limitation of Liability</strong>: We are not liable for any indirect or consequential damages arising from your use of the site.</p>
         <p class="text-gray-700 mt-2">For the most current version, please contact us at support@stockmarketnews.com.</p>
     </div>
     <div id="privacyContent" class="terms-privacy-content">
         <span class="close-btn" onclick="closePrivacy()">×</span>
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Privacy Policy</h2>
-        <p class="text-gray-700">At Stock Market News, we are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your information.</p>
+        <p class="text-gray-700">At Energy News, we are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your information.</p>
         <p class="text-gray-700 mt-4">1. <strong>Information Collection</strong>: We collect personal information such as your name and email when you sign up or submit articles.</p>
         <p class="text-gray-700 mt-2">2. <strong>Use of Information</strong>: Your data is used to personalize your experience and improve our services.</p>
         <p class="text-gray-700 mt-2">3. <strong>Data Security</strong>: We implement reasonable measures to protect your information from unauthorized access.</p>
@@ -324,155 +310,60 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        <section id="news">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-3xl font-bold text-gray-900">Latest News</h2>
-                <div>
-                    <label for="categoryFilter" class="text-sm font-medium text-gray-700 mr-2">Filter by Category:</label>
-                    <select id="categoryFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600">
-                        <option value="All">All</option>
-                        <option value="Tech">Tech</option>
-                        <option value="Oil & Energy">Oil & Energy</option>
-                        <option value="Markets">Markets</option>
-                        <option value="Trending">Trending</option>
-                    </select>
+        <div class="flex flex-col lg:flex-row lg:space-x-8">
+            <!-- News Section -->
+            <section id="news" class="flex-1">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Latest News</h2>
+                <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </section>
+
+            <!-- Right Sidebar Filter Panel -->
+            <aside class="sidebar lg:w-72 mt-10 lg:mt-0">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Filter by Category</h3>
+                <div class="space-y-3">
+                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Crude Oil">
+                        <span class="ml-3 text-gray-800 font-bold text-lg">Crude Oil</span>
+                    </label>
+                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Natural Gas">
+                        <span class="ml-3 text-gray-800 font-bold text-lg">Natural Gas</span>
+                    </label>
+                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Petrochemicals">
+                        <span class="ml-3 text-gray-800 font-bold text-lg">Petrochemicals</span>
+                    </label>
+                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Power">
+                        <span class="ml-3 text-gray-800 font-bold text-lg">Power</span>
+                    </label>
+                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Renewables">
+                        <span class="ml-3 text-gray-800 font-bold text-lg">Renewables</span>
+                    </label>
+                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Company News">
+                        <span class="ml-3 text-gray-800 font-bold text-lg">Company News</span>
+                    </label>
+                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Earnings">
+                        <span class="ml-3 text-gray-800 font-bold text-lg">Earnings</span>
+                    </label>
                 </div>
-            </div>
-            <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- News Article 1 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Markets">
-                    <img src="https://via.placeholder.com/400x200?text=Market+Chart" alt="Market Chart" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Dow Surges After Strong Jobs Report</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • Reuters</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://www.reuters.com/markets/us/futures-steady-before-key-payrolls-data-investors-weigh-middle-east-risks-2024-10-04/" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(1)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 2 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Tech">
-                    <img src="https://via.placeholder.com/400x200?text=Tech+Stocks" alt="Tech Stocks" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Tech Stocks Rally Amid AI Optimism</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • Bloomberg</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://www.bloomberg.com/news/articles/2025-02-13/china-tech-stocks-head-for-highest-level-since-reopening-rally" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(2)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 3 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Oil & Energy">
-                    <img src="https://via.placeholder.com/400x200?text=Energy+Sector" alt="Energy Sector" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Oil Prices Dip as OPEC+ Meets</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • CNBC</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://example.com/article-3" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(3)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 4 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Markets">
-                    <img src="https://via.placeholder.com/400x200?text=Gold+Prices" alt="Gold Prices" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Gold Hits Record High Above $3,500</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • Seeking Alpha</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://example.com/article-4" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(4)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 5 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Tech">
-                    <img src="https://via.placeholder.com/400x200?text=Tesla+Stock" alt="Tesla Stock" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Tesla Shares Edge Up Amid Cybertruck Revamp</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • Yahoo Finance</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://example.com/article-5" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(5)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 6 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Markets">
-                    <img src="https://via.placeholder.com/400x200?text=Fed+Policy" alt="Fed Policy" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Fed Rate Cut Expectations Shift to July</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • CNBC</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://example.com/article-6" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(6)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 7 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Tech">
-                    <img src="https://via.placeholder.com/400x200?text=Semiconductors" alt="Semiconductors" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Semiconductor Stocks Soar on AI Demand</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • Forbes</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://example.com/article-7" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(7)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 8 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Markets">
-                    <img src="https://via.placeholder.com/400x200?text=Inflation+Data" alt="Inflation Data" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Inflation Cools, Boosting Market Sentiment</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • Wall Street Journal</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://example.com/article-8" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(8)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 9 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Markets">
-                    <img src="https://via.placeholder.com/400x200?text=Bank+Earnings" alt="Bank Earnings" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Bank Earnings Beat Expectations</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • Financial Times</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://example.com/article-9" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(9)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-                <!-- News Article 10 -->
-                <article class="bg-white rounded-lg shadow-lg overflow-hidden" data-category="Markets">
-                    <img src="https://via.placeholder.com/400x200?text=Global+Markets" alt="Global Markets" class="news-image" loading="lazy">
-                    <div class="p-5">
-                        <h2 class="text-lg font-semibold text-gray-900">Global Markets Mixed Amid Trade Talks</h2>
-                        <p class="text-gray-500 text-sm mt-2">May 3, 2025 • BBC</p>
-                        <div class="flex justify-between items-center mt-3">
-                            <a href="https://example.com/article-10" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                            <button class="favorite-btn" onclick="toggleFavorite(10)">❤️</button>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
+            </aside>
+        </div>
 
         <!-- Favorites Section -->
         <section id="favorites" class="hidden py-10">
             <h2 class="text-3xl font-bold text-gray-900 mb-6">Your Favorited Articles</h2>
-            <div id="favoritesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            <div id="favoritesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
     </main>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-300 py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-            <p>© 2025 Stock Market News. All rights reserved.</p>
+            <p>© 2025 Energy News. All rights reserved.</p>
             <div class="mt-4 md:mt-0 space-x-4">
                 <a href="#" class="hover:text-white transition-colors" onclick="showTerms(event)">Terms of Service</a>
                 <a href="#" class="hover:text-white transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
@@ -505,6 +396,31 @@
 
         // Initial marquee update
         updateMarquee();
+
+        // Mock articles data (simulating fetched data, 3 per category)
+        const articlesData = [
+            { id: 1, category: 'Crude Oil', title: 'Oil Prices Surge Amid Supply Concerns', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-1', image: 'https://via.placeholder.com/400x200?text=Crude+Oil' },
+            { id: 2, category: 'Crude Oil', title: 'OPEC+ Extends Production Cuts', date: 'May 3, 2025', source: 'Bloomberg', link: 'https://example.com/article-2', image: 'https://via.placeholder.com/400x200?text=Crude+Oil' },
+            { id: 3, category: 'Crude Oil', title: 'Global Demand for Crude Hits Record', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-3', image: 'https://via.placeholder.com/400x200?text=Crude+Oil' },
+            { id: 4, category: 'Natural Gas', title: 'Natural Gas Prices Soar in Europe', date: 'May 3, 2025', source: 'Seeking Alpha', link: 'https://example.com/article-4', image: 'https://via.placeholder.com/400x200?text=Natural+Gas' },
+            { id: 5, category: 'Natural Gas', title: 'US Natural Gas Exports Rise', date: 'May 3, 2025', source: 'Yahoo Finance', link: 'https://example.com/article-5', image: 'https://via.placeholder.com/400x200?text=Natural+Gas' },
+            { id: 6, category: 'Natural Gas', title: 'Natural Gas Futures Hit 5-Year High', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-6', image: 'https://via.placeholder.com/400x200?text=Natural+Gas' },
+            { id: 7, category: 'Petrochemicals', title: 'Petrochemical Industry Faces Challenges', date: 'May 3, 2025', source: 'Forbes', link: 'https://example.com/article-7', image: 'https://via.placeholder.com/400x200?text=Petrochemicals' },
+            { id: 8, category: 'Petrochemicals', title: 'New Petrochemical Plant Opens in Asia', date: 'May 3, 2025', source: 'Wall Street Journal', link: 'https://example.com/article-8', image: 'https://via.placeholder.com/400x200?text=Petrochemicals' },
+            { id: 9, category: 'Petrochemicals', title: 'Petrochemical Demand Grows in 2025', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-9', image: 'https://via.placeholder.com/400x200?text=Petrochemicals' },
+            { id: 10, category: 'Power', title: 'Power Grid Faces Strain in Summer', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-10', image: 'https://via.placeholder.com/400x200?text=Power' },
+            { id: 11, category: 'Power', title: 'Nuclear Power Makes a Comeback', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-11', image: 'https://via.placeholder.com/400x200?text=Power' },
+            { id: 12, category: 'Power', title: 'Power Outages Hit Major Cities', date: 'May 3, 2025', source: 'Bloomberg', link: 'https://example.com/article-12', image: 'https://via.placeholder.com/400x200?text=Power' },
+            { id: 13, category: 'Renewables', title: 'Solar Energy Booms in 2025', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-13', image: 'https://via.placeholder.com/400x200?text=Renewables' },
+            { id: 14, category: 'Renewables', title: 'Wind Power Projects Expand Globally', date: 'May 3, 2025', source: 'Seeking Alpha', link: 'https://example.com/article-14', image: 'https://via.placeholder.com/400x200?text=Renewables' },
+            { id: 15, category: 'Renewables', title: 'Renewable Energy Subsidies Increase', date: 'May 3, 2025', source: 'Yahoo Finance', link: 'https://example.com/article-15', image: 'https://via.placeholder.com/400x200?text=Renewables' },
+            { id: 16, category: 'Company News', title: 'Tesla Announces New Factory', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-16', image: 'https://via.placeholder.com/400x200?text=Company+News' },
+            { id: 17, category: 'Company News', title: 'Apple Unveils New Product Line', date: 'May 3, 2025', source: 'Forbes', link: 'https://example.com/article-17', image: 'https://via.placeholder.com/400x200?text=Company+News' },
+            { id: 18, category: 'Company News', title: 'Amazon Expands Logistics Network', date: 'May 3, 2025', source: 'Wall Street Journal', link: 'https://example.com/article-18', image: 'https://via.placeholder.com/400x200?text=Company+News' },
+            { id: 19, category: 'Earnings', title: 'Google Reports Record Earnings', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-19', image: 'https://via.placeholder.com/400x200?text=Earnings' },
+            { id: 20, category: 'Earnings', title: 'Microsoft Beats Earnings Expectations', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-20', image: 'https://via.placeholder.com/400x200?text=Earnings' },
+            { id: 21, category: 'Earnings', title: 'ExxonMobil Posts Strong Q1 Results', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-21', image: 'https://via.placeholder.com/400x200?text=Earnings' }
+        ];
 
         // Modal functionality
         const authModal = document.getElementById('authModal');
@@ -637,18 +553,59 @@
         // Initial UI update
         updateUIForUser();
 
-        // Category filtering
-        const categoryFilter = document.getElementById('categoryFilter');
-        categoryFilter.addEventListener('change', function() {
-            const selectedCategory = this.value;
-            const articles = document.querySelectorAll('#newsGrid article');
+        // Display articles
+        const newsGrid = document.getElementById('newsGrid');
+        let displayedArticles = [...articlesData];
+
+        function displayArticles(articles) {
+            newsGrid.innerHTML = '';
             articles.forEach(article => {
-                const articleCategory = article.getAttribute('data-category');
-                if (selectedCategory === 'All' || articleCategory === selectedCategory) {
-                    article.style.display = 'block';
+                const articleElement = document.createElement('article');
+                articleElement.className = 'bg-white rounded-lg shadow-lg overflow-hidden';
+                articleElement.setAttribute('data-category', article.category);
+                articleElement.innerHTML = `
+                    <img src="${article.image}" alt="${article.category}" class="news-image" loading="lazy">
+                    <div class="p-5">
+                        <h2 class="text-lg font-semibold text-gray-900">${article.title}</h2>
+                        <p class="text-gray-500 text-sm mt-2">${article.date} • ${article.source} <span class="category-tag">${article.category}</span></p>
+                        <div class="flex justify-between items-center mt-3">
+                            <a href="${article.link}" target="_blank" class="text-blue-700 hover:underline">Read More</a>
+                            <button class="favorite-btn" onclick="toggleFavorite(${article.id})">❤️</button>
+                        </div>
+                    </div>
+                `;
+                newsGrid.appendChild(articleElement);
+            });
+
+            // Update favorited state
+            if (currentUser && currentUser.favorites) {
+                currentUser.favorites.forEach(id => {
+                    const button = document.querySelector(`button[onclick="toggleFavorite(${id})"]`);
+                    if (button) button.classList.add('favorited');
+                });
+            }
+        }
+
+        // Initial display of articles
+        displayArticles(displayedArticles);
+
+        // Category filtering with checkboxes
+        const checkboxes = document.querySelectorAll('.category-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const selectedCategories = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+
+                if (selectedCategories.length === 0) {
+                    displayedArticles = [...articlesData];
                 } else {
-                    article.style.display = 'none';
+                    displayedArticles = articlesData.filter(article => 
+                        selectedCategories.includes(article.category)
+                    );
                 }
+
+                displayArticles(displayedArticles);
             });
         });
 
@@ -680,17 +637,23 @@
 
         function updateFavoritesSection() {
             favoritesGrid.innerHTML = '';
-            const allArticles = document.querySelectorAll('#newsGrid article');
-            favorites.forEach(id => {
-                const article = Array.from(allArticles).find(art => {
-                    const btn = art.querySelector('.favorite-btn');
-                    return btn && btn.getAttribute('onclick') === `toggleFavorite(${id})`;
-                });
-                if (article) {
-                    const clone = article.cloneNode(true);
-                    clone.querySelector('.favorite-btn').addEventListener('click', () => toggleFavorite(id));
-                    favoritesGrid.appendChild(clone);
-                }
+            const allArticles = articlesData.filter(article => favorites.includes(article.id));
+            allArticles.forEach(article => {
+                const articleElement = document.createElement('article');
+                articleElement.className = 'bg-white rounded-lg shadow-lg overflow-hidden';
+                articleElement.setAttribute('data-category', article.category);
+                articleElement.innerHTML = `
+                    <img src="${article.image}" alt="${article.category}" class="news-image" loading="lazy">
+                    <div class="p-5">
+                        <h2 class="text-lg font-semibold text-gray-900">${article.title}</h2>
+                        <p class="text-gray-500 text-sm mt-2">${article.date} • ${article.source} <span class="category-tag">${article.category}</span></p>
+                        <div class="flex justify-between items-center mt-3">
+                            <a href="${article.link}" target="_blank" class="text-blue-700 hover:underline">Read More</a>
+                            <button class="favorite-btn favorited" onclick="toggleFavorite(${article.id})">❤️</button>
+                        </div>
+                    </div>
+                `;
+                favoritesGrid.appendChild(articleElement);
             });
         }
 
@@ -723,22 +686,18 @@
             const imageFile = document.getElementById('articleImage').files[0];
             const imageUrl = imageFile ? URL.createObjectURL(imageFile) : 'https://via.placeholder.com/400x200?text=User+Article';
 
-            const newArticleId = document.querySelectorAll('#newsGrid article').length + 1;
-            const article = document.createElement('article');
-            article.className = 'bg-white rounded-lg shadow-lg overflow-hidden';
-            article.setAttribute('data-category', category);
-            article.innerHTML = `
-                <img src="${imageUrl}" alt="User Article" class="news-image" loading="lazy">
-                <div class="p-5">
-                    <h2 class="text-lg font-semibold text-gray-900">${title}</h2>
-                    <p class="text-gray-500 text-sm mt-2">${new Date().toLocaleDateString()} • ${currentUser.name}</p>
-                    <div class="flex justify-between items-center mt-3">
-                        <a href="https://example.com/article-${newArticleId}" target="_blank" class="text-blue-700 hover:underline">Read More</a>
-                        <button class="favorite-btn" onclick="toggleFavorite(${newArticleId})">❤️</button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('newsGrid').prepend(article);
+            const newArticleId = articlesData.length + 1;
+            const newArticle = {
+                id: newArticleId,
+                category: category,
+                title: title,
+                date: new Date().toLocaleDateString(),
+                source: currentUser.name,
+                link: `https://example.com/article-${newArticleId}`,
+                image: imageUrl
+            };
+            articlesData.unshift(newArticle);
+            displayArticles(articlesData);
             closeSubmitModal();
             articleForm.reset();
         });
@@ -749,12 +708,6 @@
                 this.src = 'https://via.placeholder.com/400x200?text=Image+Not+Found';
                 this.alt = 'Image Not Found';
             };
-        });
-
-        // Initialize favorited state
-        favorites.forEach(id => {
-            const button = document.querySelector(`button[onclick="toggleFavorite(${id})"]`);
-            if (button) button.classList.add('favorited');
         });
     </script>
 </body>
