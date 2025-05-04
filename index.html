@@ -3,66 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy News</title>
+    <title>Linq</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Marquee animation for the banner */
-        .marquee {
-            overflow: hidden;
-            white-space: nowrap;
-            width: 100%;
-            display: inline-block;
-        }
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 25s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-        .marquee-content:hover {
-            animation-play-state: paused;
-        }
-        /* Hero image styling */
-        .hero-image {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            filter: brightness(0.6);
-            display: block;
-        }
-        /* Gradient overlay for hero section */
-        .hero-section {
-            position: relative;
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding-top: 2rem;
-        }
-        /* News article thumbnail images */
-        .news-image {
-            width: 150px;
-            height: 100px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-        .news-image:hover {
-            transform: scale(1.05);
-        }
         /* Professional typography */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
         }
         /* Modal styles */
         .modal {
@@ -78,14 +26,15 @@
             justify-content: center;
         }
         .modal-content {
-            background: white;
+            background: #ffffff;
             border-radius: 12px;
             width: 90%;
             max-width: 400px;
             padding: 2rem;
             position: relative;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             animation: slideIn 0.3s ease-out;
+            color: #333333;
         }
         @keyframes slideIn {
             from { transform: translateY(-20px); opacity: 0; }
@@ -97,27 +46,34 @@
             right: 1rem;
             font-size: 1.5rem;
             cursor: pointer;
-            color: #666;
+            color: #666666;
             transition: color 0.2s ease;
         }
         .close-btn:hover {
-            color: #000;
+            color: #000000;
         }
         /* Smooth transitions for articles */
         article {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #f9f9f9;
         }
         article:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         /* Input field styles */
         input, select, textarea {
             transition: border-color 0.3s ease;
+            background: #ffffff;
+            color: #333333;
+            border-color: #cccccc;
         }
         input:focus, select:focus, textarea:focus {
-            border-color: #2563eb;
+            border-color: #60a5fa;
             outline: none;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #999999;
         }
         /* Button hover effects */
         button {
@@ -129,20 +85,21 @@
         /* Navigation bar styles */
         .nav-link {
             transition: color 0.2s ease;
+            color: #333333;
         }
         .nav-link:hover {
-            color: #2563eb;
+            color: #60a5fa;
         }
         /* Favorites icon animation */
         .favorite-btn {
             transition: color 0.2s ease, transform 0.2s ease;
         }
         .favorite-btn:hover {
-            color: #d97706;
+            color: #f59e0b;
             transform: scale(1.2);
         }
         .favorited {
-            color: #d97706;
+            color: #f59e0b;
         }
         /* Terms and Privacy sections */
         .terms-privacy-content {
@@ -151,100 +108,317 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
+            background: #ffffff;
             padding: 2rem;
             border-radius: 12px;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             z-index: 60;
+            color: #333333;
         }
         /* Sidebar styles */
         .sidebar {
             position: sticky;
             top: 2rem;
             height: fit-content;
-            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+            background: #f9f9f9;
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
+        .sidebar label:hover {
+            background: #e5e5e5;
+        }
         /* Category tag styles */
         .category-tag {
             display: inline-block;
-            background: #e5e7eb;
-            color: #374151;
+            background: #e5e5e5;
+            color: #333333;
             font-size: 0.75rem;
             font-weight: 500;
             padding: 0.25rem 0.5rem;
             border-radius: 9999px;
             margin-left: 0.5rem;
         }
+        /* News article thumbnail images */
+        .news-image {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .news-image:hover {
+            transform: scale(1.05);
+        }
+        /* Search icon style */
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .search-icon:hover {
+            transform: scale(1.1);
+        }
+        /* Fade animations */
+        .fade-in {
+            animation: fadeIn 2s ease-in;
+        }
+        .fade-out {
+            animation: fadeOut 2s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        /* Tagline styling */
+        .tagline {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .tagline .highlight {
+            color: #60a5fa;
+        }
+        /* Market Updates Section */
+        .market-section {
+            background: #ffffff;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .market-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .market-tab {
+            cursor: pointer;
+            font-weight: bold;
+            color: #666666;
+            padding: 0.5rem 1rem;
+            transition: color 0.2s ease;
+        }
+        .market-tab:hover, .market-tab.active {
+            color: #000000;
+        }
+        .market-content {
+            display: none;
+        }
+        .market-content.active {
+            display: block;
+        }
+        .market-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .market-table th, .market-table td {
+            padding: 0.75rem;
+            text-align: right;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .market-table th:first-child, .market-table td:first-child {
+            text-align: left;
+            color: #333333;
+        }
+        .positive {
+            color: #10b981;
+        }
+        .negative {
+            color: #ef4444;
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body>
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-md py-4">
+    <nav class="bg-white py-4 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-gray-900">Energy News</a>
-            <div class="space-x-6">
-                <a href="#news" class="nav-link text-gray-700 hover:text-blue-600">News</a>
-                <a href="#favorites" id="favoritesTab" class="nav-link text-gray-700 hover:text-blue-600 hidden">Favorites</a>
-                <button id="submitArticleBtn" class="nav-link text-gray-700 hover:text-blue-600 hidden">Submit Article</button>
-                <button id="authBtn" class="text-gray-700 hover:text-blue-600" onclick="showModal()">Login / Sign Up</button>
-                <button id="logoutBtn" class="text-gray-700 hover:text-blue-600 hidden" onclick="handleLogout()">Logout</button>
+            <a href="#" class="text-4xl font-bold text-gray-800">Linq</a>
+            <div class="flex items-center space-x-6">
+                <a href="#news" class="nav-link">News</a>
+                <a href="#favorites" id="favoritesTab" class="nav-link hidden">Favorites</a>
+                <button id="submitArticleBtn" class="nav-link hidden">Submit Article</button>
+                <button id="authBtn" class="nav-link" onclick="showModal()">Login / Sign Up</button>
+                <button id="logoutBtn" class="nav-link hidden" onclick="handleLogout()">Logout</button>
+                <svg class="search-icon" fill="none" stroke="#333333" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"></path>
+                </svg>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section with Random Background -->
-    <section class="hero-section">
-        <img id="heroImage" src="" alt="Energy News Background" class="hero-image" loading="lazy">
-        <div class="hero-overlay">
-            <div id="userGreeting" class="hidden mb-4 text-xl font-semibold text-white"></div>
-            <h1 class="text-5xl font-bold text-white tracking-tight">Energy News</h1>
+    <!-- Welcome and Tagline Section -->
+    <div id="welcomeMessage" class="text-center text-gray-800 text-2xl py-10"></div>
+    <div id="tagline" class="tagline hidden"></div>
+
+    <!-- Market Updates Section -->
+    <section class="market-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="market-tabs">
+            <div id="tabUS" class="market-tab active">US</div>
+            <div id="tabWorld" class="market-tab">World</div>
+            <div id="tabCommodities" class="market-tab">Commodities</div>
+            <div id="tabFutures" class="market-tab">Futures</div>
+            <div id="tabTreasuries" class="market-tab">Treasuries</div>
+        </div>
+        <div id="marketUSContent" class="market-content active">
+            <table class="market-table">
+                <tr>
+                    <th>Dow Jones</th>
+                    <td>41,317.43</td>
+                    <td>564.47</td>
+                    <td class="positive">+1.39%</td>
+                </tr>
+                <tr>
+                    <th>S&P 500</th>
+                    <td>5,686.68</td>
+                    <td>82.54</td>
+                    <td class="positive">+1.47%</td>
+                </tr>
+                <tr>
+                    <th>Nasdaq</th>
+                    <td>17,977.73</td>
+                    <td>266.99</td>
+                    <td class="positive">+1.51%</td>
+                </tr>
+            </table>
+        </div>
+        <div id="marketWorldContent" class="market-content">
+            <table class="market-table">
+                <tr>
+                    <th>FTSE 100 (UK)</th>
+                    <td>8,200.67</td>
+                    <td>-0.05</td>
+                    <td class="negative">-0.01%</td>
+                </tr>
+                <tr>
+                    <th>Nikkei 225 (Japan)</th>
+                    <td>38,500.89</td>
+                    <td>0.10</td>
+                    <td class="positive">+0.00%</td>
+                </tr>
+                <tr>
+                    <th>DAX (Germany)</th>
+                    <td>18,100.23</td>
+                    <td>0.07</td>
+                    <td class="positive">+0.00%</td>
+                </tr>
+            </table>
+        </div>
+        <div id="marketCommoditiesContent" class="market-content">
+            <table class="market-table">
+                <tr>
+                    <th>Dow Jones</th>
+                    <td>41,317.43</td>
+                    <td>564.47</td>
+                    <td class="positive">+1.39%</td>
+                </tr>
+                <tr>
+                    <th>S&P 500</th>
+                    <td>5,686.68</td>
+                    <td>82.54</td>
+                    <td class="positive">+1.47%</td>
+                </tr>
+                <tr>
+                    <th>Nasdaq</th>
+                    <td>17,977.73</td>
+                    <td>266.99</td>
+                    <td class="positive">+1.51%</td>
+                </tr>
+                <tr>
+                    <th>Crude Oil</th>
+                    <td>58.29</td>
+                    <td>-0.95</td>
+                    <td class="negative">-1.60%</td>
+                </tr>
+                <tr>
+                    <th>Gold</th>
+                    <td>3,239.34</td>
+                    <td>2.08</td>
+                    <td class="positive">+0.0643%</td>
+                </tr>
+                <tr>
+                    <th>Bitcoin</th>
+                    <td>95,704.79</td>
+                    <td>-222.49</td>
+                    <td class="negative">-0.23%</td>
+                </tr>
+            </table>
+        </div>
+        <div id="marketFuturesContent" class="market-content">
+            <table class="market-table">
+                <tr>
+                    <th>S&P 500 Futures</th>
+                    <td>5,210.00</td>
+                    <td>0.10</td>
+                    <td class="positive">+0.00%</td>
+                </tr>
+                <tr>
+                    <th>Crude Oil Futures</th>
+                    <td>78.60</td>
+                    <td>0.18</td>
+                    <td class="positive">+0.00%</td>
+                </tr>
+                <tr>
+                    <th>Gold Futures</th>
+                    <td>2,755.00</td>
+                    <td>0.05</td>
+                    <td class="positive">+0.00%</td>
+                </tr>
+            </table>
+        </div>
+        <div id="marketTreasuriesContent" class="market-content">
+            <table class="market-table">
+                <tr>
+                    <th>10-Year Treasury Yield</th>
+                    <td>4.40%</td>
+                    <td>0.02</td>
+                    <td class="positive">+0.00%</td>
+                </tr>
+                <tr>
+                    <th>2-Year Treasury Yield</th>
+                    <td>4.15%</td>
+                    <td>0.01</td>
+                    <td class="positive">+0.00%</td>
+                </tr>
+                <tr>
+                    <th>30-Year Treasury Yield</th>
+                    <td>4.65%</td>
+                    <td>0.03</td>
+                    <td class="positive">+0.00%</td>
+                </tr>
+            </table>
         </div>
     </section>
-
-    <!-- Moving Banner with Market Prices -->
-    <div class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-3 overflow-hidden shadow-md">
-        <div class="marquee">
-            <div class="marquee-content flex space-x-10">
-                <span>DOW: 40,589.34 (+1.64%) ▲</span>
-                <span>S&P 500: 5,459.10 (+1.11%) ▲</span>
-                <span>NASDAQ: 17,357.88 (+1.03%) ▲</span>
-                <span>TSLA: $219.80 (+0.20%) ▲</span>
-                <span>AAPL: $217.96 (+0.22%) ▲</span>
-                <span>NVDA: $113.06 (+0.69%) ▲</span>
-                <span>AMD: $139.99 (+1.21%) ▲</span>
-                <span>Gold: $3,512.40 (+0.85%) ▲</span>
-                <span>Oil: $77.16 (-1.96%) ▼</span>
-            </div>
-        </div>
-    </div>
 
     <!-- Login/Sign-Up Modal -->
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">×</span>
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Join Energy News</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Join Linq</h2>
             <p class="text-gray-600 mb-6">Sign up or log in to access exclusive content and personalized updates.</p>
             <div class="space-y-4">
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700">Name (Sign Up Only)</label>
-                    <input type="text" id="name" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="Your Name">
+                    <input type="text" id="name" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Your Name">
                 </div>
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="your@email.com">
+                    <input type="email" id="email" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="your@email.com">
                 </div>
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="password" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="••••••••">
+                    <input type="password" id="password" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
                 </div>
                 <div class="flex space-x-4">
-                    <button onclick="handleLogin()" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Log In</button>
-                    <button onclick="handleSignup()" class="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900">Sign Up</button>
+                    <button onclick="handleLogin()" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">Log In</button>
+                    <button onclick="handleSignup()" class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600">Sign Up</button>
                 </div>
             </div>
         </div>
@@ -254,19 +428,19 @@
     <div id="submitArticleModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeSubmitModal()">×</span>
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Submit Your Article</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Submit Your Article</h2>
             <form id="articleForm" class="space-y-4">
                 <div>
                     <label for="articleTitle" class="block text-sm font-medium text-gray-700">Title</label>
-                    <input type="text" id="articleTitle" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="Article Title" required>
+                    <input type="text" id="articleTitle" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Article Title" required>
                 </div>
                 <div>
                     <label for="articleContent" class="block text-sm font-medium text-gray-700">Content</label>
-                    <textarea id="articleContent" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" rows="4" placeholder="Article Content" required></textarea>
+                    <textarea id="articleContent" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Article Content" required></textarea>
                 </div>
                 <div>
                     <label for="articleCategory" class="block text-sm font-medium text-gray-700">Category</label>
-                    <select id="articleCategory" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" required>
+                    <select id="articleCategory" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
                         <option value="Crude Oil">Crude Oil</option>
                         <option value="Natural Gas">Natural Gas</option>
                         <option value="Petrochemicals">Petrochemicals</option>
@@ -279,9 +453,9 @@
                 </div>
                 <div>
                     <label for="articleImage" class="block text-sm font-medium text-gray-700">Image (Optional)</label>
-                    <input type="file" id="articleImage" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg" accept="image/*">
+                    <input type="file" id="articleImage" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700" accept="image/*">
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Submit Article</button>
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">Submit Article</button>
             </form>
         </div>
     </div>
@@ -289,23 +463,23 @@
     <!-- Terms and Privacy Sections -->
     <div id="termsContent" class="terms-privacy-content">
         <span class="close-btn" onclick="closeTerms()">×</span>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Terms of Service</h2>
-        <p class="text-gray-700">Welcome to Energy News. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. These terms govern your use of the site and any services provided.</p>
-        <p class="text-gray-700 mt-4">1. <strong>Acceptance of Terms</strong>: By using this site, you accept these terms in full. If you disagree, please do not use the site.</p>
-        <p class="text-gray-700 mt-2">2. <strong>User Conduct</strong>: You agree not to use the site for illegal or unauthorized purposes.</p>
-        <p class="text-gray-700 mt-2">3. <strong>Content Ownership</strong>: All content on this site is owned by Energy News or its licensors unless otherwise stated.</p>
-        <p class="text-gray-700 mt-2">4. <strong>Limitation of Liability</strong>: We are not liable for any indirect or consequential damages arising from your use of the site.</p>
-        <p class="text-gray-700 mt-2">For the most current version, please contact us at support@energynews.com.</p>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Terms of Service</h2>
+        <p>Welcome to Linq. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. These terms govern your use of the site and any services provided.</p>
+        <p class="mt-4">1. <strong>Acceptance of Terms</strong>: By using this site, you accept these terms in full. If you disagree, please do not use the site.</p>
+        <p class="mt-2">2. <strong>User Conduct</strong>: You agree not to use the site for illegal or unauthorized purposes.</p>
+        <p class="mt-2">3. <strong>Content Ownership</strong>: All content on this site is owned by Linq or its licensors unless otherwise stated.</p>
+        <p class="mt-2">4. <strong>Limitation of Liability</strong>: We are not liable for any indirect or consequential damages arising from your use of the site.</p>
+        <p class="mt-2">For the most current version, please contact us at support@linq.com.</p>
     </div>
     <div id="privacyContent" class="terms-privacy-content">
         <span class="close-btn" onclick="closePrivacy()">×</span>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Privacy Policy</h2>
-        <p class="text-gray-700">At Energy News, we are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your information.</p>
-        <p class="text-gray-700 mt-4">1. <strong>Information Collection</strong>: We collect personal information such as your name and email when you sign up or submit articles.</p>
-        <p class="text-gray-700 mt-2">2. <strong>Use of Information</strong>: Your data is used to personalize your experience and improve our services.</p>
-        <p class="text-gray-700 mt-2">3. <strong>Data Security</strong>: We implement reasonable measures to protect your information from unauthorized access.</p>
-        <p class="text-gray-700 mt-2">4. <strong>Third-Party Sharing</strong>: We do not sell or share your personal data with third parties except as required by law.</p>
-        <p class="text-gray-700 mt-2">For questions, contact us at privacy@energynews.com.</p>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Privacy Policy</h2>
+        <p>At Linq, we are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your information.</p>
+        <p class="mt-4">1. <strong>Information Collection</strong>: We collect personal information such as your name and email when you sign up or submit articles.</p>
+        <p class="mt-2">2. <strong>Use of Information</strong>: Your data is used to personalize your experience and improve our services.</p>
+        <p class="mt-2">3. <strong>Data Security</strong>: We implement reasonable measures to protect your information from unauthorized access.</p>
+        <p class="mt-2">4. <strong>Third-Party Sharing</strong>: We do not sell or share your personal data with third parties except as required by law.</p>
+        <p class="mt-2">For questions, contact us at privacy@linq.com.</p>
     </div>
 
     <!-- Main Content -->
@@ -313,40 +487,40 @@
         <div class="flex flex-col lg:flex-row lg:space-x-8">
             <!-- News Section -->
             <section id="news" class="flex-1">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6">Latest News</h2>
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Latest News</h2>
                 <div id="newsGrid" class="space-y-6"></div>
             </section>
 
             <!-- Right Sidebar Filter Panel -->
             <aside class="sidebar lg:w-72 mt-10 lg:mt-0">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Filter by Category</h3>
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Filter by Category</h3>
                 <div class="space-y-3">
-                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Crude Oil">
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Crude Oil">
                         <span class="ml-3 text-gray-800 font-bold text-lg">Crude Oil</span>
                     </label>
-                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Natural Gas">
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Natural Gas">
                         <span class="ml-3 text-gray-800 font-bold text-lg">Natural Gas</span>
                     </label>
-                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Petrochemicals">
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Petrochemicals">
                         <span class="ml-3 text-gray-800 font-bold text-lg">Petrochemicals</span>
                     </label>
-                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Power">
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Power">
                         <span class="ml-3 text-gray-800 font-bold text-lg">Power</span>
                     </label>
-                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Renewables">
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Renewables">
                         <span class="ml-3 text-gray-800 font-bold text-lg">Renewables</span>
                     </label>
-                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Company News">
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Company News">
                         <span class="ml-3 text-gray-800 font-bold text-lg">Company News</span>
                     </label>
-                    <label class="flex items-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" value="Earnings">
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Earnings">
                         <span class="ml-3 text-gray-800 font-bold text-lg">Earnings</span>
                     </label>
                 </div>
@@ -355,66 +529,24 @@
 
         <!-- Favorites Section -->
         <section id="favorites" class="hidden py-10">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">Your Favorited Articles</h2>
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Your Favorited Articles</h2>
             <div id="favoritesGrid" class="space-y-6"></div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-6">
+    <footer class="bg-white text-gray-600 py-6 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-            <p>© 2025 Energy News. All rights reserved.</p>
+            <p>© 2025 Linq. All rights reserved.</p>
             <div class="mt-4 md:mt-0 space-x-4">
-                <a href="#" class="hover:text-white transition-colors" onclick="showTerms(event)">Terms of Service</a>
-                <a href="#" class="hover:text-white transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
-                <a href="#" class="hover:text-white transition-colors">Contact Us</a>
+                <a href="#" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
+                <a href="#" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-800 transition-colors">Contact Us</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Array of energy-related background images
-        const heroImages = [
-            'https://www.beamex.com/app/uploads/2022/09/shutterstock-1469789084-scaled.jpg',
-            'https://20662219.fs1.hubspotusercontent-na1.net/hubfs/20662219/Imported_Blog_Media/header_articles_%2811%29-2.png',
-            'https://eco-cdn.iqpc.com/eco/images/channel_content/images/biggest_oil_and_gas_companies.jpg',
-            'https://images.takeshape.io/86ce9525-f5f2-4e97-81ba-54e8ce933da7/dev/9d498117-3179-4718-81f4-f1c7fe8e892b/Pillar%201%20Energy%20Transition%20wind%20energy%20solar%20panels%20dreamstime.png?auto=compress%2Cformat&w=1440',
-        ];
-
-        // Function to set random hero image
-        function setRandomHeroImage() {
-            const heroImageElement = document.getElementById('heroImage');
-            const randomIndex = Math.floor(Math.random() * heroImages.length);
-            heroImageElement.src = heroImages[randomIndex];
-        }
-
-        // Set random hero image on page load
-        window.onload = setRandomHeroImage;
-
-        // Mock data for market prices
-        const marketData = [
-            { symbol: 'DOW', price: '40,589.34', change: '+1.64%' },
-            { symbol: 'S&P 500', price: '5,459.10', change: '+1.11%' },
-            { symbol: 'NASDAQ', price: '17,357.88', change: '+1.03%' },
-            { symbol: 'TSLA', price: '$219.80', change: '+0.20%' },
-            { symbol: 'AAPL', price: '$217.96', change: '+0.22%' },
-            { symbol: 'NVDA', price: '$113.06', change: '+0.69%' },
-            { symbol: 'AMD', price: '$139.99', change: '+1.21%' },
-            { symbol: 'Gold', price: '$3,512.40', change: '+0.85%' },
-            { symbol: 'Oil', price: '$77.16', change: '-1.96%' }
-        ];
-
-        // Function to update marquee content
-        function updateMarquee() {
-            const marqueeContent = document.querySelector('.marquee-content');
-            marqueeContent.innerHTML = marketData.map(data => 
-                `<span>${data.symbol}: ${data.price} (${data.change}) ${data.change.includes('+') ? '▲' : '▼'}</span>`
-            ).join('<span class="mx-10"></span>');
-        }
-
-        // Initial marquee update
-        updateMarquee();
-
         // Mock articles data (simulating fetched data, 3 per category)
         const articlesData = [
             { id: 1, category: 'Crude Oil', title: 'Oil Prices Surge Amid Supply Concerns', date: 'May 3, 2025', source: 'Reuters', link: 'https://www.reuters.com/markets/commodities/oil-prices-set-weekly-loss-potential-more-global-supply-2025-04-25/', image: 'data:image/png;base64,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' },
@@ -425,7 +557,7 @@
             { id: 6, category: 'Natural Gas', title: 'Natural Gas Futures Hit 5-Year High', date: 'May 3, 2025', source: 'CNBC', link: 'https://www.cnbc.com/2025/03/10/eqt-ceo-toby-rice-says-the-market-is-screaming-that-we-need-more-energy.html', image: 'data:image/png;base64,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' },
             { id: 7, category: 'Petrochemicals', title: 'Petrochemical Industry Faces Challenges', date: 'May 3, 2025', source: 'Forbes', link: 'https://example.com/article-7', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWpyAdajaUF-RGcmTT8cYnLr4JUsgSZ90RVQ&s' },
             { id: 8, category: 'Petrochemicals', title: 'New Petrochemical Plant Opens in Asia', date: 'May 3, 2025', source: 'Wall Street Journal', link: 'https://www.wsj.com/articles/british-chemical-giant-ineos-to-invest-800-million-in-a-new-chinese-plant-11578480660', image: 'data:image/png;base64,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' },
-            { id: 9, category: 'Petrochemicals', title: 'Petrochemical Demand Grows in 2025', date: 'May 3, 2025', source: 'Financial Times', link: 'https://www.ft.com/content/17a0149a-542a-4e6d-8e40-e1b2b798e301', image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAhFBMVEX/8eYAAAD/+O3/8+j77eI9OjeBenTt4NUREA80MC/HvLT/+/Dl2M4UExIfHRtqZF8uKylwamTy5dqmnZWMhX6xp6DWysDEubHf0shUT0vNwbkeHBt/eXMmIyGVjIV5c25eWFSIgXqflo5KRUFaVVGtpJxMSEQ8ODW8sagyLyyimpNtZ2HUm4BkAAAEVklEQVR4nO2c6XqqMBRFQ4KgglNsESlqnaq27/9+F7ROJCChodLcvf75AWdnKYIhMYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAMTAOUXstRqqOirHRV7OrwBNf1/e745dwO5i5fA9930038h6V5Ujq6lq4Ii4atauxaneFw2GtbKW3vXM8/vrZ6s2RjxcpJ6UNydL93KuUVCjw2nFg66GcN9dGDIQxt3w+D7nb+LqveWjp3xKPBZtdTN3xrTQejEwNh27V0q1+DITlfkylfiNUdj2ZI9iXEnazWZQ3fxxFPU84FePYNOtzUJoR3PzeaDa94S8Ewll6p03fE4+PhY8PphHnHhl+PdduZjA65256Utve3759GQ0bEzzD/XsSo/fnAsD+hTDjsgeGpNHutxZB4IwXDBBpdWiszXHPJ0WUM09L+ZTedhnSrZkhoWGC4lrW8rOHNfjoNxTvHA0NCz2eTxNCVNby0YXKC1GHYVTUkdJpnuJIfWtqQeF+NMGRBjmHblre7vOHlF+5zDQn9kBuOc44sb0joqBmGr3JDP6fZCoYsaoQhc6WG07wDVQz5rAmGhE1lhjnXGSVD4g0aYUhfZIZBXqtVDE/fgKcbnr4tGcO8K6ma4elC/XzDUGK4y22VkqHdCENCh6KhvE9y3K5gSLxdIwy9qWj4qseQLhphSB3RsJvbaDXDcTMMt6Jh3v1e0ZDtG2F47JFkDAs6zkqGQTMM02a81WNoN8KQcCv7zLujy5CmOzzfkI7ieHkdt4idOK9jQRQNCVvGcak2lKSiIUmfBF6L3L0SM5QMSXExZRQMGWMF7SrKUDPUTHlDFgZRWKlhf8SQ2UnP7b3S6fNXDNNH8wOjDdOOvdmGoemGx5+iZhs6xhu2DTekaafGZMPvYVxDDdMh2uhgmWO4vB/H95g/We2+t5lhWAQMczJgWCv/o2EvnSN4YXY32ccMw/hu9il3/TB6WRtl6HjinF0WDE0ylM35oXbfbMPkZ1vXdEPCeqYb/gf9Q+P7+MfBGLMNzX/WxtumG9odww0JcX1fPn/0YcZfMTR+7OkHGTCsFRhqyYBhrcBQSwYMawWGWjJgWCsw1JIBw1qBoZYMGNYKDLVkwLBWRMOFfkNh3YxfNdxn09+1h7Mwm/HGf8/w+DejO2baMySzIapNGK+EJ67gUu2xbwFUXEFlq/2rkAfjQri18PQqUsnyNQdS8emyIozaH2K6tWJUWz5j1O9IMj5sWvUReqnY79Vv+P4gCbes9da1zyvk/CjBYzxwpBFWe+7z8+xAvXZpvD+er+bOYJq9Td2eRpvB4mU+/5xUHItJE5aLwVS2/NKZ2ebrmLHVLai0ElbF8bToceUbtN8dVQy/fsGw91TDP/oZBgunJEV/KyxKCEsnpGj2I5crXSnqT6jhWgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYCD/APCZURVdgDK8AAAAAElFTkSuQmCC' },
+            { id: 9, category: 'Petrochemicals', title: 'Petrochemical Demand Grows in 2025', date: 'May 3, 2025', source: 'Financial Times', link: 'https://www.ft.com/content/17a0149a-542a-4e6d-8e40-e1b2b798e301', image: 'data:image/png;base64,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' },
             { id: 10, category: 'Power', title: 'Power Grid Faces Strain in Summer', date: 'May 3, 2025', source: 'BBC', link: 'https://www.bbc.com/news/world-us-canada-66343133', image: 'data:image/png;base64,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' },
             { id: 11, category: 'Power', title: 'Nuclear Power Makes a Comeback', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-11', image: 'data:image/png;base64,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' },
             { id: 12, category: 'Power', title: 'Power Outages Hit Major Cities', date: 'May 3, 2025', source: 'Bloomberg', link: 'https://example.com/article-12', image: 'data:image/png;base64,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' },
@@ -435,11 +567,10 @@
             { id: 16, category: 'Company News', title: 'Tesla Announces New Factory', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-16', image: 'data:image/png;base64,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' },
             { id: 17, category: 'Company News', title: 'Apple Unveils New Product Line', date: 'May 3, 2025', source: 'Forbes', link: 'https://example.com/article-17', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWpyAdajaUF-RGcmTT8cYnLr4JUsgSZ90RVQ&s' },
             { id: 18, category: 'Company News', title: 'Amazon Expands Logistics Network', date: 'May 3, 2025', source: 'Wall Street Journal', link: 'https://example.com/article-18', image: 'data:image/png;base64,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' },
-            { id: 19, category: 'Earnings', title: 'Google Reports Record Earnings', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-19', image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAhFBMVEX/8eYAAAD/+O3/8+j77eI9OjeBenTt4NUREA80MC/HvLT/+/Dl2M4UExIfHRtqZF8uKylwamTy5dqmnZWMhX6xp6DWysDEubHf0shUT0vNwbkeHBt/eXMmIyGVjIV5c25eWFSIgXqflo5KRUFaVVGtpJxMSEQ8ODW8sagyLyyimpNtZ2HUm4BkAAAEVklEQVR4nO2c6XqqMBRFQ4KgglNsESlqnaq27/9+F7ROJCChodLcvf75AWdnKYIhMYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAMTAOUXstRqqOirHRV7OrwBNf1/e745dwO5i5fA9930038h6V5Ujq6lq4Ii4atauxaneFw2GtbKW3vXM8/vrZ6s2RjxcpJ6UNydL93KuUVCjw2nFg66GcN9dGDIQxt3w+D7nb+LqveWjp3xKPBZtdTN3xrTQejEwNh27V0q1+DITlfkylfiNUdj2ZI9iXEnazWZQ3fxxFPU84FePYNOtzUJoR3PzeaDa94S8Ewll6p03fE4+PhY8PphHnHhl+PdduZjA65256Utve3759GQ0bEzzD/XsSo/fnAsD+hTDjsgeGpNHutxZB4IwXDBBpdWiszXHPJ0WUM09L+ZTedhnSrZkhoWGC4lrW8rOHNfjoNxTvHA0NCz2eTxNCVNby0YXKC1GHYVTUkdJpnuJIfWtqQeF+NMGRBjmHblre7vOHlF+5zDQn9kBuOc44sb0joqBmGr3JDP6fZCoYsaoQhc6WG07wDVQz5rAmGhE1lhjnXGSVD4g0aYUhfZIZBXqtVDE/fgKcbnr4tGcO8K6ma4elC/XzDUGK4y22VkqHdCENCh6KhvE9y3K5gSLxdIwy9qWj4qseQLhphSB3RsJvbaDXDcTMMt6Jh3v1e0ZDtG2F47JFkDAs6zkqGQTMM02a81WNoN8KQcCv7zLujy5CmOzzfkI7ieHkdt4idOK9jQRQNCVvGcak2lKSiIUmfBF6L3L0SM5QMSXExZRQMGWMF7SrKUDPUTHlDFgZRWKlhf8SQ2UnP7b3S6fNXDNNH8wOjDdOOvdmGoemGx5+iZhs6xhu2DTekaafGZMPvYVxDDdMh2uhgmWO4vB/H95g/We2+t5lhWAQMczJgWCv/o2EvnSN4YXY32ccMw/hu9il3/TB6WRtl6HjinF0WDE0ylM35oXbfbMPkZ1vXdEPCeqYb/gf9Q+P7+MfBGLMNzX/WxtumG9odww0JcX1fPn/0YcZfMTR+7OkHGTCsFRhqyYBhrcBQSwYMawWGWjJgWCsw1JIBw1qBoZYMGNYKDLVkwLBWRMOFfkNh3YxfNdxn09+1h7Mwm/HGf8/w+DejO2baMySzIapNGK+EJ67gUu2xbwFUXEFlq/2rkAfjQri18PQqUsnyNQdS8emyIozaH2K6tWJUWz5j1O9IMj5sWvUReqnY79Vv+P4gCbes9da1zyvk/CjBYzxwpBFWe+7z8+xAvXZpvD+er+bOYJq9Td2eRpvB4mU+/5xUHItJE5aLwVS2/NKZ2ebrmLHVLai0ElbF8bToceUbtN8dVQy/fsGw91TDP/oZBgunJEV/KyxKCEsnpGj2I5crXSnqT6jhWgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYCD/APCZURVdgDK8AAAAAElFTkSuQmCC' },
+            { id: 19, category: 'Earnings', title: 'Google Reports Record Earnings', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-19', image: 'data:image/png;base64,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' },
             { id: 20, category: 'Earnings', title: 'Microsoft Beats Earnings Expectations', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-20', image: 'data:image/png;base64,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' },
             { id: 21, category: 'Earnings', title: 'ExxonMobil Posts Strong Q1 Results', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-21', image: 'data:image/png;base64,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' }
         ];
-
 
         // Modal functionality
         const authModal = document.getElementById('authModal');
@@ -487,7 +618,6 @@
         const submitArticleBtn = document.getElementById('submitArticleBtn');
         const authBtn = document.getElementById('authBtn');
         const logoutBtn = document.getElementById('logoutBtn');
-        const userGreeting = document.getElementById('userGreeting');
 
         function updateUIForUser() {
             if (currentUser) {
@@ -495,14 +625,11 @@
                 submitArticleBtn.classList.remove('hidden');
                 authBtn.classList.add('hidden');
                 logoutBtn.classList.remove('hidden');
-                userGreeting.classList.remove('hidden');
-                userGreeting.textContent = `Hello, ${currentUser.name}`;
             } else {
                 favoritesTab.classList.add('hidden');
                 submitArticleBtn.classList.add('hidden');
                 authBtn.classList.remove('hidden');
                 logoutBtn.classList.add('hidden');
-                userGreeting.classList.add('hidden');
             }
         }
 
@@ -580,17 +707,17 @@
             newsGrid.innerHTML = '';
             articles.forEach(article => {
                 const articleElement = document.createElement('article');
-                articleElement.className = 'bg-white rounded-lg shadow-lg flex flex-col sm:flex-row items-start sm:items-center overflow-hidden';
+                articleElement.className = 'rounded-lg shadow-lg flex flex-col sm:flex-row items-start sm:items-center overflow-hidden';
                 articleElement.setAttribute('data-category', article.category);
                 articleElement.innerHTML = `
                     <img src="${article.image}" alt="${article.category}" class="news-image m-4 sm:m-0 sm:mr-4" loading="lazy">
                     <div class="p-4 flex-1">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h2 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
+                                <h2 class="text-lg font-semibold text-gray-800 hover:text-blue-400">
                                     <a href="${article.link}" target="_blank">${article.title}</a>
                                 </h2>
-                                <p class="text-gray-500 text-sm mt-1">${article.date} • ${article.source} <span class="category-tag">${article.category}</span></p>
+                                <p class="text-gray-600 text-sm mt-1">${article.date} • ${article.source} <span class="category-tag">${article.category}</span></p>
                             </div>
                             <button class="favorite-btn mt-1" onclick="toggleFavorite(${article.id})">☆</button>
                         </div>
@@ -662,17 +789,17 @@
             const allArticles = articlesData.filter(article => favorites.includes(article.id));
             allArticles.forEach(article => {
                 const articleElement = document.createElement('article');
-                articleElement.className = 'bg-white rounded-lg shadow-lg flex flex-col sm:flex-row items-start sm:items-center overflow-hidden';
+                articleElement.className = 'rounded-lg shadow-lg flex flex-col sm:flex-row items-start sm:items-center overflow-hidden';
                 articleElement.setAttribute('data-category', article.category);
                 articleElement.innerHTML = `
                     <img src="${article.image}" alt="${article.category}" class="news-image m-4 sm:m-0 sm:mr-4" loading="lazy">
                     <div class="p-4 flex-1">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h2 class="text-lg font-semibold text-gray-900 hover:text-blue-600">
+                                <h2 class="text-lg font-semibold text-gray-800 hover:text-blue-400">
                                     <a href="${article.link}" target="_blank">${article.title}</a>
                                 </h2>
-                                <p class="text-gray-500 text-sm mt-1">${article.date} • ${article.source} <span class="category-tag">${article.category}</span></p>
+                                <p class="text-gray-600 text-sm mt-1">${article.date} • ${article.source} <span class="category-tag">${article.category}</span></p>
                             </div>
                             <button class="favorite-btn mt-1 favorited" onclick="toggleFavorite(${article.id})">☆</button>
                         </div>
@@ -733,6 +860,43 @@
                 this.src = 'https://via.placeholder.com/150x100?text=Image+Not+Found';
                 this.alt = 'Image Not Found';
             };
+        });
+
+        // Welcome and tagline animation
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const tagline = document.getElementById('tagline');
+
+        function showWelcomeAndTagline() {
+            welcomeMessage.textContent = currentUser ? `Welcome ${currentUser.name}` : 'Welcome';
+            welcomeMessage.classList.add('fade-in');
+            setTimeout(() => {
+                welcomeMessage.classList.remove('fade-in');
+                welcomeMessage.classList.add('fade-out');
+                setTimeout(() => {
+                    welcomeMessage.textContent = '';
+                    welcomeMessage.classList.remove('fade-out');
+                    tagline.innerHTML = 'The <span class="highlight">Linq</span> to your Energy News';
+                    tagline.classList.add('fade-in');
+                }, 2000);
+            }, 3000);
+        }
+
+        // Run animation on page load
+        window.onload = showWelcomeAndTagline;
+
+        // Market Updates Toggle Functionality
+        const marketTabs = document.querySelectorAll('.market-tab');
+        const marketContents = document.querySelectorAll('.market-content');
+
+        marketTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                marketTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                marketContents.forEach(content => content.classList.remove('active'));
+                const contentId = `market${tab.id.replace('tab', '')}Content`;
+                document.getElementById(contentId).classList.add('active');
+            });
         });
     </script>
 </body>
