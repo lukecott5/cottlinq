@@ -152,35 +152,10 @@
         .news-image:hover {
             transform: scale(1.05);
         }
-        /* Search icon style */
-        .search-icon {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        .search-icon:hover {
-            transform: scale(1.1);
-        }
-        /* Fade animations */
-        .fade-in {
-            animation: fadeIn 2s ease-in;
-        }
-        .fade-out {
-            animation: fadeOut 2s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
         /* Tagline styling */
         .tagline {
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             font-weight: bold;
         }
         .tagline .highlight {
@@ -234,142 +209,138 @@
         .negative {
             color: #ef4444;
         }
+        /* Stock Ticker Banner */
+        .ticker-banner {
+            background: #333333;
+            color: #ffffff;
+            padding: 0.5rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 40s linear infinite;
+        }
+        .ticker-item {
+            display: inline-block;
+            margin-right: 2rem;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
     <!-- Navigation Bar -->
     <nav class="bg-white py-4 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="#" class="text-4xl font-bold text-gray-800">Linq</a>
+            <a href="#" class="text-4xl font-bold text-black">Linq</a>
             <div class="flex items-center space-x-6">
                 <a href="#news" class="nav-link">News</a>
-                <a href="#favorites" id="favoritesTab" class="nav-link hidden">Favorites</a>
-                <button id="submitArticleBtn" class="nav-link hidden">Submit Article</button>
+                <a href="#favorites" id="favoritesTab" class="nav-link">Favorites</a>
                 <button id="authBtn" class="nav-link" onclick="showModal()">Login / Sign Up</button>
                 <button id="logoutBtn" class="nav-link hidden" onclick="handleLogout()">Logout</button>
-                <svg class="search-icon" fill="none" stroke="#333333" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"></path>
-                </svg>
             </div>
         </div>
     </nav>
 
-    <!-- Welcome and Tagline Section -->
-    <div id="welcomeMessage" class="text-center text-gray-800 text-2xl py-10"></div>
-    <div id="tagline" class="tagline hidden"></div>
+    <!-- Stock Ticker Banner -->
+    <div class="ticker-banner">
+        <div class="ticker-content">
+            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
+            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
+            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
+            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
+            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
+            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
+            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
+            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
+            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
+            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
+            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
+            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
+            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
+            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
+            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
+            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
+            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
+            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
+            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
+            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
+            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
+            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
+            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
+            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
+            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
+        </div>
+    </div>
+
+    <!-- Tagline Section -->
+    <div class="tagline text-4xl font-bold text-gray-800 py-10">
+        The <span class="highlight">Linq</span> to your Energy News
+    </div>
 
     <!-- Market Updates Section -->
     <section class="market-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="market-tabs">
-            <div id="tabUS" class="market-tab active">US</div>
-            <div id="tabWorld" class="market-tab">World</div>
-            <div id="tabCommodities" class="market-tab">Commodities</div>
-            <div id="tabFutures" class="market-tab">Futures</div>
+            <div id="tabCommodities" class="market-tab active">Commodities</div>
+            <div id="tabUS" class="market-tab">Equities</div>
             <div id="tabTreasuries" class="market-tab">Treasuries</div>
         </div>
-        <div id="marketUSContent" class="market-content active">
+        <div id="marketCommoditiesContent" class="market-content active">
             <table class="market-table">
                 <tr>
-                    <th>Dow Jones</th>
-                    <td>41,317.43</td>
-                    <td>564.47</td>
-                    <td class="positive">+1.39%</td>
-                </tr>
-                <tr>
-                    <th>S&P 500</th>
-                    <td>5,686.68</td>
-                    <td>82.54</td>
-                    <td class="positive">+1.47%</td>
-                </tr>
-                <tr>
-                    <th>Nasdaq</th>
-                    <td>17,977.73</td>
-                    <td>266.99</td>
-                    <td class="positive">+1.51%</td>
-                </tr>
-            </table>
-        </div>
-        <div id="marketWorldContent" class="market-content">
-            <table class="market-table">
-                <tr>
-                    <th>FTSE 100 (UK)</th>
-                    <td>8,200.67</td>
-                    <td>-0.05</td>
-                    <td class="negative">-0.01%</td>
-                </tr>
-                <tr>
-                    <th>Nikkei 225 (Japan)</th>
-                    <td>38,500.89</td>
-                    <td>0.10</td>
-                    <td class="positive">+0.00%</td>
-                </tr>
-                <tr>
-                    <th>DAX (Germany)</th>
-                    <td>18,100.23</td>
-                    <td>0.07</td>
-                    <td class="positive">+0.00%</td>
-                </tr>
-            </table>
-        </div>
-        <div id="marketCommoditiesContent" class="market-content">
-            <table class="market-table">
-                <tr>
-                    <th>Dow Jones</th>
-                    <td>41,317.43</td>
-                    <td>564.47</td>
-                    <td class="positive">+1.39%</td>
-                </tr>
-                <tr>
-                    <th>S&P 500</th>
-                    <td>5,686.68</td>
-                    <td>82.54</td>
-                    <td class="positive">+1.47%</td>
-                </tr>
-                <tr>
-                    <th>Nasdaq</th>
-                    <td>17,977.73</td>
-                    <td>266.99</td>
-                    <td class="positive">+1.51%</td>
-                </tr>
-                <tr>
-                    <th>Crude Oil</th>
+                    <th>WTI Crude</th>
                     <td>58.29</td>
                     <td>-0.95</td>
                     <td class="negative">-1.60%</td>
                 </tr>
                 <tr>
-                    <th>Gold</th>
-                    <td>3,239.34</td>
-                    <td>2.08</td>
-                    <td class="positive">+0.0643%</td>
+                    <th>Brent Crude</th>
+                    <td>62.45</td>
+                    <td>-0.75</td>
+                    <td class="negative">-1.19%</td>
                 </tr>
                 <tr>
-                    <th>Bitcoin</th>
-                    <td>95,704.79</td>
-                    <td>-222.49</td>
-                    <td class="negative">-0.23%</td>
+                    <th>RBOB Gasoline</th>
+                    <td>1.82</td>
+                    <td>-0.03</td>
+                    <td class="negative">-1.62%</td>
+                </tr>
+                <tr>
+                    <th>Natural Gas</th>
+                    <td>3.15</td>
+                    <td>0.05</td>
+                    <td class="positive">+1.61%</td>
+                </tr>
+                <tr>
+                    <th>Heating Oil</th>
+                    <td>1.95</td>
+                    <td>-0.02</td>
+                    <td class="negative">-1.01%</td>
                 </tr>
             </table>
         </div>
-        <div id="marketFuturesContent" class="market-content">
+        <div id="marketUSContent" class="market-content">
             <table class="market-table">
                 <tr>
-                    <th>S&P 500 Futures</th>
-                    <td>5,210.00</td>
-                    <td>0.10</td>
-                    <td class="positive">+0.00%</td>
+                    <th>Dow Jones</th>
+                    <td>41,317.43</td>
+                    <td>564.47</td>
+                    <td class="positive">+1.39%</td>
                 </tr>
                 <tr>
-                    <th>Crude Oil Futures</th>
-                    <td>78.60</td>
-                    <td>0.18</td>
-                    <td class="positive">+0.00%</td>
+                    <th>S&P 500</th>
+                    <td>5,686.68</td>
+                    <td>82.54</td>
+                    <td class="positive">+1.47%</td>
                 </tr>
                 <tr>
-                    <th>Gold Futures</th>
-                    <td>2,755.00</td>
-                    <td>0.05</td>
-                    <td class="positive">+0.00%</td>
+                    <th>Nasdaq</th>
+                    <td>17,977.73</td>
+                    <td>266.99</td>
+                    <td class="positive">+1.51%</td>
                 </tr>
             </table>
         </div>
@@ -421,42 +392,6 @@
                     <button onclick="handleSignup()" class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600">Sign Up</button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Article Submission Modal -->
-    <div id="submitArticleModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeSubmitModal()">×</span>
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Submit Your Article</h2>
-            <form id="articleForm" class="space-y-4">
-                <div>
-                    <label for="articleTitle" class="block text-sm font-medium text-gray-700">Title</label>
-                    <input type="text" id="articleTitle" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Article Title" required>
-                </div>
-                <div>
-                    <label for="articleContent" class="block text-sm font-medium text-gray-700">Content</label>
-                    <textarea id="articleContent" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Article Content" required></textarea>
-                </div>
-                <div>
-                    <label for="articleCategory" class="block text-sm font-medium text-gray-700">Category</label>
-                    <select id="articleCategory" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                        <option value="Crude Oil">Crude Oil</option>
-                        <option value="Natural Gas">Natural Gas</option>
-                        <option value="Petrochemicals">Petrochemicals</option>
-                        <option value="Power">Power</option>
-                        <option value="Renewables">Renewables</option>
-                        <option value="Company News">Company News</option>
-                        <option value="Earnings">Earnings</option>
-                        <option value="Trending">Trending</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="articleImage" class="block text-sm font-medium text-gray-700">Image (Optional)</label>
-                    <input type="file" id="articleImage" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700" accept="image/*">
-                </div>
-                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">Submit Article</button>
-            </form>
         </div>
     </div>
 
@@ -574,7 +509,6 @@
 
         // Modal functionality
         const authModal = document.getElementById('authModal');
-        const submitArticleModal = document.getElementById('submitArticleModal');
         const termsContent = document.getElementById('termsContent');
         const privacyContent = document.getElementById('privacyContent');
 
@@ -584,14 +518,6 @@
 
         function closeModal() {
             authModal.style.display = 'none';
-        }
-
-        function showSubmitModal() {
-            submitArticleModal.style.display = 'flex';
-        }
-
-        function closeSubmitModal() {
-            submitArticleModal.style.display = 'none';
         }
 
         function showTerms(event) {
@@ -614,20 +540,14 @@
 
         // Prevent modal for logged-in users
         let currentUser = JSON.parse(localStorage.getItem('user')) || null;
-        const favoritesTab = document.getElementById('favoritesTab');
-        const submitArticleBtn = document.getElementById('submitArticleBtn');
         const authBtn = document.getElementById('authBtn');
         const logoutBtn = document.getElementById('logoutBtn');
 
         function updateUIForUser() {
             if (currentUser) {
-                favoritesTab.classList.remove('hidden');
-                submitArticleBtn.classList.remove('hidden');
                 authBtn.classList.add('hidden');
                 logoutBtn.classList.remove('hidden');
             } else {
-                favoritesTab.classList.add('hidden');
-                submitArticleBtn.classList.add('hidden');
                 authBtn.classList.remove('hidden');
                 logoutBtn.classList.add('hidden');
             }
@@ -649,9 +569,6 @@
         window.onclick = function(event) {
             if (event.target === authModal) {
                 closeModal();
-            }
-            if (event.target === submitArticleModal) {
-                closeSubmitModal();
             }
             if (event.target === termsContent) {
                 closeTerms();
@@ -786,7 +703,12 @@
 
         function updateFavoritesSection() {
             favoritesGrid.innerHTML = '';
-            const allArticles = articlesData.filter(article => favorites.includes(article.id));
+            const allArticles = articlesData.filter(article => 
+                favorites.includes(article.id) && article.category !== 'Crude Oil' && 
+                article.category !== 'Natural Gas' && article.category !== 'Petrochemicals' && 
+                article.category !== 'Power' && article.category !== 'Renewables' && 
+                article.category !== 'Commodities'
+            );
             allArticles.forEach(article => {
                 const articleElement = document.createElement('article');
                 articleElement.className = 'rounded-lg shadow-lg flex flex-col sm:flex-row items-start sm:items-center overflow-hidden';
@@ -810,7 +732,7 @@
         }
 
         // Show favorites section when tab is clicked
-        favoritesTab.addEventListener('click', () => {
+        document.getElementById('favoritesTab').addEventListener('click', () => {
             newsSection.classList.add('hidden');
             favoritesSection.classList.remove('hidden');
             updateFavoritesSection();
@@ -826,34 +748,6 @@
             favoritesSection.classList.add('hidden');
         }
 
-        // Article submission
-        submitArticleBtn.addEventListener('click', showSubmitModal);
-
-        const articleForm = document.getElementById('articleForm');
-        articleForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const title = document.getElementById('articleTitle').value;
-            const content = document.getElementById('articleContent').value;
-            const category = document.getElementById('articleCategory').value;
-            const imageFile = document.getElementById('articleImage').files[0];
-            const imageUrl = imageFile ? URL.createObjectURL(imageFile) : 'https://via.placeholder.com/150x100?text=User+Article';
-
-            const newArticleId = articlesData.length + 1;
-            const newArticle = {
-                id: newArticleId,
-                category: category,
-                title: title,
-                date: new Date().toLocaleDateString(),
-                source: currentUser.name,
-                link: `https://example.com/article-${newArticleId}`,
-                image: imageUrl
-            };
-            articlesData.unshift(newArticle);
-            displayArticles(articlesData);
-            closeSubmitModal();
-            articleForm.reset();
-        });
-
         // Image loading fallback
         document.querySelectorAll('img').forEach(img => {
             img.onerror = function() {
@@ -861,28 +755,6 @@
                 this.alt = 'Image Not Found';
             };
         });
-
-        // Welcome and tagline animation
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const tagline = document.getElementById('tagline');
-
-        function showWelcomeAndTagline() {
-            welcomeMessage.textContent = currentUser ? `Welcome ${currentUser.name}` : 'Welcome';
-            welcomeMessage.classList.add('fade-in');
-            setTimeout(() => {
-                welcomeMessage.classList.remove('fade-in');
-                welcomeMessage.classList.add('fade-out');
-                setTimeout(() => {
-                    welcomeMessage.textContent = '';
-                    welcomeMessage.classList.remove('fade-out');
-                    tagline.innerHTML = 'The <span class="highlight">Linq</span> to your Energy News';
-                    tagline.classList.add('fade-in');
-                }, 2000);
-            }, 3000);
-        }
-
-        // Run animation on page load
-        window.onload = showWelcomeAndTagline;
 
         // Market Updates Toggle Functionality
         const marketTabs = document.querySelectorAll('.market-tab');
