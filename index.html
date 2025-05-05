@@ -211,6 +211,8 @@
             padding: 0.75rem;
             text-align: right;
             border-bottom: 1px solid #e5e5e5;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
         .market-table th:first-child, .market-table td:first-child {
             text-align: left;
@@ -277,81 +279,18 @@
             <div id="tabTreasuries" class="market-tab header-font">Treasuries</div>
         </div>
         <div id="marketCommoditiesContent" class="market-content active">
-            <table class="market-table">
-                <tr>
-                    <th>WTI Crude</th>
-                    <td>58.29</td>
-                    <td>-0.95</td>
-                    <td class="negative">-1.60%</td>
-                </tr>
-                <tr>
-                    <th>Brent Crude</th>
-                    <td>62.45</td>
-                    <td>-0.75</td>
-                    <td class="negative">-1.19%</td>
-                </tr>
-                <tr>
-                    <th>RBOB Gasoline</th>
-                    <td>1.82</td>
-                    <td>-0.03</td>
-                    <td class="negative">-1.62%</td>
-                </tr>
-                <tr>
-                    <th>Natural Gas</th>
-                    <td>3.15</td>
-                    <td>0.05</td>
-                    <td class="positive">+1.61%</td>
-                </tr>
-                <tr>
-                    <th>Heating Oil</th>
-                    <td>1.95</td>
-                    <td>-0.02</td>
-                    <td class="negative">-1.01%</td>
-                </tr>
+            <table class="market-table" id="commoditiesTable">
+                <!-- Data will be populated dynamically -->
             </table>
         </div>
         <div id="marketUSContent" class="market-content">
-            <table class="market-table">
-                <tr>
-                    <th>Dow Jones</th>
-                    <td>41,317.43</td>
-                    <td>564.47</td>
-                    <td class="positive">+1.39%</td>
-                </tr>
-                <tr>
-                    <th>S&P 500</th>
-                    <td>5,686.68</td>
-                    <td>82.54</td>
-                    <td class="positive">+1.47%</td>
-                </tr>
-                <tr>
-                    <th>Nasdaq</th>
-                    <td>17,977.73</td>
-                    <td>266.99</td>
-                    <td class="positive">+1.51%</td>
-                </tr>
+            <table class="market-table" id="usTable">
+                <!-- Data will be populated dynamically -->
             </table>
         </div>
         <div id="marketTreasuriesContent" class="market-content">
-            <table class="market-table">
-                <tr>
-                    <th>10-Year Treasury Yield</th>
-                    <td>4.40%</td>
-                    <td>0.02</td>
-                    <td class="positive">+0.00%</td>
-                </tr>
-                <tr>
-                    <th>2-Year Treasury Yield</th>
-                    <td>4.15%</td>
-                    <td>0.01</td>
-                    <td class="positive">+0.00%</td>
-                </tr>
-                <tr>
-                    <th>30-Year Treasury Yield</th>
-                    <td>4.65%</td>
-                    <td>0.03</td>
-                    <td class="positive">+0.00%</td>
-                </tr>
+            <table class="market-table" id="treasuriesTable">
+                <!-- Data will be populated dynamically -->
             </table>
         </div>
     </section>
@@ -420,31 +359,31 @@
                 <div class="space-y-3">
                     <label class="flex items-center p-2 rounded-lg transition-colors">
                         <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Crude Oil">
-                        <span class="ml-3 text-gray-800 font-bold text-lg">Crude Oil</span>
+                        <span class="ml-3 text-gray-800 font-bold text-lg header-font">Crude Oil</span>
                     </label>
                     <label class="flex items-center p-2 rounded-lg transition-colors">
                         <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Natural Gas">
-                        <span class="ml-3 text-gray-800 font-bold text-lg">Natural Gas</span>
+                        <span class="ml-3 text-gray-800 font-bold text-lg header-font">Natural Gas</span>
                     </label>
                     <label class="flex items-center p-2 rounded-lg transition-colors">
                         <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Petrochemicals">
-                        <span class="ml-3 text-gray-800 font-bold text-lg">Petrochemicals</span>
+                        <span class="ml-3 text-gray-800 font-bold text-lg header-font">Petrochemicals</span>
                     </label>
                     <label class="flex items-center p-2 rounded-lg transition-colors">
                         <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Power">
-                        <span class="ml-3 text-gray-800 font-bold text-lg">Power</span>
+                        <span class="ml-3 text-gray-800 font-bold text-lg header-font">Power</span>
                     </label>
                     <label class="flex items-center p-2 rounded-lg transition-colors">
                         <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Renewables">
-                        <span class="ml-3 text-gray-800 font-bold text-lg">Renewables</span>
+                        <span class="ml-3 text-gray-800 font-bold text-lg header-font">Renewables</span>
                     </label>
                     <label class="flex items-center p-2 rounded-lg transition-colors">
                         <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Company News">
-                        <span class="ml-3 text-gray-800 font-bold text-lg">Company News</span>
+                        <span class="ml-3 text-gray-800 font-bold text-lg header-font">Company News</span>
                     </label>
                     <label class="flex items-center p-2 rounded-lg transition-colors">
                         <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Earnings">
-                        <span class="ml-3 text-gray-800 font-bold text-lg">Earnings</span>
+                        <span class="ml-3 text-gray-800 font-bold text-lg header-font">Earnings</span>
                     </label>
                 </div>
             </aside>
@@ -470,77 +409,146 @@
     </footer>
 
     <script>
-        // Polygon.io API key
-        const POLYGON_API_KEY = 'tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3';
+        // Alpha Vantage API key
+        const ALPHA_VANTAGE_API_KEY = 'WFF4R742998VZWBI';
 
-        // List of stock tickers to display in the ticker banner
-        const STOCK_TICKERS = ['XOM', 'CVX', 'COP', 'OXY', 'SLB'];
+        // List of stock tickers for the ticker banner
+        const STOCK_TICKERS = ['XOM', 'CVX', 'COP', 'OXY', 'SLB', 'EOG', 'EPD', 'PXD', 'VLO', 'MPC', 'PSX',
+'WMB', 'KMI', 'OKE', 'ET', 'EPD', 'ENB', 'TRP', 'HES', 'DVN', 'FANG',
+'APA', 'BKR', 'CTRA', 'HAL', 'MUR', 'CTRA', 'CHRD', 'SM', 'PR', 'AR',
+'SWN', 'MTDR', 'RRC', 'CNX', 'CIVI', 'NOG', 'VTLE', 'TALO', 'PDCE', 'CPE',
+'XEC', 'HP', 'NFE', 'NEXT', 'LNG', 'TELL', 'AM', 'CHK', 'EQNR', 'EQT'
 
-        // Function to fetch live stock data from Polygon.io
-        async function fetchLiveStockData() {
-            const tickerString = STOCK_TICKERS.join(',');
-            const url = `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=${tickerString}&apiKey=${POLYGON_API_KEY}`;
-            
+];
+
+        // Function to fetch data from Alpha Vantage
+        async function fetchAlphaVantageData(symbol, functionType, interval = 'daily') {
+            const url = `https://www.alphavantage.co/query?function=${functionType}&symbol=${symbol}&interval=${interval}&apikey=${ALPHA_VANTAGE_API_KEY}`;
             try {
                 const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
-                console.log('Polygon.io API Response:', data); // Log the API response for debugging
-                if (data.status !== 'OK' || !data.tickers) {
-                    throw new Error('Invalid API response structure');
-                }
-                return data.tickers;
+                if (data['Error Message'] || data['Note']) throw new Error(data['Error Message'] || data['Note']);
+                return data;
             } catch (error) {
-                console.error('Error fetching live stock data:', error);
-                // Fallback message if data fetch fails
-                return STOCK_TICKERS.map(ticker => ({
-                    ticker: ticker,
-                    lastTrade: { p: 'N/A' },
-                    day: { c: 0 },
-                    prevDay: { c: 0 }
-                }));
+                console.error(`Error fetching ${symbol} data:`, error);
+                return null;
             }
         }
 
-        // Function to format the percentage change
-        function formatChangePercent(currentPrice, prevClose) {
-            if (!prevClose || prevClose === 0 || currentPrice === 'N/A') return 'N/A';
-            const changePercent = ((currentPrice - prevClose) / prevClose * 100).toFixed(2);
-            return changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`;
-        }
-
-        // Function to update the ticker banner with live data
+        // Function to update ticker banner with live stock data
         async function updateTickerBanner() {
             const tickerContent = document.getElementById('tickerContent');
-            const liveData = await fetchLiveStockData();
-            
-            // Clear existing content
-            tickerContent.innerHTML = '';
+            const promises = STOCK_TICKERS.map(symbol => fetchAlphaVantageData(symbol, 'TIME_SERIES_INTRADAY', '5min'));
+            const results = await Promise.all(promises);
 
-            // Generate ticker items (repeat 5 times for seamless animation)
-            for (let i = 0; i < 5; i++) {
-                liveData.forEach(stock => {
-                    const price = stock.lastTrade?.p || 'N/A';
-                    const changePercent = formatChangePercent(stock.day?.c || price, stock.prevDay?.c || price);
-                    const changeClass = changePercent.startsWith('+') ? 'positive' : (changePercent === 'N/A' ? '' : 'negative');
-                    
+            tickerContent.innerHTML = '';
+            results.forEach((data, index) => {
+                if (data) {
+                    const timeSeries = data['Time Series (5min)'];
+                    const latestTime = Object.keys(timeSeries)[0];
+                    const { '1. open': open, '4. close': close } = timeSeries[latestTime];
+                    const changePercent = ((close - open) / open * 100).toFixed(2);
+                    const changeClass = changePercent >= 0 ? 'positive' : 'negative';
                     const tickerItem = document.createElement('span');
                     tickerItem.className = 'ticker-item';
-                    tickerItem.innerHTML = `${stock.ticker}: $${price} <span class="${changeClass}">${changePercent}</span>`;
+                    tickerItem.innerHTML = `${STOCK_TICKERS[index]}: $${close} <span class="${changeClass}">${changePercent >= 0 ? '+' : ''}${changePercent}%</span>`;
                     tickerContent.appendChild(tickerItem);
-                });
-            }
+                }
+            });
 
-            // Initialize the ticker animation
             const tickerWidth = tickerContent.scrollWidth;
             tickerContent.style.setProperty('--ticker-width', `-${tickerWidth}px`);
             tickerContent.style.animation = `ticker 80s linear infinite`;
         }
 
-        // Call the ticker update when the page loads
-        window.addEventListener('load', updateTickerBanner);
+        // Function to update market tables
+        async function updateMarketTables() {
+            // Commodities
+            const commodities = [
+                { symbol: 'CL', name: 'WTI Crude' },
+                { symbol: 'BZ', name: 'Brent Crude' },
+                { symbol: 'RB', name: 'RBOB Gasoline' },
+                { symbol: 'NG', name: 'Natural Gas' },
+                { symbol: 'HO', name: 'Heating Oil' }
+            ];
+            const commoditiesData = await Promise.all(commodities.map(c => fetchAlphaVantageData(c.symbol, 'TIME_SERIES_DAILY')));
+            const commoditiesTable = document.getElementById('commoditiesTable');
+            commoditiesTable.innerHTML = `
+                <tr><th>Name</th><th>Price</th><th>Change</th><th>% Change</th></tr>
+                ${commodities.map((c, i) => {
+                    if (commoditiesData[i]) {
+                        const timeSeries = commoditiesData[i]['Time Series (Daily)'];
+                        const latest = timeSeries[Object.keys(timeSeries)[0]];
+                        const price = latest['4. close'];
+                        const prev = timeSeries[Object.keys(timeSeries)[1]]['4. close'];
+                        const change = (price - prev).toFixed(2);
+                        const percentChange = ((price - prev) / prev * 100).toFixed(2);
+                        const changeClass = change >= 0 ? 'positive' : 'negative';
+                        return `<tr><td>${c.name}</td><td>$${price}</td><td>${change}</td><td class="${changeClass}">${percentChange}%</td></tr>`;
+                    }
+                    return `<tr><td>${c.name}</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>`;
+                }).join('')}
+            `;
+
+            // Equities
+            const equities = [
+                { symbol: 'DJI', name: 'Dow Jones' },
+                { symbol: 'SPX', name: 'S&P 500' },
+                { symbol: 'IXIC', name: 'Nasdaq' }
+            ];
+            const equitiesData = await Promise.all(equities.map(e => fetchAlphaVantageData(e.symbol, 'TIME_SERIES_DAILY')));
+            const usTable = document.getElementById('usTable');
+            usTable.innerHTML = `
+                <tr><th>Name</th><th>Price</th><th>Change</th><th>% Change</th></tr>
+                ${equities.map((e, i) => {
+                    if (equitiesData[i]) {
+                        const timeSeries = equitiesData[i]['Time Series (Daily)'];
+                        const latest = timeSeries[Object.keys(timeSeries)[0]];
+                        const price = latest['4. close'];
+                        const prev = timeSeries[Object.keys(timeSeries)[1]]['4. close'];
+                        const change = (price - prev).toFixed(2);
+                        const percentChange = ((price - prev) / prev * 100).toFixed(2);
+                        const changeClass = change >= 0 ? 'positive' : 'negative';
+                        return `<tr><td>${e.name}</td><td>$${price}</td><td>${change}</td><td class="${changeClass}">${percentChange}%</td></tr>`;
+                    }
+                    return `<tr><td>${e.name}</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>`;
+                }).join('')}
+            `;
+
+            // Treasuries
+            const treasuries = [
+                { symbol: 'DGS10', name: '10-Year Treasury Yield' },
+                { symbol: 'DGS2', name: '2-Year Treasury Yield' },
+                { symbol: 'DGS30', name: '30-Year Treasury Yield' }
+            ];
+            const treasuriesData = await Promise.all(treasuries.map(t => fetchAlphaVantageData(t.symbol, 'TIME_SERIES_DAILY')));
+            const treasuriesTable = document.getElementById('treasuriesTable');
+            treasuriesTable.innerHTML = `
+                <tr><th>Name</th><th>Yield</th><th>Change</th><th>% Change</th></tr>
+                ${treasuries.map((t, i) => {
+                    if (treasuriesData[i]) {
+                        const timeSeries = treasuriesData[i]['Time Series (Daily)'];
+                        const latest = timeSeries[Object.keys(timeSeries)[0]];
+                        const yieldValue = latest['4. close'];
+                        const prev = timeSeries[Object.keys(timeSeries)[1]]['4. close'];
+                        const change = (yieldValue - prev).toFixed(2);
+                        const percentChange = ((yieldValue - prev) / prev * 100).toFixed(2);
+                        const changeClass = change >= 0 ? 'positive' : 'negative';
+                        return `<tr><td>${t.name}</td><td>${yieldValue}%</td><td>${change}</td><td class="${changeClass}">${percentChange}%</td></tr>`;
+                    }
+                    return `<tr><td>${t.name}</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>`;
+                }).join('')}
+            `;
+        }
+
+        // Call updates on page load
+        window.addEventListener('load', async () => {
+            await updateTickerBanner();
+            await updateMarketTables();
+            setInterval(updateTickerBanner, 5 * 60 * 1000); // Update ticker every 5 minutes
+            setInterval(updateMarketTables, 15 * 60 * 1000); // Update market tables every 15 minutes
+        });
 
         // Mock articles data (simulating fetched data, 3 per category)
         const articlesData = [
@@ -565,7 +573,8 @@
             { id: 19, category: 'Earnings', title: 'Google Reports Record Earnings', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-19', image: 'data:image/png;base64,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' },
             { id: 20, category: 'Earnings', title: 'Microsoft Beats Earnings Expectations', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-20', image: 'data:image/png;base64,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' },
             { id: 21, category: 'Earnings', title: 'ExxonMobil Posts Strong Q1 Results', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-21', image: 'data:image/png;base64,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' }
-        ];
+        ];       
+
 
         // Modal functionality
         const authModal = document.getElementById('authModal');
