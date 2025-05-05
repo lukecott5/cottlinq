@@ -1,0 +1,209 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><style>
+    /* Dark mode and modern styling */
+    .community-section {
+        background-color: #1a1a1a;
+        padding: 30px;
+        border-radius: 15px;
+        margin-top: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        color: #e0e0e0;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .community-section h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 20px;
+        background: linear-gradient(90deg, #5c9df7, #8bbcff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 1px;
+    }
+
+    .post-card {
+        background-color: #2a2a2a;
+        border: none;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(92, 157, 247, 0.2);
+    }
+
+    .post-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #5c9df7, #8bbcff);
+        opacity: 0.8;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .post-meta {
+        font-size: 14px;
+        color: #a0a0a0;
+        margin: 8px 0;
+        font-style: italic;
+    }
+
+    .twitter-tweet {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #333333;
+        border-radius: 8px;
+        color: #e0e0e0;
+    }
+
+    .twitter-tweet a {
+        color: #5c9df7;
+        text-decoration: none;
+    }
+
+    .twitter-tweet a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .community-section {
+            padding: 20px;
+        }
+
+        .community-section h2 {
+            font-size: 24px;
+        }
+
+        .post-title {
+            font-size: 16px;
+        }
+
+        .post-meta {
+            font-size: 12px;
+        }
+    }
+</style>
+
+<div class="community-section">
+    <h2>Community</h2>
+    <div class="post-card">
+        <p class="post-title">
+            If Saudis and OPEC+ maintain production levels without increasing output
+        </p>
+        <p class="post-meta">
+            May 4, 2025 • JH (@CRUDEOIL231) • Crude Oil
+        </p>
+        <blockquote class="twitter-tweet">
+            <p lang="en" dir="ltr">If Saudis and OPEC+ maintain production levels without increasing output, and as a result, Brent crude prices barely hold steady around $70/bbl, would that be favorable for your positions?<br><br>Of course the best-case scenario is for prices to remain high, but that seems unlikely.…</p>
+            — JH (@CRUDEOIL231) <a href="https://twitter.com/CRUDEOIL231/status/1919070053825495266?ref_src=twsrc%5Etfw">May 4, 2025</a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="post-card">
+        <p class="post-title">
+            India's oil consumption rose 4.5% YoY in March
+        </p>
+        <p class="post-meta">
+            May 4, 2025 • Linq (@LinqNews) • Crude Oil
+        </p>
+        <blockquote class="twitter-tweet">
+            <p lang="en" dir="ltr">India's oil consumption rose 4.5% YoY in March. Infrastructure buildout and strong GDP expectations place it as key global demand anchor in 2025.<a href="https://twitter.com/hashtag/India?src=hash&ref_src=twsrc%5Etfw">#India</a> <a href="https://twitter.com/hashtag/EnergyDemand?src=hash&ref_src=twsrc%5Etfw">#EnergyDemand</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p>
+            — Linq (@LinqNews) <a href="https://twitter.com/LinqNews/status/1919171857409855978?ref_src=twsrc%5Etfw">May 4, 2025</a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="post-card">
+        <p class="post-title">
+            Crude gaps down >$2/bbl—Brent back in the $50s
+        </p>
+        <p class="post-meta">
+            May 4, 2025 • Rory Johnston (@Rory_Johnston) • Crude Oil
+        </p>
+        <blockquote class="twitter-tweet">
+            <p lang="en" dir="ltr">Crude gaps down >$2/bbl—Brent back in the $50s—on Asia open following OPEC headline-filled weekend.<br><br>Hard to know what, exactly, was priced in going into weekend—even if the ~400 kbpd June production hike was priced in, the entire unwind by November threat/rumour certainly wasn’t <a href="https://t.co/oMqvcPx0U8">pic.twitter.com/oMqvcPx0U8</a></p>
+            — Rory Johnston (@Rory_Johnston) <a href="https://twitter.com/Rory_Johnston/status/1919158874172530712?ref_src=twsrc%5Etfw">May 4, 2025</a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="post-card">
+        <p class="post-title">
+            OPEC has now returned 0.96 of the 2.2mmbpd of the voluntary cuts
+        </p>
+        <p class="post-meta">
+            May 4, 2025 • Unintended Consequence (@UnintendedCons5) • Crude Oil
+        </p>
+        <blockquote class="twitter-tweet">
+            <p lang="en" dir="ltr">OPEC has now returned 0.96 of the 2.2mmbpd of the voluntary cuts.<br><br>However OPEC has been over producing 1.1mmpbd since Feb. As many have mentioned the only volumes returning are Saudis (436kbpd).</p>
+            — Unintended Consequence (@UnintendedCons5) <a href="https://twitter.com/UnintendedCons5/status/1918857944579408366?ref_src=twsrc%5Etfw">May 4, 2025</a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="post-card">
+        <p class="post-title">
+            OPEC plus 8 states: agree to add 411000 bpd in June
+        </p>
+        <p class="post-meta">
+            May 3, 2025 • Amena Bakr (@Amena__Bakr) • Crude Oil
+        </p>
+        <blockquote class="twitter-tweet">
+            <p lang="en" dir="ltr">OPEC plus 8 states: agree to add 411000 bpd in June <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/Opec?src=hash&ref_src=twsrc%5Etfw">#Opec</a></p>
+            — Amena Bakr (@Amena__Bakr) <a href="https://twitter.com/Amena__Bakr/status/1918614082099286340?ref_src=twsrc%5Etfw">May 3, 2025</a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+</div>
