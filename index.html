@@ -247,31 +247,7 @@
     <!-- Stock Ticker Banner -->
     <div class="ticker-banner">
         <div class="ticker-content" id="tickerContent">
-            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
-            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
-            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
-            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
-            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
-            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
-            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
-            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
-            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
-            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
-            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
-            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
-            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
-            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
-            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
-            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
-            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
-            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
-            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
-            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
-            <span class="ticker-item">XOM: $115.20 <span class="positive">+1.32%</span></span>
-            <span class="ticker-item">CVX: $152.75 <span class="positive">+1.39%</span></span>
-            <span class="ticker-item">COP: $108.40 <span class="positive">+1.12%</span></span>
-            <span class="ticker-item">OXY: $52.80 <span class="negative">-0.56%</span></span>
-            <span class="ticker-item">SLB: $42.15 <span class="positive">+1.57%</span></span>
+            <!-- Ticker items will be populated dynamically -->
         </div>
     </div>
 
@@ -481,16 +457,73 @@
     </footer>
 
     <script>
-        // Initialize the ticker animation
-        function initializeTicker() {
-            const tickerContent = document.getElementById('tickerContent');
-            const tickerWidth = tickerContent.scrollWidth; // Get the total width of the ticker content
-            tickerContent.style.setProperty('--ticker-width', `-${tickerWidth}px`); // Set the CSS variable for the animation
-            tickerContent.style.animation = `ticker 80s linear infinite`; // Apply the animation with 80s duration
+        // Polygon.io API key (replace with your actual API key)
+        const tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3 = 'tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3';
+
+        // List of stock tickers to display in the ticker banner
+        const STOCK_TICKERS = ['XOM', 'CVX', 'COP', 'OXY', 'SLB'];
+
+        // Function to fetch live stock data from Polygon.io
+        async function fetchLiveStockData() {
+            const tickerString = STOCK_TICKERS.join(',');
+            const url = `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=${tickerString}&apiKey=${tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3}`;
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data.tickers;
+            } catch (error) {
+                console.error('Error fetching live stock data:', error);
+                // Fallback to static data in case of error
+                return STOCK_TICKERS.map(ticker => ({
+                    ticker: ticker,
+                    lastTrade: { p: 0 },
+                    day: { c: 0 },
+                    prevDay: { c: 0 }
+                }));
+            }
         }
 
-        // Call the ticker initialization when the page loads
-        window.addEventListener('load', initializeTicker);
+        // Function to format the percentage change
+        function formatChangePercent(currentPrice, prevClose) {
+            if (!prevClose || prevClose === 0) return '+0.00%';
+            const changePercent = ((currentPrice - prevClose) / prevClose * 100).toFixed(2);
+            return changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`;
+        }
+
+        // Function to update the ticker banner with live data
+        async function updateTickerBanner() {
+            const tickerContent = document.getElementById('tickerContent');
+            const liveData = await fetchLiveStockData();
+            
+            // Clear existing content
+            tickerContent.innerHTML = '';
+
+            // Generate ticker items (repeat 5 times for seamless animation)
+            for (let i = 0; i < 5; i++) {
+                liveData.forEach(stock => {
+                    const price = stock.lastTrade?.p || 0;
+                    const changePercent = formatChangePercent(stock.day?.c || price, stock.prevDay?.c || price);
+                    const changeClass = changePercent.startsWith('+') ? 'positive' : 'negative';
+                    
+                    const tickerItem = document.createElement('span');
+                    tickerItem.className = 'ticker-item';
+                    tickerItem.innerHTML = `${stock.ticker}: $${price.toFixed(2)} <span class="${changeClass}">${changePercent}</span>`;
+                    tickerContent.appendChild(tickerItem);
+                });
+            }
+
+            // Initialize the ticker animation
+            const tickerWidth = tickerContent.scrollWidth;
+            tickerContent.style.setProperty('--ticker-width', `-${tickerWidth}px`);
+            tickerContent.style.animation = `ticker 80s linear infinite`;
+        }
+
+        // Call the ticker update when the page loads
+        window.addEventListener('load', updateTickerBanner);
 
         // Mock articles data (simulating fetched data, 3 per category)
         const articlesData = [
