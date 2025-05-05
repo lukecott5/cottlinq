@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linq</title>
+    <title>Linq News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Professional typography */
@@ -11,6 +12,15 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #ffffff;
             color: #333333;
+        }
+        /* Header font style similar to WSJ */
+        .header-font {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
         /* Modal styles */
         .modal {
@@ -86,6 +96,8 @@
         .nav-link {
             transition: color 0.2s ease;
             color: #333333;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
         .nav-link:hover {
             color: #60a5fa;
@@ -156,7 +168,6 @@
         .tagline {
             text-align: center;
             font-size: 2.5rem;
-            font-weight: bold;
         }
         .tagline .highlight {
             color: #60a5fa;
@@ -180,6 +191,8 @@
             color: #666666;
             padding: 0.5rem 1rem;
             transition: color 0.2s ease;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
         .market-tab:hover, .market-tab.active {
             color: #000000;
@@ -234,10 +247,10 @@
     <!-- Navigation Bar -->
     <nav class="bg-white py-4 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="#" class="text-4xl font-bold text-black">Linq</a>
+            <a href="#" class="text-4xl font-bold text-black header-font">Linq News</a>
             <div class="flex items-center space-x-6">
-                <a href="#news" class="nav-link">News</a>
-                <a href="#favorites" id="favoritesTab" class="nav-link">Favorites</a>
+                <a href="#news" class="nav-link header-font">News</a>
+                <a href="#favorites" id="favoritesTab" class="nav-link header-font">Favorites</a>
                 <button id="authBtn" class="nav-link" onclick="showModal()">Login / Sign Up</button>
                 <button id="logoutBtn" class="nav-link hidden" onclick="handleLogout()">Logout</button>
             </div>
@@ -252,16 +265,16 @@
     </div>
 
     <!-- Tagline Section -->
-    <div class="tagline text-4xl font-bold text-gray-800 py-10">
+    <div class="tagline text-4xl font-bold text-gray-800 py-10 header-font">
         The <span class="highlight">Linq</span> to your Energy News
     </div>
 
     <!-- Market Updates Section -->
     <section class="market-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="market-tabs">
-            <div id="tabCommodities" class="market-tab active">Commodities</div>
-            <div id="tabUS" class="market-tab">Equities</div>
-            <div id="tabTreasuries" class="market-tab">Treasuries</div>
+            <div id="tabCommodities" class="market-tab header-font active">Commodities</div>
+            <div id="tabUS" class="market-tab header-font">Equities</div>
+            <div id="tabTreasuries" class="market-tab header-font">Treasuries</div>
         </div>
         <div id="marketCommoditiesContent" class="market-content active">
             <table class="market-table">
@@ -347,7 +360,7 @@
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">×</span>
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Join Linq</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Join Linq News</h2>
             <p class="text-gray-600 mb-6">Sign up or log in to access exclusive content and personalized updates.</p>
             <div class="space-y-4">
                 <div>
@@ -374,22 +387,22 @@
     <div id="termsContent" class="terms-privacy-content">
         <span class="close-btn" onclick="closeTerms()">×</span>
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Terms of Service</h2>
-        <p>Welcome to Linq. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. These terms govern your use of the site and any services provided.</p>
+        <p>Welcome to Linq News. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. These terms govern your use of the site and any services provided.</p>
         <p class="mt-4">1. <strong>Acceptance of Terms</strong>: By using this site, you accept these terms in full. If you disagree, please do not use the site.</p>
         <p class="mt-2">2. <strong>User Conduct</strong>: You agree not to use the site for illegal or unauthorized purposes.</p>
-        <p class="mt-2">3. <strong>Content Ownership</strong>: All content on this site is owned by Linq or its licensors unless otherwise stated.</p>
+        <p class="mt-2">3. <strong>Content Ownership</strong>: All content on this site is owned by Linq News or its licensors unless otherwise stated.</p>
         <p class="mt-2">4. <strong>Limitation of Liability</strong>: We are not liable for any indirect or consequential damages arising from your use of the site.</p>
-        <p class="mt-2">For the most current version, please contact us at support@linq.com.</p>
+        <p class="mt-2">For the most current version, please contact us at support@linqnews.com.</p>
     </div>
     <div id="privacyContent" class="terms-privacy-content">
         <span class="close-btn" onclick="closePrivacy()">×</span>
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Privacy Policy</h2>
-        <p>At Linq, we are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your information.</p>
+        <p>At Linq News, we are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your information.</p>
         <p class="mt-4">1. <strong>Information Collection</strong>: We collect personal information such as your name and email when you sign up or submit articles.</p>
         <p class="mt-2">2. <strong>Use of Information</strong>: Your data is used to personalize your experience and improve our services.</p>
         <p class="mt-2">3. <strong>Data Security</strong>: We implement reasonable measures to protect your information from unauthorized access.</p>
         <p class="mt-2">4. <strong>Third-Party Sharing</strong>: We do not sell or share your personal data with third parties except as required by law.</p>
-        <p class="mt-2">For questions, contact us at privacy@linq.com.</p>
+        <p class="mt-2">For questions, contact us at privacy@linqnews.com.</p>
     </div>
 
     <!-- Main Content -->
@@ -447,7 +460,7 @@
     <!-- Footer -->
     <footer class="bg-white text-gray-600 py-6 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-            <p>© 2025 Linq. All rights reserved.</p>
+            <p>© 2025 Linq News. All rights reserved.</p>
             <div class="mt-4 md:mt-0 space-x-4">
                 <a href="#" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
                 <a href="#" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
@@ -457,8 +470,8 @@
     </footer>
 
     <script>
-        // Polygon.io API key (replace with your actual API key)
-        const tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3 = 'tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3';
+        // Polygon.io API key
+        const POLYGON_API_KEY = 'tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3';
 
         // List of stock tickers to display in the ticker banner
         const STOCK_TICKERS = ['XOM', 'CVX', 'COP', 'OXY', 'SLB'];
@@ -466,7 +479,7 @@
         // Function to fetch live stock data from Polygon.io
         async function fetchLiveStockData() {
             const tickerString = STOCK_TICKERS.join(',');
-            const url = `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=${tickerString}&apiKey=${tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3}`;
+            const url = `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=${tickerString}&apiKey=${POLYGON_API_KEY}`;
             
             try {
                 const response = await fetch(url);
@@ -474,13 +487,17 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
+                console.log('Polygon.io API Response:', data); // Log the API response for debugging
+                if (data.status !== 'OK' || !data.tickers) {
+                    throw new Error('Invalid API response structure');
+                }
                 return data.tickers;
             } catch (error) {
                 console.error('Error fetching live stock data:', error);
-                // Fallback to static data in case of error
+                // Fallback message if data fetch fails
                 return STOCK_TICKERS.map(ticker => ({
                     ticker: ticker,
-                    lastTrade: { p: 0 },
+                    lastTrade: { p: 'N/A' },
                     day: { c: 0 },
                     prevDay: { c: 0 }
                 }));
@@ -489,7 +506,7 @@
 
         // Function to format the percentage change
         function formatChangePercent(currentPrice, prevClose) {
-            if (!prevClose || prevClose === 0) return '+0.00%';
+            if (!prevClose || prevClose === 0 || currentPrice === 'N/A') return 'N/A';
             const changePercent = ((currentPrice - prevClose) / prevClose * 100).toFixed(2);
             return changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`;
         }
@@ -505,13 +522,13 @@
             // Generate ticker items (repeat 5 times for seamless animation)
             for (let i = 0; i < 5; i++) {
                 liveData.forEach(stock => {
-                    const price = stock.lastTrade?.p || 0;
+                    const price = stock.lastTrade?.p || 'N/A';
                     const changePercent = formatChangePercent(stock.day?.c || price, stock.prevDay?.c || price);
-                    const changeClass = changePercent.startsWith('+') ? 'positive' : 'negative';
+                    const changeClass = changePercent.startsWith('+') ? 'positive' : (changePercent === 'N/A' ? '' : 'negative');
                     
                     const tickerItem = document.createElement('span');
                     tickerItem.className = 'ticker-item';
-                    tickerItem.innerHTML = `${stock.ticker}: $${price.toFixed(2)} <span class="${changeClass}">${changePercent}</span>`;
+                    tickerItem.innerHTML = `${stock.ticker}: $${price} <span class="${changeClass}">${changePercent}</span>`;
                     tickerContent.appendChild(tickerItem);
                 });
             }
