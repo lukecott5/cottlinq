@@ -28,7 +28,7 @@
         }
         .community-section h2 {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 400;
             color: #2563eb; /* Tailwind blue-600 */
         }
         .community-section .highlight {
@@ -415,15 +415,41 @@
                 </div>
             </div>
             <div class="filter-section">
-                <h3>Filter by category</h3>
-                <label><input type="checkbox" id="filter-crude-oil" onchange="filterPosts()"> Crude oil</label>
-                <label><input type="checkbox" id="filter-natural-gas" onchange="filterPosts()"> Natural gas</label>
-                <label><input type="checkbox" id="filter-petrochemicals" onchange="filterPosts()"> Petrochemicals</label>
-                <label><input type="checkbox" id="filter-power" onchange="filterPosts()"> Power</label>
-                <label><input type="checkbox" id="filter-renewables" onchange="filterPosts()"> Renewables</label>
-                <label><input type="checkbox" id="filter-company-news" onchange="filterPosts()"> Company news</label>
-                <label><input type="checkbox" id="filter-earnings" onchange="filterPosts()"> Earnings</label>
-                <label><input type="checkbox" id="filter-energy" onchange="filterPosts()"> Energy</label>
+                <h3>Filter by Category</h3>
+                <div class="space-y-3">
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" id="filter-crude-oil" onchange="filterPosts()">
+                        <span class="ml-3 text-gray-800 text-lg">Crude Oil</span>
+                    </label>
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" id="filter-natural-gas" onchange="filterPosts()">
+                        <span class="ml-3 text-gray-800 text-lg">Natural Gas</span>
+                    </label>
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" id="filter-petrochemicals" onchange="filterPosts()">
+                        <span class="ml-3 text-gray-800 text-lg">Petrochemicals</span>
+                    </label>
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" id="filter-power" onchange="filterPosts()">
+                        <span class="ml-3 text-gray-800 text-lg">Power</span>
+                    </label>
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" id="filter-renewables" onchange="filterPosts()">
+                        <span class="ml-3 text-gray-800 text-lg">Renewables</span>
+                    </label>
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" id="filter-company-news" onchange="filterPosts()">
+                        <span class="ml-3 text-gray-800 text-lg">Company News</span>
+                    </label>
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" id="filter-earnings" onchange="filterPosts()">
+                        <span class="ml-3 text-gray-800 text-lg">Earnings</span>
+                    </label>
+                    <label class="flex items-center p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" id="filter-energy" onchange="filterPosts()">
+                        <span class="ml-3 text-gray-800 text-lg">Energy</span>
+                    </label>
+                </div>
             </div>
         </div>
     </main>
