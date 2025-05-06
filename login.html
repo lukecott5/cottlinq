@@ -3,274 +3,546 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Linq News</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+    <title>Linq News - Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Lexend', sans-serif;
             font-weight: 400;
             background-color: #ffffff;
-            color: #333333;
+            color: #2d3748;
         }
-        .container {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .login-box {
-            width: 100%;
-            max-width: 400px;
+        .community-section {
+            background-color: #ffffff;
             padding: 2rem;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            color: #2d3748;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
         }
-        .logo {
+        .community-section h2 {
             font-size: 2rem;
-            font-weight: bold;
-            color: #1DA1F2;
-            text-align: center;
-            margin-bottom: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+            font-family: 'Lexend', serif;
         }
-        .btn-primary {
-            background-color: #1DA1F2;
-            color: white;
-            padding: 0.75rem;
-            border-radius: 9999px;
-            width: 100%;
-            text-align: center;
-            transition: background-color 0.3s ease;
+        .community-subtitle {
+            font-size: 1.125rem;
+            color: #4a5568;
+            margin: 0 0 1.5rem 0;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
         }
-        .btn-primary:hover {
-            background-color: #1991DA;
-        }
-        .btn-secondary {
-            border: 1px solid #1DA1F2;
-            color: #1DA1F2;
-            padding: 0.75rem;
-            border-radius: 9999px;
-            width: 100%;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .btn-secondary:hover {
-            background-color: #E8F5FE;
-        }
-        .btn-google {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #D1D5DB;
-            color: #333333;
-            padding: 0.75rem;
-            border-radius: 9999px;
-            width: 100%;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .btn-google:hover {
-            background-color: #F3F4F6;
-        }
-        .google-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 0.5rem;
-        }
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: #666666;
-            margin: 1rem 0;
-        }
-        .divider::before,
-        .divider::after {
-            content: '';
+        .filter-section {
             flex: 1;
-            border-bottom: 1px solid #D1D5DB;
+            max-width: 33.333%;
+            padding: 1rem;
+            background-color: #f7fafc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        .divider span {
-            padding: 0 1rem;
+        .filter-section h3 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #1a202c;
+            margin-bottom: 0.75rem;
+            font-family: 'Lexend', sans-serif;
         }
-        .input-field {
-            border: 1px solid #D1D5DB;
+        .filter-section label {
+            display: block;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            color: #2d3748;
+            font-family: 'Lexend', sans-serif;
+            cursor: pointer;
+            font-weight: 400;
+        }
+        .filter-section input[type="checkbox"] {
+            margin-right: 0.5rem;
+            accent-color: #60a5fa;
+        }
+        .posts-section {
+            flex: 2;
+            max-width: 66.666%;
+        }
+        .post-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+        }
+        .post-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #2d3748;
+            margin: 0 0 0.5rem;
+            line-height: 1.4;
+            font-family: 'Lexend', sans-serif;
+        }
+        .post-meta {
+            font-size: 0.875rem;
+            color: #4a5568;
+            margin: 0.5rem 0;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+        }
+        .category-label {
+            background-color: #e2e8f0;
+            color: #2d3748;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 400;
+            margin-left: 0.5rem;
+        }
+        .twitter-tweet {
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            color: #2d3748;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+        }
+        .twitter-tweet a {
+            color: #8bbcff;
+            text-decoration: none;
+        }
+        .twitter-tweet a:hover {
+            text-decoration: underline;
+        }
+        .share-btn {
+            margin-top: 1rem;
+            align-self: flex-start;
+            background: none;
+            border: 1px solid #000000;
             border-radius: 4px;
-            padding: 0.75rem;
-            width: 100%;
-            color: #333333;
-            background: #ffffff;
+            padding: 0.5rem 1rem;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+            font-size: 0.875rem;
+            color: #000000;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
-        .input-field:focus {
-            outline: none;
-            border-color: #1DA1F2;
-            box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+        .share-btn:hover {
+            background-color: #f5f5f5;
+            color: #000000;
         }
-        .hidden {
+        .share-confirmation {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #4a5568;
             display: none;
+        }
+        .share-confirmation:not(.hidden) {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .community-section {
+                padding: 1.5rem;
+                flex-direction: column;
+            }
+            .filter-section, .posts-section {
+                max-width: 100%;
+            }
+            .community-section h2 {
+                font-size: 1.75rem;
+            }
+            .community-subtitle {
+                font-size: 1rem;
+            }
+            .filter-section h3 {
+                font-size: 1.125rem;
+            }
+            .filter-section label {
+                font-size: 0.875rem;
+            }
+            .post-title {
+                font-size: 1.125rem;
+            }
+            .post-meta {
+                font-size: 0.75rem;
+            }
+            .post-card {
+                padding: 1rem;
+            }
+            .category-label {
+                font-size: 0.75rem;
+            }
+            .share-btn {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="login-box">
-            <!-- Logo -->
-            <div class="logo">Linq News</div>
-
-            <!-- Initial View: Sign Up or Log In -->
-            <div id="initialView">
-                <h2 class="text-2xl font-bold text-center mb-6">Join Linq News Today</h2>
-                <div class="space-y-4">
-                    <button onclick="showSignupForm()" class="btn-primary">Sign Up</button>
-                    <button onclick="showLoginForm()" class="btn-secondary">Log In</button>
-                </div>
-            </div>
-
-            <!-- Signup Form -->
-            <div id="signupForm" class="hidden">
-                <h2 class="text-2xl font-bold text-center mb-6">Sign Up for Linq News</h2>
-                <div class="space-y-4">
-                    <div>
-                        <input type="text" id="signupName" class="input-field" placeholder="Name">
-                    </div>
-                    <div>
-                        <input type="email" id="signupEmail" class="input-field" placeholder="Email">
-                    </div>
-                    <div>
-                        <input type="password" id="signupPassword" class="input-field" placeholder="Password">
-                    </div>
-                    <button onclick="handleSignup()" class="btn-primary">Sign Up</button>
-                    <div class="divider"><span>or</span></div>
-                    <button onclick="signInWithGoogle()" class="btn-google">
-                        <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.2 2.3 29.8 0 24 0 14.8 0 7.1 5.9 3.1 14.1l8.6 6.7C14.2 14.5 18.8 9.5 24 9.5z"/><path fill="#34A853" d="M24 44c5.8 0 11.2-2.3 15.2-6.2l-7.6-5.9c-2.5 1.6-5.6 2.5-8.6 2.5-5.2 0-9.7-3.4-11.3-8.1l-8.6 6.7C7.1 38.1 14.8 44 24 44z"/><path fill="#4A90E2" d="M44.5 24c0-1.6-.1-3.2-.4-4.7H24v9.4h11.7c-.5 2.5-1.9 4.7-3.9 6.2l7.6 5.9c4.5-4.1 7.1-10.2 7.1-16.8z"/><path fill="#FBBC05" d="M12.7 27.5c-.8-2.3-.8-4.7 0-7.1l-8.6-6.7C2.1 17.3 1 20.6 1 24s1.1 6.7 3.1 9.9l8.6-6.7z"/></svg>
-                        Continue with Google
-                    </button>
-                    <button onclick="showInitialView()" class="text-center text-blue-500 hover:underline w-full">Back</button>
-                </div>
-            </div>
-
-            <!-- Login Form -->
-            <div id="loginForm" class="hidden">
-                <h2 class="text-2xl font-bold text-center mb-6">Log In to Linq News</h2>
-                <div class="space-y-4">
-                    <div>
-                        <input type="email" id="loginEmail" class="input-field" placeholder="Email">
-                    </div>
-                    <div>
-                        <input type="password" id="loginPassword" class="input-field" placeholder="Password">
-                    </div>
-                    <button onclick="handleLogin()" class="btn-primary">Log In</button>
-                    <div class="divider"><span>or</span></div>
-                    <button onclick="signInWithGoogle()" class="btn-google">
-                        <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.2 2.3 29.8 0 24 0 14.8 0 7.1 5.9 3.1 14.1l8.6 6.7C14.2 14.5 18.8 9.5 24 9.5z"/><path fill="#34A853" d="M24 44c5.8 0 11.2-2.3 15.2-6.2l-7.6-5.9c-2.5 1.6-5.6 2.5-8.6 2.5-5.2 0-9.7-3.4-11.3-8.1l-8.6 6.7C7.1 38.1 14.8 44 24 44z"/><path fill="#4A90E2" d="M44.5 24c0-1.6-.1-3.2-.4-4.7H24v9.4h11.7c-.5 2.5-1.9 4.7-3.9 6.2l7.6 5.9c4.5-4.1 7.1-10.2 7.1-16.8z"/><path fill="#FBBC05" d="M12.7 27.5c-.8-2.3-.8-4.7 0-7.1l-8.6-6.7C2.1 17.3 1 20.6 1 24s1.1 6.7 3.1 9.9l8.6-6.7z"/></svg>
-                        Continue with Google
-                    </button>
-                    <button onclick="showInitialView()" class="text-center text-blue-500 hover:underline w-full">Back</button>
-                </div>
+    <nav class="bg-white py-4 shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <a href="new_page.html" class="text-4xl text-black">Linq News</a>
+            <div class="flex items-center space-x-6">
+                <a href="new_page.html#news" class="nav-link">News</a>
+                <a href="new_page.html#favorites" class="nav-link">Favorites</a>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="community-section">
+            <div class="posts-section">
+                <h2>Community</h2>
+                <p class="community-subtitle">Real-Time Posts from Energy Experts</p>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        If Saudis and OPEC+ maintain production levels without increasing output
+                    </p>
+                    <p class="post-meta">
+                        May 4, 2025 • JH (@CRUDEOIL231) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">If Saudis and OPEC+ maintain production levels without increasing output, and as a result, Brent crude prices barely hold steady around $70/bbl, would that be favorable for your positions?<br><br>Of course the best-case scenario is for prices to remain high, but that seems unlikely.…</p>
+                        — JH (@CRUDEOIL231) <a href="https://twitter.com/CRUDEOIL231/status/1919070053825495266?ref_src=twsrc%5Etfw">May 4, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        India's oil consumption rose 4.5% YoY in March
+                    </p>
+                    <p class="post-meta">
+                        May 4, 2025 • Linq (@LinqNews) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">India's oil consumption rose 4.5% YoY in March. Infrastructure buildout and strong GDP expectations place it as key global demand anchor in 2025.<a href="https://twitter.com/hashtag/India?src=hash&ref_src=twsrc%5Etfw">#India</a> <a href="https://twitter.com/hashtag/EnergyDemand?src=hash&ref_src=twsrc%5Etfw">#EnergyDemand</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p>
+                        — Linq (@LinqNews) <a href="https://twitter.com/LinqNews/status/1919171857409855978?ref_src=twsrc%5Etfw">May 4, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        Crude gaps down >$2/bbl—Brent back in the $50s
+                    </p>
+                    <p class="post-meta">
+                        May 4, 2025 • Rory Johnston (@Rory_Johnston) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">Crude gaps down >$2/bbl—Brent back in the $50s—on Asia open following OPEC headline-filled weekend.<br><br>Hard to know what, exactly, was priced in going into weekend—even if the ~400 kbpd June production hike was priced in, the entire unwind by November threat/rumour certainly wasn’t <a href="https://t.co/oMqvcPx0U8">pic.twitter.com/oMqvcPx0U8</a></p>
+                        — Rory Johnston (@Rory_Johnston) <a href="https://twitter.com/Rory_Johnston/status/1919158874172530712?ref_src=twsrc%5Etfw">May 4, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        OPEC has now returned 0.96 of the 2.2mmbpd of the voluntary cuts
+                    </p>
+                    <p class="post-meta">
+                        May 4, 2025 • Unintended Consequence (@UnintendedCons5) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">OPEC has now returned 0.96 of the 2.2mmbpd of the voluntary cuts.<br><br>However OPEC has been over producing 1.1mmpbd since Feb. As many have mentioned the only volumes returning are Saudis (436kbpd).</p>
+                        — Unintended Consequence (@UnintendedCons5) <a href="https://twitter.com/UnintendedCons5/status/1918857944579408366?ref_src=twsrc%5Etfw">May 4, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        OPEC plus 8 states: agree to add 411000 bpd in June
+                    </p>
+                    <p class="post-meta">
+                        May 3, 2025 • Amena Bakr (@Amena__Bakr) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">OPEC plus 8 states: agree to add 411000 bpd in June <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/Opec?src=hash&ref_src=twsrc%5Etfw">#Opec</a></p>
+                        — Amena Bakr (@Amena__Bakr) <a href="https://twitter.com/Amena__Bakr/status/1918614082099286340?ref_src=twsrc%5Etfw">May 3, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Energy">
+                    <p class="post-title">
+                        Riyadh’s strategic oil play
+                    </p>
+                    <p class="post-meta">
+                        May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark" data-media-max-width="560">
+                        <p lang="en" dir="ltr">My take:<br><br>Riyadh is betting that looming sanctions and tighter supply will push oil prices higher.<br><br>It’s a preemptive move to shape sentiment, not just follow it.<a href="https://t.co/g98C6IMwWl">https://t.co/g98C6IMwWl</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a> <a href="https://twitter.com/hashtag/fintwit?src=hash&ref_src=twsrc%5Etfw">#fintwit</a> <a href="https://twitter.com/hashtag/OPEC?src=hash&ref_src=twsrc%5Etfw">#OPEC</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/commoditiesmarket?src=hash&ref_src=twsrc%5Etfw">#commoditiesmarket</a> <a href="https://t.co/qhfZgyHTnM">pic.twitter.com/qhfZgyHTnM</a></p>
+                        — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919396685362373026?ref_src=twsrc%5Etfw">May 5, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        OPEC’s production challenges
+                    </p>
+                    <p class="post-meta">
+                        May 5, 2025 • Amena Bakr (@Amena__Bakr) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">The deputy minister also said that cutting production is a “hard task” for them and wasn’t able to lay out the future plan to cut output. <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/Opec?src=hash&ref_src=twsrc%5Etfw">#Opec</a> <a href="https://t.co/krzSjDrRrN">https://t.co/krzSjDrRrN</a></p>
+                        — Amena Bakr (@Amena__Bakr) <a href="https://twitter.com/Amena__Bakr/status/1919381986092667322?ref_src=twsrc%5Etfw">May 5, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        Oil market drop
+                    </p>
+                    <p class="post-meta">
+                        May 4, 2025 • Javier Blas (@JavierBlas) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">OIL MARKET: Brent and WTI crude down ~4% in early trading after OPEC+ production increase (Brent is below $59 a barrel and WTI below $56 a barrel) <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p>
+                        — Javier Blas (@JavierBlas) <a href="https://twitter.com/JavierBlas/status/1919157364831248518?ref_src=twsrc%5Etfw">May 4, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        Saudi Arabia’s oil strategy
+                    </p>
+                    <p class="post-meta">
+                        May 3, 2025 • Javier Blas (@JavierBlas) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">As Saudi Arabia today led the OPEC+ cartel to boost oil production significantly, I’m re-upping my <a href="https://twitter.com/opinion?ref_src=twsrc%5Etfw">@Opinion</a> column from earlier this week on Riyadh’s motivations.<br><br>“Saudi oil policy is multidimensional: it may have several objectives at once”<a href="https://t.co/5y2Ktc9jyU">https://t.co/5y2Ktc9jyU</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p>
+                        — Javier Blas (@JavierBlas) <a href="https://twitter.com/JavierBlas/status/1918726353475563979?ref_src=twsrc%5Etfw">May 3, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Energy">
+                    <p class="post-title">
+                        U.S. shale peak concerns
+                    </p>
+                    <p class="post-meta">
+                        May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">“We’re at a tipping point for U.S. oil—geology now outweighs tech gains,” says Travis Stice, CEO, Diamondback Energy<br><br>U.S. shale has likely peaked, with decline driven by low prices, tight margins, and geology.<a href="https://t.co/FKVAY4WazT">https://t.co/FKVAY4WazT</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a>… <a href="https://t.co/FTrFNYXaML">pic.twitter.com/FTrFNYXaML</a></p>
+                        — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919537549501968799?ref_src=twsrc%5Etfw">May 5, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Energy">
+                    <p class="post-title">
+                        IPAA supports budget reconciliation provisions
+                    </p>
+                    <p class="post-meta">
+                        May 5, 2025 • IPAA American Energy (@IPAAaccess) <span class="category-label">Energy</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">IPAA and a coalition of energy trade groups wrote to <a href="https://twitter.com/SpeakerJohnson?ref_src=twsrc%5Etfw">@SpeakerJohnson</a> expressing strong support for the <a href="https://twitter.com/hashtag/budgetreconciliation?src=hash&ref_src=twsrc%5Etfw">#budgetreconciliation</a> provisions currently under consideration by the <a href="https://twitter.com/NatResources?ref_src=twsrc%5Etfw">@NatResources</a>. "These provisions, included in the House Natural Resources bill text will increase domestic… <a href="https://t.co/QQIcQvG64S">pic.twitter.com/QQIcQvG64S</a></p>
+                        — IPAA American Energy (@IPAAaccess) <a href="https://twitter.com/IPAAaccess/status/1919510569553432731?ref_src=twsrc%5Etfw">May 5, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Energy">
+                    <p class="post-title">
+                        Peabody may scrap $3.78B Anglo deal
+                    </p>
+                    <p class="post-meta">
+                        May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">Peabody may scrap its $3.78B Anglo deal after a mine fire shut Moranbah North, raising doubts amid weak steel coal demand and rising risks.<a href="https://t.co/eaXOaF0Vvl">https://t.co/eaXOaF0Vvl</a><a href="https://twitter.com/hashtag/CoalTwitter?src=hash&ref_src=twsrc%5Etfw">#CoalTwitter</a> <a href="https://twitter.com/hashtag/Fossilfuels?src=hash&ref_src=twsrc%5Etfw">#Fossilfuels</a> <a href="https://twitter.com/hashtag/netzero?src=hash&ref_src=twsrc%5Etfw">#netzero</a> <a href="https://twitter.com/hashtag/renewables?src=hash&ref_src=twsrc%5Etfw">#renewables</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/energytransition?src=hash&ref_src=twsrc%5Etfw">#energytransition</a> <a href="https://twitter.com/hashtag/EnergyCrisis?src=hash&ref_src=twsrc%5Etfw">#EnergyCrisis</a>… <a href="https://t.co/hQSj2x54iZ">pic.twitter.com/hQSj2x54iZ</a></p>
+                        — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919540144354275464?ref_src=twsrc%5Etfw">May 5, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+                <div class="post-card" data-category="Crude Oil">
+                    <p class="post-title">
+                        OPEC+ plans to accelerate oil output hikes
+                    </p>
+                    <p class="post-meta">
+                        May 4, 2025 • Rory Johnston (@Rory_Johnston) <span class="category-label">Crude oil</span>
+                    </p>
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="en" dir="ltr">👀 “OPEC+ plans to further accelerate oil output hikes and could unwind its 2.2 million barrels per day of voluntary cuts by the end of October if members do not improve compliance with their production quota”<br><br>💀 That’d be… bad for prices. <a href="https://t.co/nZwF83qaGZ">pic.twitter.com/nZwF83qaGZ</a></p>
+                        — Rory Johnston (@Rory_Johnston) <a href="https://twitter.com/Rory_Johnston/status/1918995918264623502?ref_src=twsrc%5Etfw">May 4, 2025</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <button class="share-btn">Share</button>
+                    <span class="share-confirmation hidden">Link copied!</span>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h3>Filter by category</h3>
+                <label><input type="checkbox" id="filter-crude-oil" onchange="filterPosts()"> Crude oil</label>
+                <label><input type="checkbox" id="filter-natural-gas" onchange="filterPosts()"> Natural gas</label>
+                <label><input type="checkbox" id="filter-petrochemicals" onchange="filterPosts()"> Petrochemicals</label>
+                <label><input type="checkbox" id="filter-power" onchange="filterPosts()"> Power</label>
+                <label><input type="checkbox" id="filter-renewables" onchange="filterPosts()"> Renewables</label>
+                <label><input type="checkbox" id="filter-company-news" onchange="filterPosts()"> Company news</label>
+                <label><input type="checkbox" id="filter-earnings" onchange="filterPosts()"> Earnings</label>
+                <label><input type="checkbox" id="filter-energy" onchange="filterPosts()"> Energy</label>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white text-gray-600 py-6 shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <p>© 2025 Linq News. All rights reserved.</p>
+            <div class="mt-4 md:mt-0 space-x-4">
+                <a href="new_page.html#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
+                <a href="new_page.html#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-800 transition-colors">Contact Us</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyA4PakmXmHIdpa2PIlyGorUFcrtGHYPerU",
-            authDomain: "linq-news.firebaseapp.com",
-            projectId: "linq-news",
-            storageBucket: "linq-news.firebasestorage.app",
-            messagingSenderId: "341531763593",
-            appId: "1:341531763593:web:38909f7037e4ed2d4c7758",
-            measurementId: "G-PW63LYHPFC"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // View Switching Functions
-        const initialView = document.getElementById('initialView');
-        const signupForm = document.getElementById('signupForm');
-        const loginForm = document.getElementById('loginForm');
-
-        function showInitialView() {
-            initialView.classList.remove('hidden');
-            signupForm.classList.add('hidden');
-            loginForm.classList.add('hidden');
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
         }
-
-        function showSignupForm() {
-            initialView.classList.add('hidden');
-            signupForm.classList.remove('hidden');
-            loginForm.classList.add('hidden');
-        }
-
-        function showLoginForm() {
-            initialView.classList.add('hidden');
-            signupForm.classList.add('hidden');
-            loginForm.classList.remove('hidden');
-        }
-
-        // Handle Email/Password Login
-        function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            if (email && password) {
-                auth.signInWithEmailAndPassword(email, password)
-                    .then(userCredential => {
-                        const user = userCredential.user;
-                        localStorage.setItem('user', JSON.stringify({ email: user.email, uid: user.uid }));
-                        window.location.href = 'index.html';
-                    })
-                    .catch(error => {
-                        alert('Error logging in: ' + error.message);
-                    });
-            } else {
-                alert('Please enter email and password.');
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
             }
+            return gk_fileData[filename] || "";
         }
 
-        // Handle Email/Password Signup
-        function handleSignup() {
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            if (name && email && password) {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then(userCredential => {
-                        const user = userCredential.user;
-                        user.updateProfile({ displayName: name });
-                        localStorage.setItem('user', JSON.stringify({ name, email: user.email, uid: user.uid }));
-                        window.location.href = 'index.html';
-                    })
-                    .catch(error => {
-                        alert('Error signing up: ' + error.message);
-                    });
-            } else {
-                alert('Please fill in all fields.');
-            }
+        function filterPosts() {
+            const categories = {
+                'Crude Oil': document.getElementById('filter-crude-oil').checked,
+                'Natural Gas': document.getElementById('filter-natural-gas').checked,
+                'Petrochemicals': document.getElementById('filter-petrochemicals').checked,
+                'Power': document.getElementById('filter-power').checked,
+                'Renewables': document.getElementById('filter-renewables').checked,
+                'Company News': document.getElementById('filter-company-news').checked,
+                'Earnings': document.getElementById('filter-earnings').checked,
+                'Energy': document.getElementById('filter-energy').checked
+            };
+
+            const posts = document.querySelectorAll('.post-card');
+            posts.forEach(post => {
+                const postCategory = post.getAttribute('data-category');
+                let shouldDisplay = false;
+
+                for (const [category, isChecked] of Object.entries(categories)) {
+                    if (isChecked && postCategory === category) {
+                        shouldDisplay = true;
+                        break;
+                    }
+                }
+
+                if (!Object.values(categories).some(checked => checked)) {
+                    shouldDisplay = true;
+                }
+
+                post.style.display = shouldDisplay ? 'block' : 'none';
+            });
         }
 
-        // Handle Google Sign-In
-        function signInWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then(result => {
-                    const user = result.user;
-                    localStorage.setItem('user', JSON.stringify({
-                        name: user.displayName,
-                        email: user.email,
-                        uid: user.uid
-                    }));
-                    window.location.href = 'index.html';
-                })
-                .catch(error => {
-                    alert('Error signing in with Google: ' + error.message);
+        function sharePost(event) {
+            const post = event.target.closest('.post-card');
+            const urlElement = post.querySelector('.twitter-tweet a:last-child');
+            const url = urlElement ? urlElement.href : window.location.href;
+            const confirmation = post.querySelector('.share-confirmation');
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    confirmation.classList.remove('hidden');
+                    setTimeout(() => confirmation.classList.add('hidden'), 2000);
+                }).catch(err => {
+                    console.error('Error copying to clipboard:', err);
+                    alert('Failed to copy link. Please copy manually: ' + url);
                 });
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = url;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    confirmation.classList.remove('hidden');
+                    setTimeout(() => confirmation.classList.add('hidden'), 2000);
+                } catch (err) {
+                    console.error('Error copying to clipboard:', err);
+                    alert('Failed to copy link. Please copy manually: ' + url);
+                }
+                document.body.removeChild(textarea);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            filterPosts();
+            const shareButtons = document.querySelectorAll('.share-btn');
+            shareButtons.forEach(button => {
+                button.addEventListener('click', sharePost);
+            });
+        });
+
+        function showTerms(event) {
+            event.preventDefault();
+            window.location.href = 'new_page.html#terms';
+        }
+
+        function showPrivacy(event) {
+            event.preventDefault();
+            window.location.href = 'new_page.html#privacy';
         }
     </script>
 </body>
