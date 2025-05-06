@@ -199,10 +199,10 @@
 <body>
     <nav class="bg-white py-4 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="#" class="text-4xl text-black">Linq</a>
+            <a href="index.html" class="text-4xl text-black">Linq</a>
             <div class="flex items-center space-x-6">
-                <a href="#news" class="nav-link">News</a>
-                <a href="#favorites" id="favoritesTab" class="nav-link">Favorites</a>
+                <a href="index.html#news" class="nav-link">News</a>
+                <a href="favorites.html" id="favoritesTab" class="nav-link">Favorites</a>
                 <a href="community.html" class="nav-link">Community</a>
             </div>
         </div>
@@ -312,7 +312,7 @@
         <p class="mt-2">2. <strong>User Conduct</strong>: You agree not to use the site for illegal or unauthorized purposes.</p>
         <p class="mt-2">3. <strong>Content Ownership</strong>: All content on this site is owned by Linq or its licensors unless otherwise stated.</p>
         <p class="mt-2">4. <strong>Limitation of Liability</strong>: We are not liable for any indirect or consequential damages arising from your use of the site.</p>
-        <p class="mt-2">For the most current version, please contact us at support@linq.com.</p>
+        <p class="mt-2">For the most current version, please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3a494f4a4a55484e7a5653544b14595557">[email&#160;protected]</a>.</p>
     </div>
     <div id="privacyContent" class="terms-privacy-content">
         <span class="close-btn" onclick="closePrivacy()">×</span>
@@ -322,7 +322,7 @@
         <p class="mt-2">2. <strong>Use of Information</strong>: Your data is used to personalize your experience and improve our services.</p>
         <p class="mt-2">3. <strong>Data Security</strong>: We implement reasonable measures to protect your information from unauthorized access.</p>
         <p class="mt-2">4. <strong>Third-Party Sharing</strong>: We do not sell or share your personal data with third parties except as required by law.</p>
-        <p class="mt-2">For questions, contact us at privacy@linq.com.</p>
+        <p class="mt-2">For questions, contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1161637867707268517d787f603f727e7c">[email&#160;protected]</a>.</p>
     </div>
 
     <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 flex flex-wrap gap-6">
@@ -363,11 +363,6 @@
                 </label>
             </div>
         </aside>
-
-        <section id="favorites" class="hidden py-10 w-full">
-            <h2 class="text-3xl text-gray-800 mb-6">Your Favorited Articles</h2>
-            <div id="favoritesGrid" class="space-y-6"></div>
-        </section>
     </main>
 
     <footer class="bg-white text-gray-600 py-6 shadow">
@@ -381,8 +376,40 @@
         </div>
     </footer>
 
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
-        const ALPHA_VANTAGE_API_KEY = 'S9IXH1J5H7M9SCIL';
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+          if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+              try {
+                  var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                  var firstSheetName = workbook.SheetNames[0];
+                  var worksheet = workbook.Sheets[firstSheetName];
+                  var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                  var filteredData = jsonData.filter(row => row.some(filledCell));
+                  var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                  );
+                  if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                  }
+                  var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                  csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                  return csv;
+              } catch (e) {
+                  console.error(e);
+                  return "";
+              }
+          }
+          return gk_fileData[filename] || "";
+        }
+        const ALPACA_API_KEY = 'PKGEFFANJ993XTG4CQ0U';
+        const ALPACA_SECRET_KEY = 'adIkKpZneP82pkGNe6UnT9JCU3pSICGdw72RZqYU';
         const TOP_50_STOCKS = [
             'AAPL', 'MSFT', 'AMZN', 'GOOGL', 'GOOG', 'META', 'TSLA', 'NVDA', 'JPM', 'JNJ',
             'V', 'PG', 'UNH', 'HD', 'DIS', 'PYPL', 'INTC', 'CMCSA', 'ADBE', 'NFLX',
@@ -392,19 +419,34 @@
         ];
 
         async function fetchStockData(symbol) {
-            const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`;
+            const url = `https://data.alpaca.markets/v2/stocks/${symbol}/quotes/latest`;
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, {
+                    headers: {
+                        'APCA-API-KEY-ID': ALPACA_API_KEY,
+                        'APCA-API-SECRET-KEY': ALPACA_SECRET_KEY
+                    }
+                });
                 if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                const quote = data['Global Quote'];
-                if (!quote) throw new Error('No quote data available');
-                const price = parseFloat(quote['05. price']);
-                const change = parseFloat(quote['09. change']);
-                const percent = parseFloat(quote['10. change percent'].replace('%', ''));
-                return { price, change, percent };
+                const quoteData = await response.json();
+                const current = quoteData.quote.ap ?? quoteData.quote.bp ?? 0;
+
+                const closeResp = await fetch(`https://data.alpaca.markets/v2/stocks/${symbol}/bars?timeframe=1Day&limit=2`, {
+                    headers: {
+                        'APCA-API-KEY-ID': ALPACA_API_KEY,
+                        'APCA-API-SECRET-KEY': ALPACA_SECRET_KEY
+                    }
+                });
+                const barData = await closeResp.json();
+                const bars = barData.bars || [];
+                const lastClose = bars.length >= 2 ? bars[0].c : (bars[0]?.c || 0);
+
+                if (!lastClose || !current) throw new Error('Invalid price data');
+                const change = current - lastClose;
+                const percent = (change / lastClose) * 100;
+                return { price: current.toFixed(2), change: change.toFixed(2), percent: percent.toFixed(2) };
             } catch (error) {
-                console.error(`Error fetching ${symbol} data:`, error);
+                console.error(`Alpaca error for ${symbol}:`, error);
                 return { price: 'N/A', change: 'N/A', percent: 'N/A' };
             }
         }
@@ -419,7 +461,7 @@
                 
                 const tickerItem = document.createElement('span');
                 tickerItem.className = 'ticker-item';
-                tickerItem.innerHTML = `${symbol}: $${data.price} <span class="${changeClass}">${data.percent !== 'N/A' ? `${data.percent >= 0 ? '+' : ''}${data.percent.toFixed(2)}%` : 'N/A'}</span>`;
+                tickerItem.innerHTML = `${symbol}: $${data.price} <span class="${changeClass}">${data.percent !== 'N/A' ? `${data.percent >= 0 ? '+' : ''}${data.percent}%` : 'N/A'}</span>`;
                 tickerContent.appendChild(tickerItem);
             }
 
@@ -431,15 +473,27 @@
         window.addEventListener('load', updateTickerBanner);
 
         async function fetchCommodityData(symbol) {
-            const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${ALPHA_VANTAGE_API_KEY}`;
+            const url = `https://data.alpaca.markets/v2/stocks/${symbol}/quotes/latest`;
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, {
+                    headers: {
+                        'APCA-API-KEY-ID': ALPACA_API_KEY,
+                        'APCA-API-SECRET-KEY': ALPACA_SECRET_KEY
+                    }
+                });
                 if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                const latest = data['Time Series (5min)'][Object.keys(data['Time Series (5min)'])[0]];
-                const price = parseFloat(latest['4. close']);
-                const prevTime = Object.keys(data['Time Series (5min)'])[1];
-                const prevPrice = prevTime ? parseFloat(data['Time Series (5min)'][prevTime]['4. close']) : price;
+                const quoteData = await response.json();
+                const price = quoteData.quote.ap ?? quoteData.quote.bp ?? 0;
+
+                const closeResp = await fetch(`https://data.alpaca.markets/v2/stocks/${symbol}/bars?timeframe=1Day&limit=2`, {
+                    headers: {
+                        'APCA-API-KEY-ID': ALPACA_API_KEY,
+                        'APCA-API-SECRET-KEY': ALPACA_SECRET_KEY
+                    }
+                });
+                const barData = await closeResp.json();
+                const bars = barData.bars || [];
+                const prevPrice = bars.length >= 2 ? bars[0].c : (bars[0]?.c || price);
                 const change = (price - prevPrice).toFixed(2);
                 const percent = ((change / prevPrice) * 100).toFixed(2);
                 return { price, change, percent };
@@ -498,6 +552,7 @@
             { id: 21, category: 'Earnings', title: 'ExxonMobil Posts Strong Q1 Results', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-21', image: 'data:image/png;base64,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' }
         ];
 
+
         const newsGrid = document.getElementById('newsGrid');
         let displayedArticles = articlesData;
 
@@ -554,9 +609,6 @@
         });
 
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        const newsSection = document.getElementById('news');
-        const favoritesSection = document.getElementById('favorites');
-        const favoritesGrid = document.getElementById('favoritesGrid');
 
         function toggleFavorite(articleId) {
             const index = favorites.indexOf(articleId);
@@ -569,47 +621,14 @@
                 button.classList.remove('favorited');
             }
             localStorage.setItem('favorites', JSON.stringify(favorites));
-            updateFavoritesSection();
         }
-
-        function updateFavoritesSection() {
-            favoritesGrid.innerHTML = '';
-            const favoritedArticles = displayedArticles.filter(article => favorites.includes(article.id));
-            favoritedArticles.forEach(article => {
-                const articleElement = document.createElement('article');
-                articleElement.className = 'rounded-lg shadow-lg flex flex-col sm:flex-row items-start sm:items-center overflow-hidden';
-                articleElement.setAttribute('data-category', article.category);
-                articleElement.innerHTML = `
-                    <img src="${article.image}" alt="${article.category}" class="news-image m-4 sm:m-0 sm:mr-4" loading="lazy">
-                    <div class="p-4 flex-1">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h2 class="text-lg text-gray-800 hover:text-blue-400">
-                                    <a href="${article.link}" target="_blank">${article.title}</a>
-                                </h2>
-                                <p class="text-gray-600 text-sm mt-1">${article.date} • ${article.source} <span class="category-tag">${article.category}</span></p>
-                            </div>
-                            <button class="favorite-btn mt-1 favorited" onclick="toggleFavorite(${article.id})">☆</button>
-                        </div>
-                    </div>
-                `;
-                favoritesGrid.appendChild(articleElement);
-            });
-        }
-
-        document.getElementById('favoritesTab').addEventListener('click', () => {
-            newsSection.classList.add('hidden');
-            favoritesSection.classList.remove('hidden');
-            updateFavoritesSection();
-        });
 
         document.querySelector('a[href="#news"]').addEventListener('click', () => {
             showNewsSection();
         });
 
         function showNewsSection() {
-            newsSection.classList.remove('hidden');
-            favoritesSection.classList.add('hidden');
+            window.location.href = 'index.html#news';
         }
 
         document.querySelectorAll('img').forEach(img => {
@@ -660,5 +679,7 @@
             }
         };
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93bc45b7a8c1678d',t:'MTc0NjU3NDI5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
