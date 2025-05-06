@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linq - News & Market</title>
+    <title>LINQ - News & Market</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -76,6 +76,7 @@
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            order: 2; /* Moved to right */
         }
         .sidebar label:hover {
             background: #e5e5e5;
@@ -180,6 +181,16 @@
             }
             .market-tab {
                 padding: 0.25rem;
+            }
+            main {
+                flex-direction: column;
+            }
+            .sidebar {
+                order: 0; /* Stack filter above news on mobile */
+                width: 100%;
+            }
+            #news {
+                order: 1;
             }
         }
     </style>
@@ -313,13 +324,12 @@
         <p class="mt-2">For questions, contact us at privacy@linq.com.</p>
     </div>
 
-    <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 flex flex-wrap gap-6">
         <section id="news" class="flex-1">
             <h2 class="text-3xl text-gray-800 mb-6">Latest News</h2>
             <div id="newsGrid" class="space-y-6"></div>
         </section>
-
-        <aside class="sidebar lg:w-72 mt-10 lg:mt-0">
+        <aside class="sidebar lg:w-72">
             <h3 class="text-xl text-gray-800 mb-4">Filter by Category</h3>
             <div class="space-y-3">
                 <label class="flex items-center p-2 rounded-lg transition-colors">
@@ -353,7 +363,7 @@
             </div>
         </aside>
 
-        <section id="favorites" class="hidden py-10">
+        <section id="favorites" class="hidden py-10 w-full">
             <h2 class="text-3xl text-gray-800 mb-6">Your Favorited Articles</h2>
             <div id="favoritesGrid" class="space-y-6"></div>
         </section>
@@ -486,6 +496,7 @@
             { id: 20, category: 'Earnings', title: 'Microsoft Beats Earnings Expectations', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-20', image: 'data:image/png;base64,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' },
             { id: 21, category: 'Earnings', title: 'ExxonMobil Posts Strong Q1 Results', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-21', image: 'data:image/png;base64,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' }
         ];       
+
 
         const newsGrid = document.getElementById('newsGrid');
         let displayedArticles = articlesData;
