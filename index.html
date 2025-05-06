@@ -383,7 +383,10 @@
 
     <script>
         const FINNHUB_API_KEY = 'd0d0dlpr01qm2sk76g3gd0d0dlpr01qm2sk76g40';
-        const TOP_50_STOCKS = ['XOM', 'CVX', 'OXY', 'SLB', 'COP', 'TSLA', 'AAPL'];
+        const TOP_50_STOCKS = ['XOM', 'CVX', 'SHEL', 'TTE', 'BP',
+                                'COP', 'OXY', 'PXD', 'EOG', 'FANG',
+                                'MRO', 'APA', 'CTRA', 'DVN', 'VLO',
+                                'PSX', 'KMI', 'ET', 'EPD', 'CHK', 'EPD'];
 
         async function fetchStockData(symbol) {
             const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`;
