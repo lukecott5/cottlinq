@@ -382,30 +382,76 @@
     </footer>
 
     <script>
-        const FINNHUB_API_KEY = 'd0d0dlpr01qm2sk76g3gd0d0dlpr01qm2sk76g40';
-        const TOP_50_STOCKS = ['XOM', 'CVX', 'SHEL', 'TTE', 'BP',
-                                'COP', 'OXY', 'PXD', 'EOG', 'FANG',
-                                'MRO', 'APA', 'CTRA', 'DVN', 'VLO',
-                                'PSX', 'KMI', 'ET', 'EPD', 'CHK', 'EPD'];
+        const ALPACA_API_KEY = 'PKGEFFANJ993XTG4CQ0U';
+const ALPACA_SECRET_KEY = 'adIkKpZneP82pkGNe6UnT9JCU3pSICGdw72RZqYU';
 
-        async function fetchStockData(symbol) {
-            const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`;
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                if (!data || data.c === 0) throw new Error('No quote data available');
-                
-                const price = parseFloat(data.c);
-                const prevClose = parseFloat(data.pc);
-                const change = price - prevClose;
-                const percent = (change / prevClose) * 100;
-                return { price, change, percent };
-            } catch (error) {
-                console.error(`Error fetching ${symbol} data:`, error);
-                return { price: 'N/A', change: 'N/A', percent: 'N/A' };
+const TOP_50_STOCKS = ['XOM', 'CVX', 'SHEL', 'TTE', 'BP',
+                       'COP', 'OXY', 'PXD', 'EOG', 'FANG',
+                       'MRO', 'APA', 'CTRA', 'DVN', 'VLO',
+                       'PSX', 'KMI', 'ET', 'EPD', 'CHK'];
+
+async function fetchStockData(symbol) {
+    const url = `https://data.alpaca.markets/v2/stocks/${symbol}/quotes/latest`;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'APCA-API-KEY-ID': PKGEFFANJ993XTG4CQ0U,
+                'APCA-API-SECRET-KEY': adIkKpZneP82pkGNe6UnT9JCU3pSICGdw72RZqYU
             }
-        }
+        });
+
+        if (!response.ok) throw new Error('Network error');
+        const quoteData = await response.json();
+
+        const current = quoteData.quote.ap ?? quoteData.quote.bp ?? 0;
+
+        const closeResp = await fetch(`https://data.alpaca.markets/v2/stocks/${symbol}/bars?timeframe=1Day&limit=2`, {
+            headers: {
+                'APCA-API-KEY-ID': PKGEFFANJ993XTG4CQ0U,
+                'APCA-API-SECRET-KEY': adIkKpZneP82pkGNe6UnT9JCU3pSICGdw72RZqYU
+            }
+        });
+
+        const barData = await closeResp.json();
+        const bars = barData.bars;
+        const lastClose = bars.length >= 2 ? bars[0].c : bars[0]?.c || 0;
+
+        if (!lastClose || !current) throw new Error('Invalid price data');
+
+        const change = current - lastClose;
+        const percent = (change / lastClose) * 100;
+
+        return {
+            price: current,
+            change: change,
+            percent: percent
+        };
+    } catch (error) {
+        console.error(`Alpaca error for ${symbol}:`, error);
+        return { price: 'N/A', change: 'N/A', percent: 'N/A' };
+    }
+}
+
+        const barData = await closeResp.json();
+        const bars = barData.bars;
+        const lastClose = bars.length >= 2 ? bars[0].c : bars[0]?.c || 0;
+        const current = quoteData.quote.ap;
+
+        const change = current - lastClose;
+        const percent = (change / lastClose) * 100;
+
+        return {
+            price: current,
+            change: change,
+            percent: percent
+        };
+    } catch (error) {
+        console.error(`Alpaca error for ${symbol}:`, error);
+        return { price: 'N/A', change: 'N/A', percent: 'N/A' };
+    }
+}
+
 
 
         async function updateTickerBanner() {
