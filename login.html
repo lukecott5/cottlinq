@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Linq News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+            background-color: #ffffff;
+            color: #333333;
+        }
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1DA1F2;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .btn-primary {
+            background-color: #1DA1F2;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 9999px;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #1991DA;
+        }
+        .btn-secondary {
+            border: 1px solid #1DA1F2;
+            color: #1DA1F2;
+            padding: 0.75rem;
+            border-radius: 9999px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #E8F5FE;
+        }
+        .btn-google {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #D1D5DB;
+            color: #333333;
+            padding: 0.75rem;
+            border-radius: 9999px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .btn-google:hover {
+            background-color: #F3F4F6;
+        }
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #666666;
+            margin: 1rem 0;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #D1D5DB;
+        }
+        .divider span {
+            padding: 0 1rem;
+        }
+        .input-field {
+            border: 1px solid #D1D5DB;
+            border-radius: 4px;
+            padding: 0.75rem;
+            width: 100%;
+            color: #333333;
+            background: #ffffff;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #1DA1F2;
+            box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <!-- Logo -->
+            <div class="logo">Linq News</div>
+
+            <!-- Initial View: Sign Up or Log In -->
+            <div id="initialView">
+                <h2 class="text-2xl font-bold text-center mb-6">Join Linq News Today</h2>
+                <div class="space-y-4">
+                    <button onclick="showSignupForm()" class="btn-primary">Sign Up</button>
+                    <button onclick="showLoginForm()" class="btn-secondary">Log In</button>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupForm" class="hidden">
+                <h2 class="text-2xl font-bold text-center mb-6">Sign Up for Linq News</h2>
+                <div class="space-y-4">
+                    <div>
+                        <input type="text" id="signupName" class="input-field" placeholder="Name">
+                    </div>
+                    <div>
+                        <input type="email" id="signupEmail" class="input-field" placeholder="Email">
+                    </div>
+                    <div>
+                        <input type="password" id="signupPassword" class="input-field" placeholder="Password">
+                    </div>
+                    <button onclick="handleSignup()" class="btn-primary">Sign Up</button>
+                    <div class="divider"><span>or</span></div>
+                    <button onclick="signInWithGoogle()" class="btn-google">
+                        <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.2 2.3 29.8 0 24 0 14.8 0 7.1 5.9 3.1 14.1l8.6 6.7C14.2 14.5 18.8 9.5 24 9.5z"/><path fill="#34A853" d="M24 44c5.8 0 11.2-2.3 15.2-6.2l-7.6-5.9c-2.5 1.6-5.6 2.5-8.6 2.5-5.2 0-9.7-3.4-11.3-8.1l-8.6 6.7C7.1 38.1 14.8 44 24 44z"/><path fill="#4A90E2" d="M44.5 24c0-1.6-.1-3.2-.4-4.7H24v9.4h11.7c-.5 2.5-1.9 4.7-3.9 6.2l7.6 5.9c4.5-4.1 7.1-10.2 7.1-16.8z"/><path fill="#FBBC05" d="M12.7 27.5c-.8-2.3-.8-4.7 0-7.1l-8.6-6.7C2.1 17.3 1 20.6 1 24s1.1 6.7 3.1 9.9l8.6-6.7z"/></svg>
+                        Continue with Google
+                    </button>
+                    <button onclick="showInitialView()" class="text-center text-blue-500 hover:underline w-full">Back</button>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="hidden">
+                <h2 class="text-2xl font-bold text-center mb-6">Log In to Linq News</h2>
+                <div class="space-y-4">
+                    <div>
+                        <input type="email" id="loginEmail" class="input-field" placeholder="Email">
+                    </div>
+                    <div>
+                        <input type="password" id="loginPassword" class="input-field" placeholder="Password">
+                    </div>
+                    <button onclick="handleLogin()" class="btn-primary">Log In</button>
+                    <div class="divider"><span>or</span></div>
+                    <button onclick="signInWithGoogle()" class="btn-google">
+                        <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.2 2.3 29.8 0 24 0 14.8 0 7.1 5.9 3.1 14.1l8.6 6.7C14.2 14.5 18.8 9.5 24 9.5z"/><path fill="#34A853" d="M24 44c5.8 0 11.2-2.3 15.2-6.2l-7.6-5.9c-2.5 1.6-5.6 2.5-8.6 2.5-5.2 0-9.7-3.4-11.3-8.1l-8.6 6.7C7.1 38.1 14.8 44 24 44z"/><path fill="#4A90E2" d="M44.5 24c0-1.6-.1-3.2-.4-4.7H24v9.4h11.7c-.5 2.5-1.9 4.7-3.9 6.2l7.6 5.9c4.5-4.1 7.1-10.2 7.1-16.8z"/><path fill="#FBBC05" d="M12.7 27.5c-.8-2.3-.8-4.7 0-7.1l-8.6-6.7C2.1 17.3 1 20.6 1 24s1.1 6.7 3.1 9.9l8.6-6.7z"/></svg>
+                        Continue with Google
+                    </button>
+                    <button onclick="showInitialView()" class="text-center text-blue-500 hover:underline w-full">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA4PakmXmHIdpa2PIlyGorUFcrtGHYPerU",
+            authDomain: "linq-news.firebaseapp.com",
+            projectId: "linq-news",
+            storageBucket: "linq-news.firebasestorage.app",
+            messagingSenderId: "341531763593",
+            appId: "1:341531763593:web:38909f7037e4ed2d4c7758",
+            measurementId: "G-PW63LYHPFC"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // View Switching Functions
+        const initialView = document.getElementById('initialView');
+        const signupForm = document.getElementById('signupForm');
+        const loginForm = document.getElementById('loginForm');
+
+        function showInitialView() {
+            initialView.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            loginForm.classList.add('hidden');
+        }
+
+        function showSignupForm() {
+            initialView.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        }
+
+        function showLoginForm() {
+            initialView.classList.add('hidden');
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        }
+
+        // Handle Email/Password Login
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            if (email && password) {
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(userCredential => {
+                        const user = userCredential.user;
+                        localStorage.setItem('user', JSON.stringify({ email: user.email, uid: user.uid }));
+                        window.location.href = 'index.html';
+                    })
+                    .catch(error => {
+                        alert('Error logging in: ' + error.message);
+                    });
+            } else {
+                alert('Please enter email and password.');
+            }
+        }
+
+        // Handle Email/Password Signup
+        function handleSignup() {
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            if (name && email && password) {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(userCredential => {
+                        const user = userCredential.user;
+                        user.updateProfile({ displayName: name });
+                        localStorage.setItem('user', JSON.stringify({ name, email: user.email, uid: user.uid }));
+                        window.location.href = 'index.html';
+                    })
+                    .catch(error => {
+                        alert('Error signing up: ' + error.message);
+                    });
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        // Handle Google Sign-In
+        function signInWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(result => {
+                    const user = result.user;
+                    localStorage.setItem('user', JSON.stringify({
+                        name: user.displayName,
+                        email: user.email,
+                        uid: user.uid
+                    }));
+                    window.location.href = 'index.html';
+                })
+                .catch(error => {
+                    alert('Error signing in with Google: ' + error.message);
+                });
+        }
+    </script>
+</body>
+</html>
