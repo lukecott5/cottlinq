@@ -29,9 +29,10 @@
         .community-section h2 {
             font-size: 2rem;
             font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 0.5rem;
-            font-family: 'Lexend', serif;
+            color: #2563eb; /* Tailwind blue-600 */
+        }
+        .community-section .highlight {
+            color: #000000; /* Black for "Linq" */
         }
         .community-subtitle {
             font-size: 1.125rem;
@@ -114,6 +115,7 @@
             font-size: 0.875rem;
             font-weight: 400;
             margin-left: 0.5rem;
+            font-family: 'Lexend', sans-serif;
         }
         .twitter-tweet {
             margin-top: 0.75rem;
@@ -127,6 +129,7 @@
         .twitter-tweet a {
             color: #8bbcff;
             text-decoration: none;
+            font-family: 'Lexend', sans-serif;
         }
         .twitter-tweet a:hover {
             text-decoration: underline;
@@ -154,6 +157,7 @@
             font-size: 0.75rem;
             color: #4a5568;
             display: none;
+            font-family: 'Lexend', sans-serif;
         }
         .share-confirmation:not(.hidden) {
             display: block;
@@ -201,10 +205,10 @@
 <body>
     <nav class="bg-white py-4 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="new_page.html" class="text-4xl text-black">Linq</a>
+            <a href="/index.html" class="text-4xl text-black">Linq</a>
             <div class="flex items-center space-x-6">
-                <a href="new_page.html#news" class="nav-link">News</a>
-                <a href="new_page.html#favorites" class="nav-link">Favorites</a>
+                <a href="/index.html#news" class="nav-link">News</a>
+                <a href="/index.html#favorites" class="nav-link">Favorites</a>
             </div>
         </div>
     </nav>
@@ -212,11 +216,7 @@
     <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="community-section">
             <div class="posts-section">
-            <h2 class="text-blue-600">
-              The <span class="text-black">Linq</span> to Your Community
-            </h2>
-
-
+                <h2>The <span class="highlight">Linq</span> to Your Community</h2>
                 <p class="community-subtitle">Real-Time Posts from Energy Experts</p>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -432,8 +432,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
             <p>© 2025 Linq. All rights reserved.</p>
             <div class="mt-4 md:mt-0 space-x-4">
-                <a href="new_page.html#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
-                <a href="new_page.html#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
+                <a href="/index.html#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
+                <a href="/index.html#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
                 <a href="#" class="hover:text-gray-800 transition-colors">Contact Us</a>
             </div>
         </div>
@@ -534,23 +534,36 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            filterPosts();
-            const shareButtons = document.querySelectorAll('.share-btn');
-            shareButtons.forEach(button => {
-                button.addEventListener('click', sharePost);
-            });
+        document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('click', sharePost);
         });
 
         function showTerms(event) {
             event.preventDefault();
-            window.location.href = 'new_page.html#terms';
+            document.getElementById('termsContent').style.display = 'block';
+        }
+
+        function closeTerms() {
+            document.getElementById('termsContent').style.display = 'none';
         }
 
         function showPrivacy(event) {
             event.preventDefault();
-            window.location.href = 'new_page.html#privacy';
+            document.getElementById('privacyContent').style.display = 'block';
         }
+
+        function closePrivacy() {
+            document.getElementById('privacyContent').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('termsContent')) {
+                closeTerms();
+            }
+            if (event.target === document.getElementById('privacyContent')) {
+                closePrivacy();
+            }
+        };
     </script>
 </body>
 </html>
