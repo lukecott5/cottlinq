@@ -397,6 +397,9 @@
         // Polygon.io API key
         const POLYGON_API_KEY = 'tnX_5sLwVqeqDEzzWf1PzLD3Ac4beaP3';
 
+        // NewsAPI key (replace with your own key)
+        const NEWS_API_KEY = 'YOUR_NEWSAPI_KEY'; // Sign up at https://newsapi.org/ to get your key
+
         // List of stock tickers to display in the ticker banner
         const STOCK_TICKERS = ['XOM', 'CVX', 'COP', 'OXY', 'SLB'];
 
@@ -460,30 +463,64 @@
 
         window.addEventListener('load', updateTickerBanner);
 
-        // Mock articles data
-        const articlesData = [
-            { id: 1, category: 'Crude Oil', title: 'Oil Prices Surge Amid Supply Concerns', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-1', image: 'https://via.placeholder.com/150x100?text=Crude+Oil' },
-            { id: 2, category: 'Crude Oil', title: 'OPEC+ Extends Production Cuts', date: 'May 3, 2025', source: 'Bloomberg', link: 'https://example.com/article-2', image: 'https://via.placeholder.com/150x100?text=Crude+Oil' },
-            { id: 3, category: 'Crude Oil', title: 'Global Demand for Crude Hits Record', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-3', image: 'https://via.placeholder.com/150x100?text=Crude+Oil' },
-            { id: 4, category: 'Natural Gas', title: 'Natural Gas Prices Soar in Europe', date: 'May 3, 2025', source: 'Seeking Alpha', link: 'https://example.com/article-4', image: 'https://via.placeholder.com/150x100?text=Natural+Gas' },
-            { id: 5, category: 'Natural Gas', title: 'US Natural Gas Exports Rise', date: 'May 3, 2025', source: 'Yahoo Finance', link: 'https://example.com/article-5', image: 'https://via.placeholder.com/150x100?text=Natural+Gas' },
-            { id: 6, category: 'Natural Gas', title: 'Natural Gas Futures Hit 5-Year High', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-6', image: 'https://via.placeholder.com/150x100?text=Natural+Gas' },
-            { id: 7, category: 'Petrochemicals', title: 'Petrochemical Industry Faces Challenges', date: 'May 3, 2025', source: 'Forbes', link: 'https://example.com/article-7', image: 'https://via.placeholder.com/150x100?text=Petrochemicals' },
-            { id: 8, category: 'Petrochemicals', title: 'New Petrochemical Plant Opens in Asia', date: 'May 3, 2025', source: 'Wall Street Journal', link: 'https://example.com/article-8', image: 'https://via.placeholder.com/150x100?text=Petrochemicals' },
-            { id: 9, category: 'Petrochemicals', title: 'Petrochemical Demand Grows in 2025', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-9', image: 'https://via.placeholder.com/150x100?text=Petrochemicals' },
-            { id: 10, category: 'Power', title: 'Power Grid Faces Strain in Summer', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-10', image: 'https://via.placeholder.com/150x100?text=Power' },
-            { id: 11, category: 'Power', title: 'Nuclear Power Makes a Comeback', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-11', image: 'https://via.placeholder.com/150x100?text=Power' },
-            { id: 12, category: 'Power', title: 'Power Outages Hit Major Cities', date: 'May 3, 2025', source: 'Bloomberg', link: 'https://example.com/article-12', image: 'https://via.placeholder.com/150x100?text=Power' },
-            { id: 13, category: 'Renewables', title: 'Solar Energy Booms in 2025', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-13', image: 'https://via.placeholder.com/150x100?text=Renewables' },
-            { id: 14, category: 'Renewables', title: 'Wind Power Projects Expand Globally', date: 'May 3, 2025', source: 'Seeking Alpha', link: 'https://example.com/article-14', image: 'https://via.placeholder.com/150x100?text=Renewables' },
-            { id: 15, category: 'Renewables', title: 'Renewable Energy Subsidies Increase', date: 'May 3, 2025', source: 'Yahoo Finance', link: 'https://example.com/article-15', image: 'https://via.placeholder.com/150x100?text=Renewables' },
-            { id: 16, category: 'Company News', title: 'Tesla Announces New Factory', date: 'May 3, 2025', source: 'CNBC', link: 'https://example.com/article-16', image: 'https://via.placeholder.com/150x100?text=Company+News' },
-            { id: 17, category: 'Company News', title: 'Apple Unveils New Product Line', date: 'May 3, 2025', source: 'Forbes', link: 'https://example.com/article-17', image: 'https://via.placeholder.com/150x100?text=Company+News' },
-            { id: 18, category: 'Company News', title: 'Amazon Expands Logistics Network', date: 'May 3, 2025', source: 'Wall Street Journal', link: 'https://example.com/article-18', image: 'https://via.placeholder.com/150x100?text=Company+News' },
-            { id: 19, category: 'Earnings', title: 'Google Reports Record Earnings', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-19', image: 'https://via.placeholder.com/150x100?text=Earnings' },
-            { id: 20, category: 'Earnings', title: 'Microsoft Beats Earnings Expectations', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-20', image: 'https://via.placeholder.com/150x100?text=Earnings' },
-            { id: 21, category: 'Earnings', title: 'ExxonMobil Posts Strong Q1 Results', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-21', image: 'https://via.placeholder.com/150x100?text=Earnings' }
-        ];
+        // Function to determine article category based on title or content
+        function determineCategory(article) {
+            const title = article.title.toLowerCase();
+            const description = article.description ? article.description.toLowerCase() : '';
+
+            if (title.includes('crude') || description.includes('crude') || title.includes('oil price') || description.includes('oil price')) {
+                return 'Crude Oil';
+            } else if (title.includes('natural gas') || description.includes('natural gas') || title.includes('lng') || description.includes('lng')) {
+                return 'Natural Gas';
+            } else if (title.includes('petrochemical') || description.includes('petrochemical') || title.includes('chemical') || description.includes('chemical')) {
+                return 'Petrochemicals';
+            } else if (title.includes('power') || description.includes('power') || title.includes('electricity') || description.includes('electricity') || title.includes('grid') || description.includes('grid')) {
+                return 'Power';
+            } else if (title.includes('renewable') || description.includes('renewable') || title.includes('solar') || description.includes('solar') || title.includes('wind') || description.includes('wind')) {
+                return 'Renewables';
+            } else if (title.includes('earnings') || description.includes('earnings') || title.includes('profit') || description.includes('profit') || title.includes('quarterly') || description.includes('quarterly')) {
+                return 'Earnings';
+            } else if (title.includes('company') || description.includes('company') || title.includes('merger') || description.includes('merger') || title.includes('acquisition') || description.includes('acquisition')) {
+                return 'Company News';
+            }
+            return 'Company News'; // Default category
+        }
+
+        // Function to fetch news articles from NewsAPI
+        async function fetchNewsArticles() {
+            const query = 'energy OR crude oil OR natural gas OR petrochemical OR power OR renewables OR "energy company" OR "energy earnings"';
+            const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&apiKey=${NEWS_API_KEY}`;
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log('NewsAPI Response:', data);
+                if (data.status !== 'ok' || !data.articles) {
+                    throw new Error('Invalid API response structure');
+                }
+
+                // Map API articles to our format
+                return data.articles.slice(0, 21).map((article, index) => ({
+                    id: index + 1,
+                    category: determineCategory(article),
+                    title: article.title || 'Untitled Article',
+                    date: new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                    source: article.source.name || 'Unknown Source',
+                    link: article.url || '#',
+                    image: article.urlToImage || 'https://via.placeholder.com/150x100?text=No+Image'
+                }));
+            } catch (error) {
+                console.error('Error fetching news articles:', error);
+                // Fallback to mock data if API fails
+                return [
+                    { id: 1, category: 'Crude Oil', title: 'Oil Prices Surge Amid Supply Concerns', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-1', image: 'https://via.placeholder.com/150x100?text=Crude+Oil' },
+                    { id: 2, category: 'Natural Gas', title: 'Natural Gas Prices Soar in Europe', date: 'May 3, 2025', source: 'Seeking Alpha', link: 'https://example.com/article-4', image: 'https://via.placeholder.com/150x100?text=Natural+Gas' }
+                ];
+            }
+        }
 
         // Terms and Privacy Sections
         const termsContent = document.getElementById('termsContent');
@@ -558,7 +595,12 @@
 
         // Display articles
         const newsGrid = document.getElementById('newsGrid');
-        let displayedArticles = [...articlesData];
+        let displayedArticles = [];
+
+        async function loadArticles() {
+            displayedArticles = await fetchNewsArticles();
+            displayArticles(displayedArticles);
+        }
 
         function displayArticles(articles) {
             newsGrid.innerHTML = '';
@@ -591,7 +633,8 @@
             }
         }
 
-        displayArticles(displayedArticles);
+        // Load articles when the page loads
+        window.addEventListener('load', loadArticles);
 
         // Category filtering with checkboxes
         const checkboxes = document.querySelectorAll('.category-checkbox');
@@ -602,14 +645,13 @@
                     .map(cb => cb.value);
 
                 if (selectedCategories.length === 0) {
-                    displayedArticles = [...articlesData];
+                    displayArticles(displayedArticles);
                 } else {
-                    displayedArticles = articlesData.filter(article => 
+                    const filteredArticles = displayedArticles.filter(article => 
                         selectedCategories.includes(article.category)
                     );
+                    displayArticles(filteredArticles);
                 }
-
-                displayArticles(displayedArticles);
             });
         });
 
@@ -641,13 +683,8 @@
 
         function updateFavoritesSection() {
             favoritesGrid.innerHTML = '';
-            const allArticles = articlesData.filter(article => 
-                favorites.includes(article.id) && article.category !== 'Crude Oil' && 
-                article.category !== 'Natural Gas' && article.category !== 'Petrochemicals' && 
-                article.category !== 'Power' && article.category !== 'Renewables' && 
-                article.category !== 'Commodities'
-            );
-            allArticles.forEach(article => {
+            const favoritedArticles = displayedArticles.filter(article => favorites.includes(article.id));
+            favoritedArticles.forEach(article => {
                 const articleElement = document.createElement('article');
                 articleElement.className = 'rounded-lg shadow-lg flex flex-col sm:flex-row items-start sm:items-center overflow-hidden';
                 articleElement.setAttribute('data-category', article.category);
