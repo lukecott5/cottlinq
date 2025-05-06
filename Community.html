@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linq News - Community</title>
+    <title>Linq - Community</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -47,6 +47,7 @@
             background-color: #f7fafc;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            order: 2; /* Moved to right on larger screens */
         }
         .filter-section h3 {
             font-size: 1.25rem;
@@ -71,6 +72,7 @@
         .posts-section {
             flex: 2;
             max-width: 66.666%;
+            order: 1; /* Content stays on left */
         }
         .post-card {
             background-color: #ffffff;
@@ -163,6 +165,7 @@
             }
             .filter-section, .posts-section {
                 max-width: 100%;
+                order: 0; /* Stack filter below posts on mobile */
             }
             .community-section h2 {
                 font-size: 1.75rem;
@@ -198,7 +201,7 @@
 <body>
     <nav class="bg-white py-4 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="new_page.html" class="text-4xl text-black">Linq News</a>
+            <a href="new_page.html" class="text-4xl text-black">Linq</a>
             <div class="flex items-center space-x-6">
                 <a href="new_page.html#news" class="nav-link">News</a>
                 <a href="new_page.html#favorites" class="nav-link">Favorites</a>
@@ -209,7 +212,7 @@
     <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="community-section">
             <div class="posts-section">
-                <h2>Community</h2>
+                <h2>See what's happening in the Community</h2>
                 <p class="community-subtitle">Real-Time Posts from Energy Experts</p>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -423,7 +426,7 @@
 
     <footer class="bg-white text-gray-600 py-6 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-            <p>© 2025 Linq News. All rights reserved.</p>
+            <p>© 2025 Linq. All rights reserved.</p>
             <div class="mt-4 md:mt-0 space-x-4">
                 <a href="new_page.html#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
                 <a href="new_page.html#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
