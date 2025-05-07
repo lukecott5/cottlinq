@@ -156,25 +156,34 @@
             color: #ef4444;
         }
         .ticker-banner {
-            background: #333333;
-            color: #ffffff;
-            padding: 0.5rem 0;
-            overflow: hidden;
-            white-space: nowrap;
+          background: #333333;
+          color: #ffffff;
+          padding: 0.5rem 0;
+          overflow: hidden;
+          white-space: nowrap;
+          position: relative;
         }
-          .ticker-content {
-        display: inline-block;
-        white-space: nowrap;
-        animation: ticker 80s linear infinite;
+        
+        .ticker-content {
+          display: inline-block;
+          white-space: nowrap;
+          animation: ticker-scroll 80s linear infinite;
         }
+        
+        @keyframes ticker-scroll {
+          0% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+        
         .ticker-item {
-            display: inline-block;
-            margin-right: 2rem;
+          display: inline-block;
+          margin-right: 2rem;
         }
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+
         @media (max-width: 768px) {
             .tagline {
                 font-size: 1.75rem;
@@ -240,13 +249,13 @@
         }
     </script>
 
-    <nav class="bg-white py-4 shadow">
+    <nav class="bg-white py-4 shadow fixed top-0 left-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="#" class="text-4xl text-black">Linq</a>
+            <a href="#" class="text-5xl font-extrabold text-black tracking-tight">Linq</a>
             <div class="flex items-center space-x-6">
-                <a href="#news" class="nav-link">News</a>
-                <a href="#favorites" id="favoritesTab" class="nav-link">Favorites</a>
-                <a href="community.html" class="nav-link">Community</a>
+                <a href="#news" class="nav-link text-lg font-medium hover:text-blue-600">News</a>
+                <a href="#favorites" id="favoritesTab" class="nav-link text-lg font-medium hover:text-blue-600">Favorites</a>
+                <a href="community.html" class="nav-link text-lg font-medium hover:text-blue-600">Community</a>
             </div>
         </div>
     </nav>
@@ -368,7 +377,7 @@
         <p class="mt-2">For questions, contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4636342f3027253f062a2f28376825292b">[email&#160;protected]</a>.</p>
     </div>
 
-    <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 flex flex-wrap gap-6">
+    <main class="max-w-7xl mx-auto pt-32 sm:px-6 lg:px-8 flex flex-wrap gap-6">
         <section id="news" class="flex-1">
             <h2 class="text-3xl text-gray-800 mb-6">Latest News</h2>
             <div id="newsGrid" class="space-y-6"></div>
@@ -461,9 +470,9 @@
                 tickerItem.innerHTML = `${symbol}: $${data.price} <span class="${changeClass}">${data.percent !== 'N/A' ? `${data.percent >= 0 ? '+' : ''}${data.percent.toFixed(2)}%` : 'N/A'}</span>`;
                 tickerContent.appendChild(tickerItem);
             }
-
-            const tickerWidth = tickerContent.scrollWidth;
-            tickerContent.style.setProperty('--ticker-width', `-${tickerWidth}px`);
+            
+                const originalContent = tickerContent.innerHTML;
+                tickerContent.innerHTML += originalContent; // Duplicate items to fill space
         }
 
         async function fetchCommodityData(symbol) {
