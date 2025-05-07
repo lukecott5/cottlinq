@@ -162,16 +162,18 @@
             overflow: hidden;
             white-space: nowrap;
         }
-        .ticker-content {
-            display: inline-block;
+          .ticker-content {
+        display: inline-block;
+        white-space: nowrap;
+        animation: ticker 80s linear infinite;
         }
         .ticker-item {
             display: inline-block;
             margin-right: 2rem;
         }
         @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(var(--ticker-width)); }
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
         @media (max-width: 768px) {
             .tagline {
@@ -462,7 +464,6 @@
 
             const tickerWidth = tickerContent.scrollWidth;
             tickerContent.style.setProperty('--ticker-width', `-${tickerWidth}px`);
-            tickerContent.style.animation = `ticker 80s linear infinite`;
         }
 
         async function fetchCommodityData(symbol) {
