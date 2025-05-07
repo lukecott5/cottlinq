@@ -194,6 +194,31 @@
                 order: 1;
             }
         }
+                .category-pill {
+          display: block;
+          padding: 10px 16px;
+          margin: 0 auto;
+          border-radius: 8px;
+          background: linear-gradient(135deg, #ececec, #fafafa);
+          border: 1.5px solid #bbb;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          font-size: 16px;
+          color: #222;
+          text-align: center;
+          width: 240px;
+        }
+        .category-pill:hover {
+          background: linear-gradient(135deg, #dcdcdc, #f0f0f0);
+          transform: scale(1.05);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .category-pill.selected {
+          background: linear-gradient(135deg, #1f1f1f, #2d2d2d);
+          color: #fff;
+          border-color: #1f1f1f;
+        }
+
     </style>
 </head>
 <body>
@@ -697,5 +722,12 @@
         };
     </script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93bc5bf94afbbf8b',t:'MTc0NjU3NTIxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+        <script>
+      document.querySelectorAll('.category-pill').forEach(item => {
+        item.addEventListener('click', () => {
+          item.classList.toggle('selected');
+        });
+      });
+    </script>
 </body>
 </html>
