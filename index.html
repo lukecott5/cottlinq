@@ -247,6 +247,77 @@
         }
         return gk_fileData[filename] || "";
         }
+                .filter-panel {
+          display: inline-block;
+          background: rgba(255, 255, 255, 0.65);
+          backdrop-filter: blur(12px);
+          padding: 20px;
+          border-radius: 20px;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+          animation: fadeIn 0.5s ease-in-out, slideIn 0.5s ease-in-out;
+          width: 100%;
+          max-width: 280px;
+        }
+        .filter-panel h2 {
+          font-family: 'Lexend', sans-serif;
+          font-weight: normal;
+          color: #333;
+          margin-bottom: 15px;
+          text-align: center;
+        }
+        #filter-list {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .filter-item {
+          display: block;
+          padding: 10px 16px;
+          border-radius: 8px;
+          background: linear-gradient(135deg, #ececec, #fafafa);
+          border: 1.5px solid #bbb;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          font-size: 16px;
+          color: #222;
+          text-align: center;
+        }
+        .filter-item:hover {
+          background: linear-gradient(135deg, #dcdcdc, #f0f0f0);
+          transform: scale(1.05);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .filter-item:active::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 120%;
+          height: 120%;
+          background: rgba(0, 0, 0, 0.1);
+          border-radius: 50%;
+          animation: ripple 0.4s ease-out;
+          z-index: 0;
+        }
+        .filter-item.selected {
+          background: linear-gradient(135deg, #1f1f1f, #2d2d2d);
+          color: #fff;
+          border-color: #1f1f1f;
+        }
+        @keyframes ripple {
+          from { transform: translate(-50%, -50%) scale(0.5); opacity: 0.6; }
+          to { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideIn {
+          from { transform: translateX(-20px); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+
     </script>
 
     <nav class="bg-white py-4 shadow fixed top-0 left-0 w-full z-50">
@@ -382,39 +453,19 @@
             <h2 class="text-3xl text-gray-800 mb-6">Latest News</h2>
             <div id="newsGrid" class="space-y-6"></div>
         </section>
-        <aside class="sidebar lg:w-72">
-            <h3 class="text-xl text-gray-800 mb-4">Filter by Category</h3>
-            <div class="space-y-3">
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Crude Oil">
-                    <span class="ml-3 text-gray-800 text-lg">Crude Oil</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Natural Gas">
-                    <span class="ml-3 text-gray-800 text-lg">Natural Gas</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Petrochemicals">
-                    <span class="ml-3 text-gray-800 text-lg">Petrochemicals</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Power">
-                    <span class="ml-3 text-gray-800 text-lg">Power</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Renewables">
-                    <span class="ml-3 text-gray-800 text-lg">Renewables</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Company News">
-                    <span class="ml-3 text-gray-800 text-lg">Company News</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Earnings">
-                    <span class="ml-3 text-gray-800 text-lg">Earnings</span>
-                </label>
-            </div>
+        <aside class="filter-panel">
+          <h2>Filter by Category</h2>
+          <div id="filter-list">
+            <div class="filter-item">Crude Oil</div>
+            <div class="filter-item">Natural Gas</div>
+            <div class="filter-item">Petrochemicals</div>
+            <div class="filter-item">Power</div>
+            <div class="filter-item">Renewables</div>
+            <div class="filter-item">Company News</div>
+            <div class="filter-item">Earnings</div>
+          </div>
         </aside>
+
 
         <section id="favorites" class="hidden py-10 w-full">
             <h2 class="text-3xl text-gray-800 mb-6">Your Favorited Articles</h2>
@@ -709,5 +760,17 @@
         };
     </script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93bc5bf94afbbf8b',t:'MTc0NjU3NTIxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>
+      const filterList = document.getElementById('filter-list');
+      filterList.addEventListener('click', e => {
+        const item = e.target;
+        if (item.classList.contains('filter-item')) {
+          item.classList.toggle('selected');
+          if (item.classList.contains('selected')) {
+            filterList.prepend(item);
+          }
+        }
+      });
+    </script>
 </body>
 </html>
