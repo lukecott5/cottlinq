@@ -371,40 +371,18 @@
             <h2 class="text-3xl text-gray-800 mb-6">Latest News</h2>
             <div id="newsGrid" class="space-y-6"></div>
         </section>
-        <aside class="sidebar lg:w-72">
-            <h3 class="text-xl text-gray-800 mb-4">Filter by Category</h3>
-            <div class="space-y-3">
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Crude Oil">
-                    <span class="ml-3 text-gray-800 text-lg">Crude Oil</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Natural Gas">
-                    <span class="ml-3 text-gray-800 text-lg">Natural Gas</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Petrochemicals">
-                    <span class="ml-3 text-gray-800 text-lg">Petrochemicals</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Power">
-                    <span class="ml-3 text-gray-800 text-lg">Power</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Renewables">
-                    <span class="ml-3 text-gray-800 text-lg">Renewables</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Company News">
-                    <span class="ml-3 text-gray-800 text-lg">Company News</span>
-                </label>
-                <label class="flex items-center p-2 rounded-lg transition-colors">
-                    <input type="checkbox" class="category-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-400" value="Earnings">
-                    <span class="ml-3 text-gray-800 text-lg">Earnings</span>
-                </label>
-            </div>
-        </aside>
-
+            <aside class="filter-panel bg-white rounded-2xl shadow-xl p-6 w-80">
+              <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Filter by Category</h2>
+              <div id="categoryList" class="space-y-3">
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md">Company News</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md">Power</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md">Crude Oil</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md">Natural Gas</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md">Petrochemicals</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md">Renewables</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md">Earnings</button>
+              </div>
+            </aside>
         <section id="favorites" class="hidden py-10 w-full">
             <h2 class="text-3xl text-gray-800 mb-6">Your Favorited Articles</h2>
             <div id="favoritesGrid" class="space-y-6"></div>
