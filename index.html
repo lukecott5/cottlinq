@@ -682,5 +682,18 @@
             });
         });
     </script>
+    <script>
+      document.querySelectorAll('a.nav-link').forEach(link => {
+        link.addEventListener('click', e => {
+          const href = link.getAttribute('href');
+          if (href === '#favorites') {
+            e.preventDefault();
+            document.querySelector('#news').classList.add('hidden');
+            document.querySelector('#favorites').classList.remove('hidden');
+            document.querySelector('.filter-panel').classList.add('hidden');
+          }
+        });
+      });
+    </script>
 </body>
 </html>
