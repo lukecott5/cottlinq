@@ -1,529 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linq - Profile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-            background-color: #ffffff;
-            color: #2d3748;
-        }
-        .profile-section {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-            color: #2d3748;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-        }
-        .profile-section h2 {
-            font-size: 2rem;
-            font-weight: 400;
-            color: #2563eb;
-        }
-        .profile-section .highlight {
-            color: #000000;
-        }
-        .profile-info {
-            margin-bottom: 2rem;
-        }
-        .profile-info p {
-            font-size: 1.125rem;
-            color: #4a5568;
-            margin: 0.5rem 0;
-        }
-        .logout-btn {
-            background: #2563eb;
-            border: none;
-            border-radius: 4px;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-            font-size: 1rem;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            padding: 0.75rem 1.5rem;
-        }
-        .logout-btn:hover {
-            background-color: #1e40af;
-        }
-        .favorites-section {
-            margin-top: 2rem;
-        }
-        .favorites-section h3 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: #1a202c;
-            margin-bottom: 1rem;
-        }
-        .post-card {
-            background-color: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-            display: flex;
-            flex-direction: column;
-        }
-        .post-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-        .post-title {
-            font-size: 1.25rem;
-            font-weight: 400;
-            color: #2d3748;
-            margin: 0 0 0.5rem;
-            line-height: 1.4;
-            font-family: 'Lexend', sans-serif;
-        }
-        .post-meta {
-            font-size: 0.875rem;
-            color: #4a5568;
-            margin: 0.5rem 0;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-        }
-        .category-label {
-            background-color: #e2e8f0;
-            color: #2d3748;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            font-weight: 400;
-            margin-left: 0.5rem;
-            font-family: 'Lexend', sans-serif;
-        }
-        .twitter-tweet {
-            margin-top: 0.75rem;
-            padding: 1rem;
-            background-color: #ffffff;
-            border-radius: 8px;
-            color: #2d3748;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-        }
-        .twitter-tweet a {
-            color: #8bbcff;
-            text-decoration: none;
-            font-family: 'Lexend', sans-serif;
-        }
-        .twitter-tweet a:hover {
-            text-decoration: underline;
-        }
-        .share-btn {
-            background: none;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-            font-size: 0.875rem;
-            color: #000000;
-            cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease;
-            padding: 0.5rem 1rem;
-        }
-        .share-btn:hover {
-            background-color: #f5f5f5;
-            color: #000000;
-        }
-        .favorite-btn {
-            font-size: 1.5rem;
-            background: none;
-            border: none;
-            color: #000000;
-            padding: 0.375rem;
-            cursor: pointer;
-            transition: color 0.2s ease, transform 0.2s ease;
-        }
-        .favorite-btn:hover {
-            color: #000000;
-            transform: scale(1.2);
-        }
-        .favorited {
-            color: #f59e0b;
-        }
-        .share-confirmation {
-            margin-top: 0.5rem;
-            font-size: 0.75rem;
-            color: #4a5568;
-            display: none;
-            font-family: 'Lexend', sans-serif;
-            align-self: flex-start;
-        }
-        .share-confirmation:not(.hidden) {
-            display: block;
-        }
-        .nav-link {
-            transition: color 0.2s ease;
-            color: #333333;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-        }
-        .nav-link:hover {
-            color: #60a5fa;
-        }
-        .post-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 0.5rem;
-        }
-        @media (max-width: 768px) {
-            .profile-section {
-                padding: 1.5rem;
-            }
-            .profile-section h2 {
-                font-size: 1.75rem;
-            }
-            .profile-info p {
-                font-size: 1rem;
-            }
-            .logout-btn {
-                font-size: 0.875rem;
-                padding: 0.5rem 1rem;
-            }
-            .favorites-section h3 {
-                font-size: 1.25rem;
-            }
-            .post-title {
-                font-size: 1.125rem;
-            }
-            .post-meta {
-                font-size: 0.75rem;
-            }
-            .post-card {
-                padding: 1rem;
-            }
-            .category-label {
-                font-size: 0.75rem;
-            }
-            .share-btn {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.8rem;
-            }
-            .favorite-btn {
-                font-size: 1.125rem;
-                padding: 0.3rem;
-                color: #000000;
-            }
-            .favorite-btn:hover {
-                color: #000000;
-            }
-            .share-confirmation {
-                font-size: 0.675rem;
-            }
-            .nav-link.text-sm {
-                font-size: 0.75rem;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - LINQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #f9fbfd;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
+            font-weight: 400;
+        }
+
+        body.dark-mode {
+            background-color: #1e2527;
+            color: #d0d7de;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ffffff, #f0f4f8);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-mode header {
+            background: linear-gradient(135deg, #2a2f32, #1e2527);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            color: #2a2f32;
+        }
+
+        .dark-mode .logo {
+            color: #d0d7de;
+        }
+
+        nav a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #1a73e8;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #1557b0;
+        }
+
+        .dark-mode nav a {
+            color: #8ab4f8;
+        }
+
+        .dark-mode nav a:hover {
+            color: #c6d7f8;
+        }
+
+        main {
+            flex: 1;
+            padding: 3rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2a2f32;
+            font-size: 2.25rem;
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .dark-mode h1 {
+            color: #d0d7de;
+        }
+
+        .account-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .dark-mode .account-section {
+            background: #2a2f32;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .account-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #2a2f32;
+            font-weight: 400;
+        }
+
+        .dark-mode .account-section h2 {
+            color: #d0d7de;
+        }
+
+        .profile-pic-container {
+            position: relative;
+            text-align: center;
+            margin-bottom: 1rem; /* Reduced to accommodate name */
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #000000; /* Black border for clarity */
+            transition: opacity 0.3s;
+        }
+
+        .upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: #ffffff;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .profile-pic-container:hover .upload-overlay {
+            opacity: 1;
+        }
+
+        .upload-overlay span {
+            text-align: center;
+        }
+
+        .current-name {
+            margin-top: 0.5rem;
+            font-size: 1.25rem;
+            color: #2a2f32;
+            font-weight: 400;
+        }
+
+        .dark-mode .current-name {
+            color: #d0d7de;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #4a5568;
+            font-weight: 400;
+        }
+
+        .dark-mode label {
+            color: #a0aec0;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d9e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Lexend', sans-serif;
+            box-sizing: border-box;
+            transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+        }
+
+        .dark-mode input,
+        .dark-mode textarea,
+        .dark-mode select {
+            background-color: #3a4144;
+            border-color: #4a5568;
+            color: #d0d7de;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #1a73e8, #1557b0);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Lexend', sans-serif;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .danger-btn {
+            background: linear-gradient(135deg, #dc3545, #b02a37);
+        }
+
+        .secondary-btn {
+            background: linear-gradient(135deg, #6b7280, #4a5568);
+        }
+
+        .toggle {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .toggle input {
+            width: auto;
+            margin-right: 0.75rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #ffffff, #f0f4f8);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #4a5568;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-mode footer {
+            background: linear-gradient(135deg, #2a2f32, #1e2527);
+            color: #a0aec0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        footer a {
+            color: #1a73e8;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #1557b0;
+        }
+
+        .dark-mode footer a {
+            color: #8ab4f8;
+        }
+
+        .dark-mode footer a:hover {
+            color: #c6d7f8;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1.5rem;
+            }
+
+            .account-section {
+                padding: 1.5rem;
+            }
+
+            .profile-pic {
+                width: 100px;
+                height: 100px;
+            }
+
+            .upload-overlay {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="bg-white py-4 shadow fixed top-0 left-0 w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="index.html" class="text-4xl text-black">Linq</a>
-            <div class="flex items-center space-x-6">
-                <a href="index.html#news" class="nav-link">News</a>
-                <a href="favorites.html" class="nav-link">Favorites</a>
-                <a href="community.html" class="nav-link">Community</a>
-                <a id="authLink" href="profile.html" class="nav-link text-sm">Profile</a>
-            </div>
-        </div>
-    </nav>
+    <header>
+        <div class="logo">LINQ</div>
+        <nav>
+            <a href="#">News</a>
+            <a href="#">Favorites</a>
+            <a href="#">Community</a>
+        </nav>
+    </header>
 
-    <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        <div class="profile-section">
-            <h2>Your <span class="highlight">Linq</span> Profile</h2>
-            <div class="profile-info">
-                <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
-                <button class="logout-btn" id="logoutBtn">Logout</button>
-            </div>
-            <div class="favorites-section">
-                <h3>Your Favorited Posts</h3>
-                <div id="favoritesContainer"></div>
-            </div>
-        </div>
-    </main>
+    <main>
+        <h1>Account Settings</h1>
 
-    <footer class="bg-white text-gray-600 py-6 shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-            <p>© 2025 Linq. All rights reserved.</p>
-            <div class="mt-4 md:mt-0 space-x-4">
-                <a href="index.html#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
-                <a href="index.html#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
-                <a href="#" class="hover:text-gray-800 transition-colors">Contact Us</a>
-            </div>
-        </div>
-    </footer>
+        <!-- Profile Information -->
+        <div class="account-section">
+            <h2>Profile Information</h2>
+            <div class="profile-pic-container">
+                <img id="profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" alt="Profile Picture">
+                <div class="upload-overlay" onclick="document.getElementById('profile-pic-upload').click()">
+                    <span>Click or Drag<br>to Upload</span>
+                </div>
+                <input type="file" id="profile-pic-upload" accept="image/*" onchange="updateProfilePic()" style="display: none;">
+            </div>
+            <div class="current-name" id="current-name"></div>
+            <div class="form-group">
+                <label for="display-email">Email</label>
+                <input type="email" id="display-email" readonly>
+            </div>
+            <div class="form-group">
+                <label for="edit-name">Name</label>
+                <input type="text" id="edit-name" placeholder="Update Name">
+            </div>
+            <div class="form-group">
+                <label for="edit-bio">Profile Bio</label>
+                <textarea id="edit-bio" placeholder="Update Profile Bio"></textarea>
+            </div>
+            <button onclick="updateProfile()">Update Profile</button>
+        </div>
 
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyC76M6U4ZxO2AUr_IZlJ2C2SHzg0yS6zqM",
-            authDomain: "linq-news.firebaseapp.com",
-            projectId: "linq-news",
-            storageBucket: "linq-news.appspot.com",
-            messagingSenderId: "210614100652",
-            appId: "1:210614100652:web:1b47329f8437a04eabf087"
-        };
+        <!-- Security Settings -->
+        <div class="account-section">
+            <h2>Security Settings</h2>
+            <div class="form-group">
+                <label for="edit-password">Update Password</label>
+                <input type="password" id="edit-password" placeholder="New Password">
+            </div>
+            <div class="toggle">
+                <input type="checkbox" id="two-factor" onchange="toggleTwoFactor()">
+                <label for="two-factor">Enable Two-Factor Authentication</label>
+            </div>
+            <div class="form-group" id="two-factor-phone" style="display: none;">
+                <label for="phone-number">Phone Number for 2FA</label>
+                <input type="tel" id="phone-number" placeholder="+1234567890">
+            </div>
+            <div class="form-group">
+                <label for="security-question">Security Question</label>
+                <select id="security-question">
+                    <option value="">Select a question</option>
+                    <option value="pet">What is the name of your first pet?</option>
+                    <option value="school">What was the name of your elementary school?</option>
+                    <option value="city">In what city were you born?</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="security-answer">Answer</label>
+                <input type="text" id="security-answer" placeholder="Your answer">
+            </div>
+            <button onclick="updateSecurity()">Save Security Settings</button>
+        </div>
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        <!-- Notification Preferences -->
+        <div class="account-section">
+            <h2>Notification Preferences</h2>
+            <div class="toggle">
+                <input type="checkbox" id="email-notifications" onchange="updateNotifications()">
+                <label for="email-notifications">Receive Email Notifications</label>
+            </div>
+        </div>
 
-        // Hardcoded post data to match community.html
-        const postData = [
-            {
-                title: "If Saudis and OPEC+ maintain production levels without increasing output",
-                meta: "May 4, 2025 • JH (@CRUDEOIL231)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">If Saudis and OPEC+ maintain production levels without increasing output, and as a result, Brent crude prices barely hold steady around $70/bbl, would that be favorable for your positions?<br><br>Of course the best-case scenario is for prices to remain high, but that seems unlikely.…</p> — JH (@CRUDEOIL231) <a href="https://twitter.com/CRUDEOIL231/status/1919070053825495266?ref_src=twsrc%5Etfw">May 4, 2025</a>`,
-                url: "https://twitter.com/CRUDEOIL231/status/1919070053825495266?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "India's oil consumption rose 4.5% YoY in March",
-                meta: "May 4, 2025 • Linq (@LinqNews)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">India's oil consumption rose 4.5% YoY in March. Infrastructure buildout and strong GDP expectations place it as key global demand anchor in 2025.<a href="https://twitter.com/hashtag/India?src=hash&ref_src=twsrc%5Etfw">#India</a> <a href="https://twitter.com/hashtag/EnergyDemand?src=hash&ref_src=twsrc%5Etfw">#EnergyDemand</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p> — Linq (@LinqNews) <a href="https://twitter.com/LinqNews/status/1919171857409855978?ref_src=twsrc%5Etfw">May 4, 2025</a>`,
-                url: "https://twitter.com/LinqNews/status/1919171857409855978?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "Crude gaps down >$2/bbl—Brent back in the $50s",
-                meta: "May 4, 2025 • Rory Johnston (@Rory_Johnston)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">Crude gaps down >$2/bbl—Brent back in the $50s—on Asia open following OPEC headline-filled weekend.<br><br>Hard to know what, exactly, was priced in going into weekend—even if the ~400 kbpd June production hike was priced in, the entire unwind by November threat/rumour certainly wasn’t <a href="https://t.co/oMqvcPx0U8">pic.twitter.com/oMqvcPx0U8</a></p> — Rory Johnston (@Rory_Johnston) <a href="https://twitter.com/Rory_Johnston/status/1919158874172530712?ref_src=twsrc%5Etfw">May 4, 2025</a>`,
-                url: "https://twitter.com/Rory_Johnston/status/1919158874172530712?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "OPEC has now returned 0.96 of the 2.2mmbpd of the voluntary cuts",
-                meta: "May 4, 2025 • Unintended Consequence (@UnintendedCons5)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">OPEC has now returned 0.96 of the 2.2mmbpd of the voluntary cuts.<br><br>However OPEC has been over producing 1.1mmpbd since Feb. As many have mentioned the only volumes returning are Saudis (436kbpd).</p> — Unintended Consequence (@UnintendedCons5) <a href="https://twitter.com/UnintendedCons5/status/1918857944579408366?ref_src=twsrc%5Etfw">May 4, 2025</a>`,
-                url: "https://twitter.com/UnintendedCons5/status/1918857944579408366?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "OPEC plus 8 states: agree to add 411000 bpd in June",
-                meta: "May 3, 2025 • Amena Bakr (@Amena__Bakr)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">OPEC plus 8 states: agree to add 411000 bpd in June <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/Opec?src=hash&ref_src=twsrc%5Etfw">#Opec</a></p> — Amena Bakr (@Amena__Bakr) <a href="https://twitter.com/Amena__Bakr/status/1918614082099286340?ref_src=twsrc%5Etfw">May 3, 2025</a>`,
-                url: "https://twitter.com/Amena__Bakr/status/1918614082099286340?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "Riyadh’s strategic oil play",
-                meta: "May 5, 2025 • Art Berman (@aeberman12)",
-                category: "Energy",
-                tweet: `<p lang="en" dir="ltr">My take:<br><br>Riyadh is betting that looming sanctions and tighter supply will push oil prices higher.<br><br>It’s a preemptive move to shape sentiment, not just follow it.<a href="https://t.co/g98C6IMwWl">https://t.co/g98C6IMwWl</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a> <a href="https://twitter.com/hashtag/fintwit?src=hash&ref_src=twsrc%5Etfw">#fintwit</a> <a href="https://twitter.com/hashtag/OPEC?src=hash&ref_src=twsrc%5Etfw">#OPEC</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/commoditiesmarket?src=hash&ref_src=twsrc%5Etfw">#commoditiesmarket</a> <a href="https://t.co/qhfZgyHTnM">pic.twitter.com/qhfZgyHTnM</a></p> — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919396685362373026?ref_src=twsrc%5Etfw">May 5, 2025</a>`,
-                url: "https://twitter.com/aeberman12/status/1919396685362373026?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "OPEC’s production challenges",
-                meta: "May 5, 2025 • Amena Bakr (@Amena__Bakr)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">The deputy minister also said that cutting production is a “hard task” for them and wasn’t able to lay out the future plan to cut output. <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/Opec?src=hash&ref_src=twsrc%5Etfw">#Opec</a> <a href="https://t.co/krzSjDrRrN">https://t.co/krzSjDrRrN</a></p> — Amena Bakr (@Amena__Bakr) <a href="https://twitter.com/Amena__Bakr/status/1919381986092667322?ref_src=twsrc%5Etfw">May 5, 2025</a>`,
-                url: "https://twitter.com/Amena__Bakr/status/1919381986092667322?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "Oil market drop",
-                meta: "May 4, 2025 • Javier Blas (@JavierBlas)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">OIL MARKET: Brent and WTI crude down ~4% in early trading after OPEC+ production increase (Brent is below $59 a barrel and WTI below $56 a barrel) <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p> — Javier Blas (@JavierBlas) <a href="https://twitter.com/JavierBlas/status/1919157364831248518?ref_src=twsrc%5Etfw">May 4, 2025</a>`,
-                url: "https://twitter.com/JavierBlas/status/1919157364831248518?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "Saudi Arabia’s oil strategy",
-                meta: "May 3, 2025 • Javier Blas (@JavierBlas)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">As Saudi Arabia today led the OPEC+ cartel to boost oil production significantly, I’m re-upping my <a href="https://twitter.com/opinion?ref_src=twsrc%5Etfw">@Opinion</a> column from earlier this week on Riyadh’s motivations.<br><br>“Saudi oil policy is multidimensional: it may have several objectives at once”<a href="https://t.co/5y2Ktc9jyU">https://t.co/5y2Ktc9jyU</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p> — Javier Blas (@JavierBlas) <a href="https://twitter.com/JavierBlas/status/1918726353475563979?ref_src=twsrc%5Etfw">May 3, 2025</a>`,
-                url: "https://twitter.com/JavierBlas/status/1918726353475563979?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "U.S. shale peak concerns",
-                meta: "May 5, 2025 • Art Berman (@aeberman12)",
-                category: "Energy",
-                tweet: `<p lang="en" dir="ltr">“We’re at a tipping point for U.S. oil—geology now outweighs tech gains,” says Travis Stice, CEO, Diamondback Energy<br><br>U.S. shale has likely peaked, with decline driven by low prices, tight margins, and geology.<a href="https://t.co/FKVAY4WazT">https://t.co/FKVAY4WazT</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a>… <a href="https://t.co/FTrFNYXaML">pic.twitter.com/FTrFNYXaML</a></p> — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919537549501968799?ref_src=twsrc%5Etfw">May 5, 2025</a>`,
-                url: "https://twitter.com/aeberman12/status/1919537549501968799?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "IPAA supports budget reconciliation provisions",
-                meta: "May 5, 2025 • IPAA American Energy (@IPAAaccess)",
-                category: "Energy",
-                tweet: `<p lang="en" dir="ltr">IPAA and a coalition of energy trade groups wrote to <a href="https://twitter.com/SpeakerJohnson?ref_src=twsrc%5Etfw">@SpeakerJohnson</a> expressing strong support for the <a href="https://twitter.com/hashtag/budgetreconciliation?src=hash&ref_src=twsrc%5Etfw">#budgetreconciliation</a> provisions currently under consideration by the <a href="https://twitter.com/NatResources?ref_src=twsrc%5Etfw">@NatResources</a>. "These provisions, included in the House Natural Resources bill text will increase domestic… <a href="https://t.co/QQIcQvG64S">pic.twitter.com/QQIcQvG64S</a></p> — IPAA American Energy (@IPAAaccess) <a href="https://twitter.com/IPAAaccess/status/1919510569553432731?ref_src=twsrc%5Etfw">May 5, 2025</a>`,
-                url: "https://twitter.com/IPAAaccess/status/1919510569553432731?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "Peabody may scrap $3.78B Anglo deal",
-                meta: "May 5, 2025 • Art Berman (@aeberman12)",
-                category: "Energy",
-                tweet: `<p lang="en" dir="ltr">Peabody may scrap its $3.78B Anglo deal after a mine fire shut Moranbah North, raising doubts amid weak steel coal demand and rising risks.<a href="https://t.co/eaXOaF0Vvl">https://t.co/eaXOaF0Vvl</a><a href="https://twitter.com/hashtag/CoalTwitter?src=hash&ref_src=twsrc%5Etfw">#CoalTwitter</a> <a href="https://twitter.com/hashtag/Fossilfuels?src=hash&ref_src=twsrc%5Etfw">#Fossilfuels</a> <a href="https://twitter.com/hashtag/netzero?src=hash&ref_src=twsrc%5Etfw">#netzero</a> <a href="https://twitter.com/hashtag/renewables?src=hash&ref_src=twsrc%5Etfw">#renewables</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/energytransition?src=hash&ref_src=twsrc%5Etfw">#energytransition</a> <a href="https://twitter.com/hashtag/EnergyCrisis?src=hash&ref_src=twsrc%5Etfw">#EnergyCrisis</a>… <a href="https://t.co/hQSj2x54iZ">pic.twitter.com/hQSj2x54iZ</a></p> — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919540144354275464?ref_src=twsrc%5Etfw">May 5, 2025</a>`,
-                url: "https://twitter.com/aeberman12/status/1919540144354275464?ref_src=twsrc%5Etfw"
-            },
-            {
-                title: "OPEC+ plans to accelerate oil output hikes",
-                meta: "May 4, 2025 • Rory Johnston (@Rory_Johnston)",
-                category: "Crude Oil",
-                tweet: `<p lang="en" dir="ltr">👀 “OPEC+ plans to further accelerate oil output hikes and could unwind its 2.2 million barrels per day of voluntary cuts by the end of October if members do not improve compliance with their production quota”<br><br>💀 That’d be… bad for prices. <a href="https://t.co/nZwF83qaGZ">pic.twitter.com/nZwF83qaGZ</a></p> — Rory Johnston (@Rory_Johnston) <a href="https://twitter.com/Rory_Johnston/status/1918995918264623502?ref_src=twsrc%5Etfw">May 4, 2025</a>`,
-                url: "https://twitter.com/Rory_Johnston/status/1918995918264623502?ref_src=twsrc%5Etfw"
-            }
-        ];
+        <!-- Appearance -->
+        <div class="account-section">
+            <h2>Appearance</h2>
+            <div class="toggle">
+                <input type="checkbox" id="dark-mode" onchange="toggleDarkMode()">
+                <label for="dark-mode">Enable Dark Mode</label>
+            </div>
+        </div>
 
-        function checkAuthState() {
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    document.getElementById('userEmail').textContent = user.email || 'User';
-                    document.getElementById('authLink').textContent = 'Profile';
-                    document.getElementById('authLink').href = 'profile.html';
-                } else {
-                    window.location.href = 'login.html';
-                }
-            });
-        }
+        <!-- Account Actions -->
+        <div class="account-section">
+            <h2>Account Actions</h2>
+            <button class="secondary-btn" onclick="logout()">Log Out</button>
+            <button class="danger-btn" onclick="deleteAccount()">Delete Account</button>
+        </div>
+    </main>
 
-        function logout() {
-            auth.signOut().then(() => {
-                window.location.href = 'login.html';
-            }).catch(error => {
-                console.error('Error signing out:', error);
-                alert('Failed to sign out. Please try again.');
-            });
-        }
+    <footer>
+        <div>© 2025 LINQ. All rights reserved.</div>
+        <div>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Contact Us</a>
+        </div>
+    </footer>
 
-        function sharePost(event) {
-            const post = event.target.closest('.post-card');
-            const urlElement = post.querySelector('.twitter-tweet a:last-child');
-            const url = urlElement ? urlElement.href : window.location.href;
-            const title = post.querySelector('.post-title').textContent;
-            const confirmation = post.querySelector('.share-confirmation');
+    <script>
+        // Retrieve current user from localStorage
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let users = JSON.parse(localStorage.getItem('users')) || [];
 
-            if (navigator.share) {
-                navigator.share({
-                    title: title,
-                    url: url
-                }).catch(err => {
-                    console.error('Error sharing:', err);
-                });
-            } else {
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(url).then(() => {
-                        confirmation.classList.remove('hidden');
-                        setTimeout(() => confirmation.classList.add('hidden'), 2000);
-                    }).catch(err => {
-                        console.error('Error copying to clipboard:', err);
-                        alert('Failed to copy link. Please copy manually: ' + url);
-                    });
-                } else {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = url;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    try {
-                        document.execCommand('copy');
-                        confirmation.classList.remove('hidden');
-                        setTimeout(() => confirmation.classList.add('hidden'), 2000);
-                    } catch (err) {
-                        console.error('Error copying to clipboard:', err);
-                        alert('Failed to copy link. Please copy manually: ' + url);
-                    }
-                    document.body.removeChild(textarea);
-                }
-            }
-        }
+        // Default profile picture (external URL)
+        const defaultProfilePic = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106";
 
-        function favoritePost(button) {
-            const url = button.getAttribute('data-url');
-            if (!url) return;
+        // Check if a user is logged in
+        if (!currentUser || !currentUser.email) {
+            alert('No user logged in. Redirecting to login page...');
+            window.location.href = 'index.html'; // Replace with your login page's file name
+            return;
+        } else {
+            displayUserInfo();
+            loadPreferences();
+        }
 
-            let favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
-            const isFavorited = favoritePosts.includes(url);
+        // Display user info
+        function displayUserInfo() {
+            document.getElementById('display-email').value = currentUser.email || 'Not available';
+            document.getElementById('edit-name').value = currentUser.name || '';
+            document.getElementById('edit-bio').value = currentUser.bio || '';
+            document.getElementById('profile-pic').src = currentUser.profilePic || defaultProfilePic;
+            document.getElementById('current-name').textContent = currentUser.name || 'User'; // Display current name
+            document.getElementById('two-factor').checked = currentUser.twoFactorEnabled || false;
+            document.getElementById('two-factor-phone').style.display = currentUser.twoFactorEnabled ? 'block' : 'none';
+            document.getElementById('phone-number').value = currentUser.phoneNumber || '';
+            document.getElementById('security-question').value = currentUser.securityQuestion || '';
+            document.getElementById('security-answer').value = currentUser.securityAnswer || '';
+        }
 
-            if (isFavorited) {
-                favoritePosts = favoritePosts.filter(fav => fav !== url);
-                button.classList.remove('favorited');
-            } else {
-                favoritePosts.push(url);
-                button.classList.add('favorited');
-            }
+        // Update profile
+        function updateProfile() {
+            const newName = document.getElementById('edit-name').value;
+            const newBio = document.getElementById('edit-bio').value;
 
-            localStorage.setItem('favoritePosts', JSON.stringify(favoritePosts));
-            displayFavorites();
-        }
+            if (newName) currentUser.name = newName;
+            if (newBio) currentUser.bio = newBio;
 
-        function displayFavorites() {
-            const container = document.getElementById('favoritesContainer');
-            const favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
-            container.innerHTML = '';
+            updateUserInStorage();
+            displayUserInfo();
+            alert('Profile updated successfully!');
+        }
 
-            if (favoritePosts.length === 0) {
-                container.innerHTML = '<p class="text-gray-600">No favorited posts yet.</p>';
-                return;
-            }
+        // Update profile picture
+        function updateProfilePic() {
+            const fileInput = document.getElementById('profile-pic-upload');
+            const img = document.getElementById('profile-pic');
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    currentUser.profilePic = e.target.result;
+                    updateUserInStorage();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
 
-            favoritePosts.forEach(url => {
-                const post = postData.find(p => p.url === url);
-                if (post) {
-                    const postElement = document.createElement('div');
-                    postElement.className = 'post-card';
-                    postElement.setAttribute('data-category', post.category);
-                    postElement.innerHTML = `
-                        <p class="post-title">${post.title}</p>
-                        <p class="post-meta">${post.meta} <span class="category-label">${post.category}</span></p>
-                        <blockquote class="twitter-tweet" data-theme="dark">${post.tweet}</blockquote>
-                        <div class="post-footer">
-                            <button class="share-btn">Share</button>
-                            <button class="favorite-btn favorited" data-url="${post.url}">☆</button>
-                        </div>
-                        <span class="share-confirmation hidden">Link copied!</span>
-                    `;
-                    container.appendChild(postElement);
-                }
-            });
+        // Toggle 2FA
+        function toggleTwoFactor() {
+            const isEnabled = document.getElementById('two-factor').checked;
+            document.getElementById('two-factor-phone').style.display = isEnabled ? 'block' : 'none';
+            currentUser.twoFactorEnabled = isEnabled;
+            if (isEnabled) {
+                const phone = document.getElementById('phone-number').value;
+                if (!phone) {
+                    alert('Please enter a phone number for 2FA.');
+                    document.getElementById('two-factor').checked = false;
+                    document.getElementById('two-factor-phone').style.display = 'none';
+                    currentUser.twoFactorEnabled = false;
+                    return;
+                }
+                currentUser.phoneNumber = phone;
+            } else {
+                delete currentUser.phoneNumber;
+            }
+            updateUserInStorage();
+        }
 
-            document.querySelectorAll('.share-btn').forEach(btn => {
-                btn.addEventListener('click', sharePost);
-            });
+        // Update security settings
+        function updateSecurity() {
+            const newPassword = document.getElementById('edit-password').value;
+            const securityQuestion = document.getElementById('security-question').value;
+            const securityAnswer = document.getElementById('security-answer').value;
 
-            document.querySelectorAll('.favorite-btn').forEach(btn => {
-                btn.addEventListener('click', () => favoritePost(btn));
-            });
+            if (newPassword && newPassword.length < 6) {
+                alert('New password must be at least 6 characters long.');
+                return;
+            }
+            if (newPassword) currentUser.password = newPassword;
+            if (securityQuestion && securityAnswer) {
+                currentUser.securityQuestion = securityQuestion;
+                currentUser.securityAnswer = securityAnswer;
+            } else if (securityQuestion || securityAnswer) {
+                alert('Please provide both a security question and answer.');
+                return;
+            }
 
-            // Reinitialize Twitter widgets
-            if (window.twttr && window.twttr.widgets) {
-                window.twttr.widgets.load();
-            }
-        }
+            updateUserInStorage();
+            alert('Security settings updated successfully!');
+        }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            checkAuthState();
-            displayFavorites();
+        // Update notification preferences
+        function updateNotifications() {
+            currentUser.emailNotifications = document.getElementById('email-notifications').checked;
+            updateUserInStorage();
+        }
 
-            document.getElementById('logoutBtn').addEventListener('click', logout);
+        // Toggle dark mode
+        function toggleDarkMode() {
+            const isDarkMode = document.getElementById('dark-mode').checked;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            localStorage.setItem('darkMode', isDarkMode);
+        }
 
-            const twitterScript = document.createElement('script');
-            twitterScript.src = 'https://platform.twitter.com/widgets.js';
-            twitterScript.async = true;
-            document.body.appendChild(twitterScript);
-        });
+        // Load user preferences
+        function loadPreferences() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            document.getElementById('dark-mode').checked = isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
 
-        function showTerms(event) {
-            event.preventDefault();
-            alert('Please view Terms of Service on the main page.');
-        }
+            document.getElementById('email-notifications').checked = currentUser.emailNotifications !== false;
+        }
 
-        function showPrivacy(event) {
-            event.preventDefault();
-            alert('Please view Privacy Policy on the main page.');
-        }
-    </script>
+        // Update user in localStorage
+        function updateUserInStorage() {
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+            } else {
+                users.push(currentUser);
+            }
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+
+        // Log out
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html'; // Replace with your login page's file name
+        }
+
+        // Delete account
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+                users = users.filter(u => u.email !== currentUser.email);
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.removeItem('currentUser');
+                alert('Account deleted successfully.');
+                window.location.href = 'index.html'; // Replace with your login page's file name
+            }
+        }
+    </script>
 </body>
 </html>
