@@ -418,23 +418,24 @@
 
         // Check Authentication State
         function checkAuthState() {
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                authLink.textContent = 'Profile';
-                authLink.href = 'profile.html';
-                loadUserProfile(user);
-            } else {
-                setTimeout(() => {
-                    if (!auth.currentUser) {
-                        authLink.textContent = 'Login';
-                        authLink.href = 'login.html';
-                        alert('No user logged in. Redirecting to login page...');
-                        window.location.href = 'login.html';
-                    }
-                }, 300); // delay allows auth to stabilize
-            }
-        });
-
+            auth.onAuthStateChanged(user => {
+                const authLink = document.getElementById('authLink');
+                if (user) {
+                    authLink.textContent = 'Profile';
+                    authLink.href = 'profile.html';
+                    loadUserProfile(user);
+                } else {
+                    setTimeout(() => {
+                        if (!auth.currentUser) {
+                            authLink.textContent = 'Login';
+                            authLink.href = 'login.html';
+                            alert('No user logged in. Redirecting to login page...');
+                            window.location.href = 'login.html';
+                        }
+                    }, 300); // delay allows auth to stabilize
+                }
+            });
+        }
 
         // Load User Profile
         async function loadUserProfile(user) {
@@ -477,8 +478,7 @@
 
         // Update Profile Picture
         async function updateProfilePic() {
-            const user = auth.currentUser;
-            if (!user) {
+            const ')' {
                 alert('No user logged in.');
                 return;
             }
