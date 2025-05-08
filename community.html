@@ -303,7 +303,7 @@
                 <a href="index.html#news" class="nav-link">News</a>
                 <a href="favorites.html" class="nav-link">Favorites</a>
                 <a href="community.html" class="nav-link">Community</a>
-                <a href="login.html" class="nav-link">Login</a>
+                <a id="authLink" href="login.html" class="nav-link text-sm">Login</a>
             </div>
         </div>
     </nav>
@@ -516,7 +516,21 @@
         </div>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC76M6U4ZxO2AUr_IZlJ2C2SHzg0yS6zqM",
+            authDomain: "linq-news.firebaseapp.com",
+            projectId: "linq-news",
+            storageBucket: "linq-news.appspot.com",
+            messagingSenderId: "210614100652",
+            appId: "1:210614100652:web:1b47329f8437a04eabf087"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
         function filterPosts() {
             const categoryButtons = document.querySelectorAll('.category-checkbox');
             const selectedCategories = Array.from(categoryButtons)
@@ -610,8 +624,22 @@
             });
         }
 
+        function updateAuthLink() {
+            const authLink = document.getElementById('authLink');
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    authLink.textContent = 'Profile';
+                    authLink.href = 'profile.html';
+                } else {
+                    authLink.textContent = 'Login';
+                    authLink.href = 'login.html';
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             initializeFavorites();
+            updateAuthLink();
 
             document.querySelectorAll('.share-btn').forEach(btn => {
                 btn.addEventListener('click', sharePost);
