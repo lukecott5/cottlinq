@@ -173,18 +173,21 @@
             color: #000000;
         }
         .favorite-btn {
-            padding: 0.5rem;
-            font-size: 1rem;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 2rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+            font-size: 1.25rem;
+            color: #333;
+            background: none;
+            border: none;
+            padding: 0.25rem;
+        }
+        .favorite-btn:hover {
+            color: #3b82f6; /* Tailwind blue-500 */
+            transform: scale(1.2);
         }
         .favorite-btn.favorited {
-            font-weight: bold;
-            color: #facc15; /* Yellow for favorited state */
+            color: #3b82f6; /* Active blue color */
         }
+
         .share-confirmation, .favorite-confirmation {
             margin-top: 0.5rem;
             font-size: 0.75rem;
