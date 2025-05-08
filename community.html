@@ -148,13 +148,16 @@
         .twitter-tweet a:hover {
             text-decoration: underline;
         }
-        .share-btn {
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
             margin-top: 1rem;
-            align-self: flex-start;
+            gap: 0.5rem;
+        }
+        .share-btn, .favorite-btn {
             background: none;
             border: 1px solid #000000;
             border-radius: 4px;
-            padding: 0.5rem 1rem;
             font-family: 'Lexend', sans-serif;
             font-weight: 400;
             font-size: 0.875rem;
@@ -162,18 +165,35 @@
             cursor: pointer;
             transition: background-color 0.2s ease, color 0.2s ease;
         }
-        .share-btn:hover {
+        .share-btn {
+            padding: 0.5rem 1rem;
+        }
+        .share-btn:hover, .favorite-btn:hover {
             background-color: #f5f5f5;
             color: #000000;
         }
-        .share-confirmation {
+        .favorite-btn {
+            padding: 0.5rem;
+            font-size: 1rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2rem;
+        }
+        .favorite-btn.favorited {
+            font-weight: bold;
+            color: #facc15; /* Yellow for favorited state */
+        }
+        .share-confirmation, .favorite-confirmation {
             margin-top: 0.5rem;
             font-size: 0.75rem;
             color: #4a5568;
             display: none;
             font-family: 'Lexend', sans-serif;
+            align-self: flex-end;
         }
-        .share-confirmation:not(.hidden) {
+        .share-confirmation:not(.hidden), .favorite-confirmation:not(.hidden) {
             display: block;
         }
         .nav-link {
@@ -254,6 +274,11 @@
                 font-size: 0.75rem;
                 padding: 0.4rem 0.8rem;
             }
+            .favorite-btn {
+                font-size: 0.875rem;
+                padding: 0.4rem;
+                min-width: 1.75rem;
+            }
             .search-input {
                 font-size: 0.875rem;
                 padding: 0.4rem;
@@ -261,6 +286,9 @@
             .search-btn {
                 font-size: 0.875rem;
                 padding: 0.4rem 0.8rem;
+            }
+            .share-confirmation, .favorite-confirmation {
+                font-size: 0.675rem;
             }
         }
     </style>
@@ -298,8 +326,12 @@
                         — JH (@CRUDEOIL231) <a href="https://twitter.com/CRUDEOIL231/status/1919070053825495266?ref_src=twsrc%5Etfw">May 4, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -313,8 +345,12 @@
                         — Linq (@LinqNews) <a href="https://twitter.com/LinqNews/status/1919171857409855978?ref_src=twsrc%5Etfw">May 4, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -328,8 +364,12 @@
                         — Rory Johnston (@Rory_Johnston) <a href="https://twitter.com/Rory_Johnston/status/1919158874172530712?ref_src=twsrc%5Etfw">May 4, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -343,8 +383,12 @@
                         — Unintended Consequence (@UnintendedCons5) <a href="https://twitter.com/UnintendedCons5/status/1918857944579408366?ref_src=twsrc%5Etfw">May 4, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -358,8 +402,12 @@
                         — Amena Bakr (@Amena__Bakr) <a href="https://twitter.com/Amena__Bakr/status/1918614082099286340?ref_src=twsrc%5Etfw">May 3, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Energy">
                     <p class="post-title">
@@ -373,8 +421,12 @@
                         — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919396685362373026?ref_src=twsrc%5Etfw">May 5, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -388,8 +440,12 @@
                         — Amena Bakr (@Amena__Bakr) <a href="https://twitter.com/Amena__Bakr/status/1919381986092667322?ref_src=twsrc%5Etfw">May 5, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -403,8 +459,12 @@
                         — Javier Blas (@JavierBlas) <a href="https://twitter.com/JavierBlas/status/1919157364831248518?ref_src=twsrc%5Etfw">May 4, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -418,8 +478,12 @@
                         — Javier Blas (@JavierBlas) <a href="https://twitter.com/JavierBlas/status/1918726353475563979?ref_src=twsrc%5Etfw">May 3, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Energy">
                     <p class="post-title">
@@ -433,8 +497,12 @@
                         — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919537549501968799?ref_src=twsrc%5Etfw">May 5, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Energy">
                     <p class="post-title">
@@ -448,8 +516,12 @@
                         — IPAA American Energy (@IPAAaccess) <a href="https://twitter.com/IPAAaccess/status/1919510569553432731?ref_src=twsrc%5Etfw">May 5, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Energy">
                     <p class="post-title">
@@ -463,8 +535,12 @@
                         — Art Berman (@aeberman12) <a href="https://twitter.com/aeberman12/status/1919540144354275464?ref_src=twsrc%5Etfw">May 5, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
@@ -478,8 +554,12 @@
                         — Rory Johnston (@Rory_Johnston) <a href="https://twitter.com/Rory_Johnston/status/1918995918264623502?ref_src=twsrc%5Etfw">May 4, 2025</a>
                     </blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <button class="share-btn">Share</button>
+                    <div class="button-container">
+                        <button class="share-btn">Share</button>
+                        <button class="favorite-btn">☆</button>
+                    </div>
                     <span class="share-confirmation hidden">Link copied!</span>
+                    <span class="favorite-confirmation hidden">Favorited!</span>
                 </div>
             </div>
             <aside class="filter-section lg:w-80">
@@ -594,8 +674,52 @@
             }
         }
 
+        function favoritePost(event) {
+            const post = event.target.closest('.post-card');
+            const favoriteBtn = post.querySelector('.favorite-btn');
+            const urlElement = post.querySelector('.twitter-tweet a:last-child');
+            const url = urlElement ? urlElement.href : '';
+            const confirmation = post.querySelector('.favorite-confirmation');
+
+            if (!url) return;
+
+            let favorites = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
+            const isFavorited = favorites.includes(url);
+
+            if (isFavorited) {
+                favorites = favorites.filter(fav => fav !== url);
+                favoriteBtn.classList.remove('favorited');
+                confirmation.textContent = 'Removed from favorites!';
+            } else {
+                favorites.push(url);
+                favoriteBtn.classList.add('favorited');
+                confirmation.textContent = 'Favorited!';
+            }
+
+            localStorage.setItem('favoritePosts', JSON.stringify(favorites));
+
+            confirmation.classList.remove('hidden');
+            setTimeout(() => confirmation.classList.add('hidden'), 2000);
+        }
+
+        // Initialize favorite buttons
+        function initializeFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
+            document.querySelectorAll('.post-card').forEach(post => {
+                const urlElement = post.querySelector('.twitter-tweet a:last-child');
+                const url = urlElement ? urlElement.href : '';
+                if (url && favorites.includes(url)) {
+                    post.querySelector('.favorite-btn').classList.add('favorited');
+                }
+            });
+        }
+
         document.querySelectorAll('.share-btn').forEach(btn => {
             btn.addEventListener('click', sharePost);
+        });
+
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', favoritePost);
         });
 
         // Toggle filter buttons with charcoal black style
@@ -625,6 +749,9 @@
             event.preventDefault();
             alert('Please view Privacy Policy on the main page.');
         }
+
+        // Initialize favorites on page load
+        initializeFavorites();
     </script>
 </body>
 </html>
