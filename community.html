@@ -183,6 +183,38 @@
         .nav-link:hover {
             color: #60a5fa;
         }
+        .search-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .search-input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1rem;
+            color: #2d3748;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+        }
+        .search-btn {
+            background-color: #1f2937; /* Charcoal black */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .search-btn:hover {
+            background-color: #111827; /* Darker charcoal hover */
+        }
         @media (max-width: 768px) {
             .community-section {
                 padding: 1.5rem;
@@ -222,16 +254,25 @@
                 font-size: 0.75rem;
                 padding: 0.4rem 0.8rem;
             }
+            .search-input {
+                font-size: 0.875rem;
+                padding: 0.4rem;
+            }
+            .search-btn {
+                font-size: 0.875rem;
+                padding: 0.4rem 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <nav class="bg-white py-4 shadow fixed top-0 left-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="/index.html" class="text-4xl text-black">Linq</a>
+            <a href="index.html" class="text-4xl text-black">Linq</a>
             <div class="flex items-center space-x-6">
-                <a href="/index.html#news" class="nav-link">News</a>
-                <a href="/index.html#favorites" class="nav-link">Favorites</a>
+                <a href="index.html#news" class="nav-link">News</a>
+                <a href="index.html#favorites" class="nav-link">Favorites</a>
+                <a href="community.html" class="nav-link">Community</a>
             </div>
         </div>
     </nav>
@@ -241,6 +282,10 @@
             <div class="posts-section">
                 <h2>The <span class="highlight">Linq</span> to Your Community</h2>
                 <p class="community-subtitle">Real-Time Posts from Energy Experts</p>
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search posts or authors...">
+                    <button id="searchBtn" class="search-btn">Search</button>
+                </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">
                         If Saudis and OPEC+ maintain production levels without increasing output
@@ -457,8 +502,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
             <p>© 2025 Linq. All rights reserved.</p>
             <div class="mt-4 md:mt-0 space-x-4">
-                <a href="/index.html#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
-                <a href="/index.html#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
+                <a href="index.html#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
+                <a href="index.html#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
                 <a href="#" class="hover:text-gray-800 transition-colors">Contact Us</a>
             </div>
         </div>
@@ -502,12 +547,19 @@
                 .filter(btn => btn.classList.contains('bg-gray-800'))
                 .map(btn => btn.getAttribute('data-category'));
 
+            const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+
             const posts = document.querySelectorAll('.post-card');
             posts.forEach(post => {
                 const postCategory = post.getAttribute('data-category');
-                post.style.display = selectedCategories.length === 0 || selectedCategories.includes(postCategory)
-                    ? 'block'
-                    : 'none';
+                const postContent = post.querySelector('.twitter-tweet p').textContent.toLowerCase();
+                const postAuthor = post.querySelector('.post-meta').textContent.toLowerCase();
+                const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(postCategory);
+                const matchesSearch = searchQuery === '' ||
+                    postContent.includes(searchQuery) ||
+                    postAuthor.includes(searchQuery);
+
+                post.style.display = matchesCategory && matchesSearch ? 'block' : 'none';
             });
         }
 
@@ -556,6 +608,13 @@
                 filterPosts();
             });
         });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+
+        searchBtn.addEventListener('click', filterPosts);
+        searchInput.addEventListener('input', filterPosts);
 
         function showTerms(event) {
             event.preventDefault();
