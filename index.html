@@ -62,11 +62,11 @@
             transition: color 0.2s ease, transform 0.2s ease;
         }
         .favorite-btn:hover {
-            color: #3b82f6;
+            color: #f59e0b;
             transform: scale(1.2);
         }
         .favorited {
-            color: #3b82f6;
+            color: #f59e0b;
         }
         .filter-panel {
             height: fit-content;
@@ -179,6 +179,32 @@
             display: inline-block;
             margin-right: 1.5rem;
         }
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+        .search-container svg {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: #666666;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.2s ease;
+        }
+        .search-container input:focus {
+            border-color: #2563eb;
+            outline: none;
+        }
         @media (max-width: 768px) {
             .tagline {
                 font-size: 1.75rem;
@@ -206,6 +232,9 @@
                 padding: 0.4rem 0;
                 font-size: 0.85rem;
             }
+            .search-container {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -228,6 +257,9 @@
 
     <div class="tagline text-4xl py-10">
         The <span class="highlight">Linq</span> to your Energy News
+    </div>
+    <div class="text-center mb-10">
+        <button onclick="document.getElementById('news').scrollIntoView({ behavior: 'smooth' })" class="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors hover:bg-blue-700 mx-auto">Explore News</button>
     </div>
 
     <section class="market-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -339,7 +371,13 @@
 
     <main class="max-w-7xl mx-auto pt-8 sm:px-6 lg:px-8 flex flex-wrap gap-6">
         <section id="news" class="flex-1 order-1">
-            <h2 class="text-3xl text-gray-800 mb-6">Latest News</h2>
+            <h2 class="text-3xl text-gray-800 mb-4">Latest News</h2>
+            <div class="search-container mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search news..." class="text-gray-800">
+            </div>
             <div id="newsGrid" class="space-y-6"></div>
         </section>
         <aside class="filter-panel bg-white rounded-2xl shadow-xl p-6 w-80 order-2">
@@ -502,10 +540,36 @@
             });
         }
 
+        function filterArticles() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCategories = Array.from(document.querySelectorAll('.category'))
+                .filter(btn => btn.classList.contains('bg-gray-800'))
+                .map(btn => btn.getAttribute('data-category'));
+
+            let filteredArticles = articlesData;
+
+            if (searchQuery) {
+                filteredArticles = filteredArticles.filter(article =>
+                    article.title.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (selectedCategories.length > 0) {
+                filteredArticles = filteredArticles.filter(article =>
+                    selectedCategories.includes(article.category)
+                );
+            }
+
+            displayArticles(filteredArticles);
+        }
+
         window.addEventListener('load', () => {
             displayArticles(displayedArticles);
             updateTickerBanner();
             updateCommodities();
+
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', filterArticles);
         });
 
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -559,6 +623,7 @@
         function showNewsSection() {
             newsSection.classList.remove('hidden');
             favoritesSection.classList.add('hidden');
+            document.getElementById('news').scrollIntoView({ behavior: 'smooth' });
         }
 
         const marketTabs = document.querySelectorAll('.market-tab');
@@ -609,19 +674,7 @@
                 btn.classList.toggle('border-gray-300');
                 btn.classList.toggle('border-black');
                 btn.classList.toggle('hover:bg-gray-900');
-
-                const selectedCategories = Array.from(categoryButtons)
-                    .filter(btn => btn.classList.contains('bg-gray-800'))
-                    .map(btn => btn.getAttribute('data-category'));
-
-                if (selectedCategories.length === 0) {
-                    displayArticles(displayedArticles);
-                } else {
-                    const filteredArticles = displayedArticles.filter(article =>
-                        selectedCategories.includes(article.category)
-                    );
-                    displayArticles(filteredArticles);
-                }
+                filterArticles();
             });
         });
     </script>
