@@ -584,31 +584,32 @@
                 document.body.removeChild(textarea);
             }
         }
-
+        
         function favoritePost(event) {
-            const post = event.target.closest('.post-card');
-            const favoriteBtn = post.querySelector('.favorite-btn');
+            const button = event.target;
+            const post = button.closest('.post-card');
             const urlElement = post.querySelector('.twitter-tweet a:last-child');
             const url = urlElement ? urlElement.href : '';
             const confirmation = post.querySelector('.favorite-confirmation');
-
+        
             if (!url) return;
-
+        
             let favorites = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
             const isFavorited = favorites.includes(url);
-
+        
             if (isFavorited) {
                 favorites = favorites.filter(fav => fav !== url);
-                favoriteBtn.classList.remove('favorited');
+                button.classList.remove('favorited');
+                button.textContent = '☆';
                 confirmation.textContent = 'Removed from favorites!';
             } else {
                 favorites.push(url);
-                favoriteBtn.classList.add('favorited');
+                button.classList.add('favorited');
+                button.textContent = '★';
                 confirmation.textContent = 'Favorited!';
             }
-
+        
             localStorage.setItem('favoritePosts', JSON.stringify(favorites));
-
             confirmation.classList.remove('hidden');
             setTimeout(() => confirmation.classList.add('hidden'), 2000);
         }
@@ -618,8 +619,10 @@
             document.querySelectorAll('.post-card').forEach(post => {
                 const urlElement = post.querySelector('.twitter-tweet a:last-child');
                 const url = urlElement ? urlElement.href : '';
+                const button = post.querySelector('.favorite-btn');
                 if (url && favorites.includes(url)) {
-                    post.querySelector('.favorite-btn').classList.add('favorited');
+                    button.classList.add('favorited');
+                    button.textContent = '★';
                 }
             });
         }
