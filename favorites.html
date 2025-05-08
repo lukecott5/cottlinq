@@ -28,7 +28,7 @@
             text-align: center;
             margin-bottom: 2.5rem;
             letter-spacing: 1px;
-            color: #000000 /* Black for "your favorite" */
+            color: #000000;
         }
         .favorites-section .highlight {
             color: #3b82f6;
@@ -163,6 +163,16 @@
         .nav-link:hover {
             color: #3b82f6;
         }
+        .news-image {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .news-image:hover {
+            transform: scale(1.05);
+        }
         @media (max-width: 1024px) {
             .favorites-section {
                 grid-template-columns: 1fr;
@@ -256,22 +266,12 @@
     </footer>
 
     <script>
-        // Placeholder news articles (to be replaced with actual data from index.html)
+        // News articles shared with index.html
         const newsArticles = [
-            {
-                id: 'news1',
-                title: 'Global Oil Prices Drop Amid OPEC+ Production Hike',
-                source: 'Reuters',
-                date: 'May 4, 2025',
-                url: 'https://www.reuters.com/markets/commodities/oil-prices-drop-2025-05-04'
-            },
-            {
-                id: 'news2',
-                title: 'India’s Energy Demand Surges in 2025',
-                source: 'Bloomberg',
-                date: 'May 3, 2025',
-                url: 'https://www.bloomberg.com/news/articles/2025-05-03/india-energy-demand'
-            }
+            { id: 1, category: 'Crude Oil', title: 'Oil Prices Surge Amid Supply Concerns', date: 'May 3, 2025', source: 'Reuters', link: 'https://www.reuters.com/markets/commodities/oil-prices-set-weekly-loss-potential-more-global-supply-2025-04-25/', image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=150&auto=format&fit=crop' },
+            { id: 19, category: 'Earnings', title: 'Google Reports Record Earnings', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-19', image: 'https://images.unsplash.com/photo-1516321310764-9f22c22d2f67?q=80&w=150&auto=format&fit=crop' },
+            { id: 20, category: 'Earnings', title: 'Microsoft Beats Earnings Expectations', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-20', image: 'https://images.unsplash.com/photo-1551288049-b1bd52206d29?q=80&w=150&auto=format&fit=crop' },
+            { id: 21, category: 'Earnings', title: 'ExxonMobil Posts Strong Q1 Results', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-21', image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782e?q=80&w=150&auto=format&fit=crop' }
         ];
 
         // Community posts from community.html
@@ -320,7 +320,7 @@
                 url: 'https://twitter.com/aeberman12/status/1919396685362373026',
                 title: 'Riyadh’s strategic oil play',
                 meta: 'May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>',
-                tweet: '<p lang="en" dir="ltr">My take:<br><br>Riyadh is betting that looming sanctions and tighter supply will push oil prices higher.<br><br>It’s a preemptive move to shape sentiment, not just follow it.<a href="https://t.co/g98C6IMwWl">https://t.co/g98C6IMwWl</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a> <a href="https://twitter.com/hashtag/fintwit?src=hash&ref_src=twsrc%5Etfw">#fintwit</a> <a href="https://twitter.com/hashtag/OPEC?src=hash&ref_src=twsrc%5Etfw">#OPEC</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/com城乡itiesmarket?src=hash&ref_src=twsrc%5Etfw">#commoditiesmarket</a> <a href="https://t.co/qhfZgyHTnM">pic.twitter.com/qhfZgyHTnM</a></p>',
+                tweet: '<p lang="en" dir="ltr">My take:<br><br>Riyadh is betting that looming sanctions and tighter supply will push oil prices higher.<br><br>It’s a preemptive move to shape sentiment, not just follow it.<a href="https://t.co/g98C6IMwWl">https://t.co/g98C6IMwWl</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a> <a href="https://twitter.com/hashtag/fintwit?src=hash&ref_src=twsrc%5Etfw">#fintwit</a> <a href="https://twitter.com/hashtag/OPEC?src=hash&ref_src=twsrc%5Etfw">#OPEC</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/commoditiesmarket?src=hash&ref_src=twsrc%5Etfw">#commoditiesmarket</a> <a href="https://t.co/qhfZgyHTnM">pic.twitter.com/qhfZgyHTnM</a></p>',
                 author: 'Art Berman (@aeberman12)',
                 date: 'May 5, 2025'
             },
@@ -352,7 +352,7 @@
                 url: 'https://twitter.com/aeberman12/status/1919537549501968799',
                 title: 'U.S. shale peak concerns',
                 meta: 'May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>',
-                tweet: '<p lang="en" dir="ltr">“We’re at a tipping point for U.S. oil—geology now outweighs tech gains,” says Travis Stice, CEO, Diamondback Energy<br><br>U.S. shale has likely peaked, with decline driven by low prices, tight margins, and geology.<a href="https://t.co/FKVAY4WazT">https://t.co/FKVAY4WazT</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a>… <a href="https://t.co/FTrFNYXaML">pic.twitter.com/FTrFNYXaML</a></p>',
+                tweet: '<p lang="en" dir="ltr">“We’re at a tipping point for U.S. oil—geology now outweighs tech Gains,” says Travis Stice, CEO, Diamondback Energy<br><br>U.S. shale has likely peaked, with decline driven by low prices, tight margins, and geology.<a href="https://t.co/FKVAY4WazT">https://t.co/FKVAY4WazT</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a>… <a href="https://t.co/FTrFNYXaML">pic.twitter.com/FTrFNYXaML</a></p>',
                 author: 'Art Berman (@aeberman12)',
                 date: 'May 5, 2025'
             },
@@ -387,7 +387,7 @@
             const communityFavoritesContainer = document.getElementById('communityFavorites');
 
             // Render news favorites
-            const favoriteNews = JSON.parse(localStorage.getItem('favoriteNews') || '[]');
+            const favoriteNews = JSON.parse(localStorage.getItem('favorites') || '[]');
             newsFavoritesContainer.innerHTML = '';
             if (favoriteNews.length === 0) {
                 newsFavoritesContainer.innerHTML = '<p class="no-favorites">No favorited news articles yet.</p>';
@@ -397,9 +397,10 @@
                     if (article) {
                         newsFavoritesContainer.innerHTML += `
                             <div class="news-card" data-id="${article.id}">
+                                <img src="${article.image}" alt="${article.title}" class="news-image m-4 sm:m-0 sm:mr-4">
                                 <p class="news-title">${article.title}</p>
-                                <p class="news-meta">${article.date} • ${article.source}</p>
-                                <a href="${article.url}" class="news-link" target="_blank">Read more</a>
+                                <p class="news-meta">${article.date} • ${article.source} <span class="category-label">${article.category}</span></p>
+                                <a href="${article.link}" class="news-link" target="_blank">Read more</a>
                                 <div class="button-container">
                                     <button class="favorite-btn favorited">☆</button>
                                 </div>
@@ -453,10 +454,10 @@
             const confirmation = card.querySelector('.favorite-confirmation');
 
             if (card.classList.contains('news-card')) {
-                const newsId = card.getAttribute('data-id');
-                let favoriteNews = JSON.parse(localStorage.getItem('favoriteNews') || '[]');
+                const newsId = parseInt(card.getAttribute('data-id'));
+                let favoriteNews = JSON.parse(localStorage.getItem('favorites') || '[]');
                 favoriteNews = favoriteNews.filter(id => id !== newsId);
-                localStorage.setItem('favoriteNews', JSON.stringify(favoriteNews));
+                localStorage.setItem('favorites', JSON.stringify(favoriteNews));
             } else if (card.classList.contains('community-card')) {
                 const url = card.getAttribute('data-url');
                 let favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
