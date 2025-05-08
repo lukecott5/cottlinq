@@ -189,6 +189,7 @@
         });
 
 
+
         window.handleLogin = async () => {
             const email = document.getElementById("login-email").value;
             const password = document.getElementById("login-password").value;
@@ -222,7 +223,7 @@
 
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
-                window.location.href = "index.html";
+                window.location.href = ".html";
             } catch (error) {
                 errorMessage.style.display = "block";
                 switch (error.code) {
