@@ -29,10 +29,10 @@
         .community-section h2 {
             font-size: 2rem;
             font-weight: 400;
-            color: #2563eb; /* Tailwind blue-600 */
+            color: #2563eb;
         }
         .community-section .highlight {
-            color: #000000; /* Black for "Linq" */
+            color: #000000;
         }
         .community-subtitle {
             font-size: 1.125rem;
@@ -46,7 +46,7 @@
             padding: 1.5rem;
             border-radius: 2rem;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            order: 2; /* Moved to right */
+            order: 2;
             max-width: 33.333%;
             position: sticky;
             top: 80px;
@@ -71,23 +71,23 @@
             cursor: pointer;
             width: 100%;
             text-align: center;
-            border: 1px solid #d1d5db; /* Gray-300 */
+            border: 1px solid #d1d5db;
         }
         .category-checkbox:hover {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .category-checkbox.bg-gray-800 {
-            background-color: #1f2937; /* Charcoal black */
+            background-color: #1f2937;
             color: #ffffff;
             border-color: #000000;
         }
         .category-checkbox.bg-gray-800:hover {
-            background-color: #111827; /* Darker hover */
+            background-color: #111827;
         }
         .posts-section {
             flex: 2;
             max-width: 66.666%;
-            order: 1; /* Content stays on left */
+            order: 1;
         }
         .post-card {
             background-color: #ffffff;
@@ -168,17 +168,17 @@
             font-size: 1.5rem;
             background: none;
             border: none;
-            color: #000000; /* Black default */
+            color: #000000;
             padding: 0.375rem;
             cursor: pointer;
             transition: color 0.2s ease, transform 0.2s ease;
         }
         .favorite-btn:hover {
-            color: #000000; /* Black on hover */
+            color: #3b82f6;
             transform: scale(1.2);
         }
         .favorited {
-            color: #f59e0b; /* Orange for favorited */
+            color: #3b82f6;
         }
         .share-confirmation {
             margin-top: 0.5rem;
@@ -236,67 +236,6 @@
             align-items: center;
             margin-top: 0.5rem;
         }
-        #loginModal {
-            display: none;
-        }
-        #loginModal:not(.hidden) {
-            display: block;
-        }
-        .modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 40;
-        }
-        .modal-content {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffffff;
-            padding: 1.5rem;
-            border-radius: 1rem; /* rounded-xl */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 20rem;
-            width: 100%;
-            z-index: 50;
-            font-family: 'Lexend', sans-serif;
-            color: #2d3748;
-            transition: opacity 200ms ease, transform 200ms ease;
-        }
-        #loginModal.hidden .modal-content {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.95);
-        }
-        #loginModal:not(.hidden) .modal-content {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        .modal-close-icon {
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            width: 1.5rem;
-            height: 1.5rem;
-            color: #6b7280; /* Gray-500 */
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-        .modal-close-icon:hover {
-            color: #374151; /* Gray-700 */
-        }
-        .modal-link {
-            color: #2563eb; /* Blue-600 */
-            font-weight: 600;
-            text-decoration: underline;
-            transition: color 0.2s ease;
-        }
-        .modal-link:hover {
-            color: #1d4ed8; /* Blue-700 */
-        }
         @media (max-width: 768px) {
             .community-section {
                 padding: 1.5rem;
@@ -339,10 +278,10 @@
             .favorite-btn {
                 font-size: 1.125rem;
                 padding: 0.3rem;
-                color: #000000; /* Black default */
+                color: #000000;
             }
             .favorite-btn:hover {
-                color: #000000; /* Black hover */
+                color: #000000;
             }
             .search-container {
                 max-width: 100%;
@@ -351,17 +290,6 @@
                 font-size: 0.675rem;
             }
             .nav-link.text-sm {
-                font-size: 0.75rem;
-            }
-            .modal-content {
-                max-width: 16rem;
-                padding: 1rem;
-            }
-            .modal-close-icon {
-                width: 1.25rem;
-                height: 1.25rem;
-            }
-            .modal-content p {
                 font-size: 0.75rem;
             }
         }
@@ -375,7 +303,7 @@
                 <a href="index.html#news" class="nav-link">News</a>
                 <a href="favorites.html" class="nav-link">Favorites</a>
                 <a href="community.html" class="nav-link">Community</a>
-                <a href="login.html" class="nav-link text-sm">Login</a>
+                <a href="login.html" class="nav-link">Login</a>
             </div>
         </div>
     </nav>
@@ -575,15 +503,6 @@
                 </div>
             </aside>
         </div>
-        <div id="loginModal" class="hidden">
-            <div class="modal-backdrop"></div>
-            <div class="modal-content">
-                <svg class="modal-close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <p class="text-sm">You must be logged in to use the favorite feature. <a href="login.html" class="modal-link">Login here</a>.</p>
-            </div>
-        </div>
     </main>
 
     <footer class="bg-white text-gray-600 py-6 shadow">
@@ -597,21 +516,7 @@
         </div>
     </footer>
 
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyC76M6U4ZxO2AUr_IZlJ2C2SHzg0yS6zqM",
-            authDomain: "linq-news.firebaseapp.com",
-            projectId: "linq-news",
-            storageBucket: "linq-news.appspot.com",
-            messagingSenderId: "210614100652",
-            appId: "1:210614100652:web:1b47329f8437a04eabf087"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
         function filterPosts() {
             const categoryButtons = document.querySelectorAll('.category-checkbox');
             const selectedCategories = Array.from(categoryButtons)
@@ -676,38 +581,30 @@
         }
 
         function favoritePost(button) {
-            const modal = document.getElementById('loginModal');
             const url = button.getAttribute('data-url');
             if (!url) return;
 
-            auth.onAuthStateChanged(user => {
-                if (!user) {
-                    modal.classList.remove('hidden');
-                    return;
-                }
+            let favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
+            const isFavorited = favoritePosts.includes(url);
 
-                let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-                const isFavorited = favorites.includes(url);
+            if (isFavorited) {
+                favoritePosts = favoritePosts.filter(fav => fav !== url);
+                button.classList.remove('favorited');
+            } else {
+                favoritePosts.push(url);
+                button.classList.add('favorited');
+            }
 
-                if (isFavorited) {
-                    favorites = favorites.filter(fav => fav !== url);
-                    button.classList.remove('favorited');
-                } else {
-                    favorites.push(url);
-                    button.classList.add('favorited');
-                }
-
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-            });
+            localStorage.setItem('favoritePosts', JSON.stringify(favoritePosts));
         }
 
         function initializeFavorites() {
-            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
             document.querySelectorAll('.post-card').forEach(post => {
                 const urlElement = post.querySelector('.twitter-tweet a:last-child');
                 const url = urlElement ? urlElement.href : '';
                 const button = post.querySelector('.favorite-btn');
-                if (url && favorites.includes(url)) {
+                if (url && favoritePosts.includes(url)) {
                     button.classList.add('favorited');
                 }
             });
@@ -737,19 +634,6 @@
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', filterPosts);
 
-            const modal = document.getElementById('loginModal');
-            const closeIcon = modal.querySelector('.modal-close-icon');
-            const loginLink = modal.querySelector('.modal-link');
-
-            closeIcon.addEventListener('click', () => {
-                modal.classList.add('hidden');
-            });
-
-            loginLink.addEventListener('click', () => {
-                modal.classList.add('hidden');
-                window.location.href = 'login.html';
-            });
-
             const twitterScript = document.createElement('script');
             twitterScript.src = 'https://platform.twitter.com/widgets.js';
             twitterScript.async = true;
@@ -766,6 +650,5 @@
             alert('Please view Privacy Policy on the main page.');
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93cbcdb3be7f7ba8',t:'MTc0NjczNzE1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
