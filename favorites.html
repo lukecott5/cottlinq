@@ -473,5 +473,42 @@
         // Initialize favorites on page load
         document.addEventListener('DOMContentLoaded', renderFavorites);
     </script>
+    <script>
+    const newsFavorites = JSON.parse(localStorage.getItem('favorites-news') || '[]');
+    const communityFavorites = JSON.parse(localStorage.getItem('favorites-community') || '[]');
+    
+    function renderFavorites() {
+        const newsContainer = document.getElementById('newsFavorites');
+        const communityContainer = document.getElementById('communityFavorites');
+    
+        if (newsFavorites.length === 0) {
+            newsContainer.innerHTML = "<p class='no-favorites'>No favorite news articles yet.</p>";
+        } else {
+            newsFavorites.forEach(article => {
+                newsContainer.innerHTML += `
+                    <div class="news-card">
+                        <p class="news-title">${article.title}</p>
+                        <p class="news-meta">${article.date} • ${article.source}</p>
+                        <a class="news-link" href="${article.url}" target="_blank">Read More</a>
+                    </div>`;
+            });
+        }
+    
+        if (communityFavorites.length === 0) {
+            communityContainer.innerHTML = "<p class='no-favorites'>No favorite community posts yet.</p>";
+        } else {
+            communityFavorites.forEach(post => {
+                communityContainer.innerHTML += `
+                    <div class="community-card">
+                        <p class="community-title">${post.title}</p>
+                        <p class="community-meta">${post.meta}</p>
+                        <div class="twitter-tweet">${post.tweet}</div>
+                        <a class="news-link" href="${post.url}" target="_blank">View Tweet</a>
+                    </div>`;
+            });
+        }
+    }
+    renderFavorites();
+    </script>
 </body>
 </html>
