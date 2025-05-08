@@ -10,105 +10,100 @@
         body {
             font-family: 'Lexend', sans-serif;
             font-weight: 400;
-            background-color: #ffffff;
-            color: #2d3748;
+            background-color: #f9fafb;
+            color: #1f2937;
         }
         .favorites-section {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-            color: #2d3748;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 2rem auto;
         }
         .favorites-section h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 400;
-            color: #2d3748;
-            width: 100%;
+            grid-column: span 2;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 1px;
+            color: #000000; /* Black for "your favorite" */
         }
         .favorites-section .highlight {
-            color: #2563eb; /* Tailwind blue-600 */
+            color: #3b82f6;
+            text-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
         }
         .news-section, .community-section {
-            flex: 1;
-            min-width: 300px;
+            min-width: 0;
+            padding: 1.5rem;
+        }
+        .news-section:hover, .community-section:hover {
+            transform: translateY(-5px);
         }
         .news-section h2, .community-section h2 {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 400;
-            color: #1a202c;
-            margin-bottom: 1rem;
-            font-family: 'Lexend', sans-serif;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 0.5rem;
         }
         .news-card, .community-card {
-            background-color: #ffffff;
-            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-            display: flex;
-            flex-direction: column;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
         .news-card:hover, .community-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
         }
         .news-title, .community-title {
-            font-size: 1.25rem;
-            font-weight: 400;
-            color: #2d3748;
-            margin: 0 0 0.5rem;
-            line-height: 1.4;
-            font-family: 'Lexend', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #1f2937;
+            margin: 0 0 0.75rem;
+            line-height: 1.5;
         }
         .news-meta, .community-meta {
-            font-size: 0.875rem;
-            color: #4a5568;
+            font-size: 0.9rem;
+            color: #6b7280;
             margin: 0.5rem 0;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
         }
         .category-label {
-            background-color: #e2e8f0;
-            color: #2d3748;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            font-weight: 400;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
             margin-left: 0.5rem;
-            font-family: 'Lexend', sans-serif;
         }
         .news-link {
-            color: #8bbcff;
+            color: #3b82f6;
             text-decoration: none;
-            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            transition: color 0.2s ease;
         }
         .news-link:hover {
+            color: #1e40af;
             text-decoration: underline;
         }
         .twitter-tweet {
             margin-top: 0.75rem;
             padding: 1rem;
-            background-color: #ffffff;
+            background: #f8fafc;
             border-radius: 8px;
-            color: #2d3748;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
+            border-left: 4px solid #3b82f6;
         }
         .twitter-tweet a {
-            color: #8bbcff;
+            color: #3b82f6;
             text-decoration: none;
-            font-family: 'Lexend', sans-serif;
         }
         .twitter-tweet a:hover {
             text-decoration: underline;
@@ -120,62 +115,89 @@
             gap: 0.5rem;
         }
         .favorite-btn {
-            background: none;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
-            font-size: 1rem;
-            color: #000000;
+            background: #ffffff;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #3b82f6;
             cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease;
-            padding: 0.5rem;
-            line-height: 1;
+            transition: all 0.2s ease;
+            padding: 0.5rem 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 2rem;
         }
         .favorite-btn:hover {
-            background-color: #f5f5f5;
-            color: #000000;
+            background: #3b82f6;
+            color: #ffffff;
         }
         .favorite-btn.favorited {
-            font-weight: bold;
-            color: #facc15; /* Yellow for favorited state */
+            background: #facc15;
+            color: #1f2937;
+            border-color: #facc15;
+            font-weight: 600;
         }
         .favorite-confirmation {
             margin-top: 0.5rem;
-            font-size: 0.75rem;
-            color: #4a5568;
+            font-size: 0.8rem;
+            color: #6b7280;
             display: none;
-            font-family: 'Lexend', sans-serif;
             align-self: flex-end;
         }
         .favorite-confirmation:not(.hidden) {
             display: block;
         }
         .no-favorites {
-            font-size: 1rem;
-            color: #4a5568;
-            font-family: 'Lexend', sans-serif;
-            font-weight: 400;
+            font-size: 1.1rem;
+            color: #6b7280;
             text-align: center;
+            padding: 2rem;
+            background: #f1f5f9;
+            border-radius: 12px;
         }
         .nav-link {
             transition: color 0.2s ease;
-            color: #333333;
+            color: #1f2937;
+            font-weight: 500;
         }
         .nav-link:hover {
-            color: #60a5fa;
+            color: #3b82f6;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .favorites-section {
-                padding: 1.5rem;
-                flex-direction: column;
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+            .favorites-section h1 {
+                font-size: 2.5rem;
+                grid-column: span 1;
             }
             .news-section, .community-section {
-                min-width: 100%;
+                padding: 1rem;
+            }
+            .news-section h2, .community-section h2 {
+                font-size: 1.5rem;
+            }
+            .news-card, .community-card {
+                padding: 1.2rem;
+            }
+            .news-title, .community-title {
+                font-size: 1.2rem;
+            }
+            .news-meta, .community-meta {
+                font-size: 0.85rem;
+            }
+            .category-label {
+                font-size: 0.8rem;
+            }
+            .favorite-btn {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .favorites-section {
+                padding: 1.5rem;
             }
             .favorites-section h1 {
                 font-size: 2rem;
@@ -187,21 +209,11 @@
                 padding: 1rem;
             }
             .news-title, .community-title {
-                font-size: 1.125rem;
-            }
-            .news-meta, .community-meta {
-                font-size: 0.75rem;
-            }
-            .category-label {
-                font-size: 0.75rem;
+                font-size: 1.1rem;
             }
             .favorite-btn {
-                font-size: 0.875rem;
-                padding: 0.4rem;
-                min-width: 1.75rem;
-            }
-            .favorite-confirmation {
-                font-size: 0.675rem;
+                font-size: 0.8rem;
+                padding: 0.3rem 0.7rem;
             }
         }
     </style>
@@ -308,7 +320,7 @@
                 url: 'https://twitter.com/aeberman12/status/1919396685362373026',
                 title: 'Riyadh’s strategic oil play',
                 meta: 'May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>',
-                tweet: '<p lang="en" dir="ltr">My take:<br><br>Riyadh is betting that looming sanctions and tighter supply will push oil prices higher.<br><br>It’s a preemptive move to shape sentiment, not just follow it.<a href="https://t.co/g98C6IMwWl">https://t.co/g98C6IMwWl</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a> <a href="https://twitter.com/hashtag/fintwit?src=hash&ref_src=twsrc%5Etfw">#fintwit</a> <a href="https://twitter.com/hashtag/OPEC?src=hash&ref_src=twsrc%5Etfw">#OPEC</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/commoditiesmarket?src=hash&ref_src=twsrc%5Etfw">#commoditiesmarket</a> <a href="https://t.co/qhfZgyHTnM">pic.twitter.com/qhfZgyHTnM</a></p>',
+                tweet: '<p lang="en" dir="ltr">My take:<br><br>Riyadh is betting that looming sanctions and tighter supply will push oil prices higher.<br><br>It’s a preemptive move to shape sentiment, not just follow it.<a href="https://t.co/g98C6IMwWl">https://t.co/g98C6IMwWl</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a> <a href="https://twitter.com/hashtag/fintwit?src=hash&ref_src=twsrc%5Etfw">#fintwit</a> <a href="https://twitter.com/hashtag/OPEC?src=hash&ref_src=twsrc%5Etfw">#OPEC</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/com城乡itiesmarket?src=hash&ref_src=twsrc%5Etfw">#commoditiesmarket</a> <a href="https://t.co/qhfZgyHTnM">pic.twitter.com/qhfZgyHTnM</a></p>',
                 author: 'Art Berman (@aeberman12)',
                 date: 'May 5, 2025'
             },
@@ -472,43 +484,6 @@
 
         // Initialize favorites on page load
         document.addEventListener('DOMContentLoaded', renderFavorites);
-    </script>
-    <script>
-    const newsFavorites = JSON.parse(localStorage.getItem('favorites-news') || '[]');
-    const communityFavorites = JSON.parse(localStorage.getItem('favorites-community') || '[]');
-    
-    function renderFavorites() {
-        const newsContainer = document.getElementById('newsFavorites');
-        const communityContainer = document.getElementById('communityFavorites');
-    
-        if (newsFavorites.length === 0) {
-            newsContainer.innerHTML = "<p class='no-favorites'>No favorite news articles yet.</p>";
-        } else {
-            newsFavorites.forEach(article => {
-                newsContainer.innerHTML += `
-                    <div class="news-card">
-                        <p class="news-title">${article.title}</p>
-                        <p class="news-meta">${article.date} • ${article.source}</p>
-                        <a class="news-link" href="${article.url}" target="_blank">Read More</a>
-                    </div>`;
-            });
-        }
-    
-        if (communityFavorites.length === 0) {
-            communityContainer.innerHTML = "<p class='no-favorites'>No favorite community posts yet.</p>";
-        } else {
-            communityFavorites.forEach(post => {
-                communityContainer.innerHTML += `
-                    <div class="community-card">
-                        <p class="community-title">${post.title}</p>
-                        <p class="community-meta">${post.meta}</p>
-                        <div class="twitter-tweet">${post.tweet}</div>
-                        <a class="news-link" href="${post.url}" target="_blank">View Tweet</a>
-                    </div>`;
-            });
-        }
-    }
-    renderFavorites();
     </script>
 </body>
 </html>
