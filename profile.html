@@ -207,16 +207,17 @@
 </head>
 <body>
     <header class="bg-white py-4 shadow fixed top-0 left-0 w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="index.html" class="text-4xl text-black">Linq</a>
-            <div class="flex items-center space-x-6">
-                <a href="index.html#news" class="nav-link">News</a>
-                <a href="favorites.html" class="nav-link">Favorites</a>
-                <a href="community.html" class="nav-link">Community</a>
-                <a id="authLink" href="login.html" class="nav-link">Login</a>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <a href="index.html" class="text-4xl text-black font-bold">Linq</a>
+        <div class="flex items-center space-x-6">
+          <a href="index.html#news" class="nav-link text-base">News</a>
+          <a href="favorites.html" class="nav-link text-base">Favorites</a>
+          <a href="community.html" class="nav-link text-base">Community</a>
+          <a id="authLink" href="login.html" class="nav-link text-base">Login</a>
         </div>
+      </div>
     </header>
+
 
     <main>
         <h1>Account Settings</h1>
@@ -324,24 +325,24 @@
 
         // Check Authentication State
         function checkAuthState() {
-            auth.onAuthStateChanged(user => {
-                const authLink = document.getElementById('authLink');
-                if (user) {
-                    authLink.textContent = 'Profile';
-                    authLink.href = 'profile.html';
-                    loadUserProfile(user);
-                } else {
-                    setTimeout(() => {
-                        if (!auth.currentUser) {
-                            authLink.textContent = 'Login';
-                            authLink.href = 'login.html';
-                            alert('No user logged in. Redirecting to login page...');
-                            window.location.href = 'login.html';
-                        }
-                    }, 300); // delay allows auth to stabilize
-                }
-            });
-        }
+        auth.onAuthStateChanged(user => {
+            const authLink = document.getElementById('authLink');
+            if (user) {
+                authLink.textContent = 'Profile';
+                authLink.href = 'profile.html';
+                loadUserProfile(user);
+            } else {
+                setTimeout(() => {
+                    if (!auth.currentUser) {
+                        authLink.textContent = 'Login';
+                        authLink.href = 'login.html';
+                        alert('No user logged in. Redirecting to login page...');
+                        window.location.href = 'login.html';
+                    }
+                }, 300);
+            }
+        });
+
 
         // Load User Profile
         async function loadUserProfile(user) {
