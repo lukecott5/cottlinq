@@ -326,18 +326,19 @@
         // Check Authentication State
         // Check Authentication State
         function checkAuthState() {
-            auth.onAuthStateChanged(user => {
-                const authLink = document.getElementById('authLink');
-                if (user) {
-                    authLink.textContent = 'Profile';
-                    authLink.href = 'profile.html';
-                    loadUserProfile(user);
-                } else {
-                    authLink.textContent = 'Login';
-                    authLink.href = 'login.html';
-                }
-            });
-        }
+        auth.onAuthStateChanged(user => {
+            const authLink = document.getElementById('authLink');
+            if (user) {
+                authLink.textContent = 'Profile';
+                authLink.href = 'profile.html';
+                loadUserProfile(user);
+            } else {
+                authLink.textContent = 'Login';
+                authLink.href = 'login.html';
+            }
+        });
+    }
+
 
 
 
