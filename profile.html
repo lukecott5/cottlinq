@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account - LINQ</title>
+    <title>Account - Linq</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
     <style>
@@ -24,51 +24,14 @@
             color: #d0d7de;
         }
 
-        header {
-            background: linear-gradient(135deg, #ffffff, #f0f4f8);
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 50;
-        }
-
-        .dark-mode header {
-            background: linear-gradient(135deg, #2a2f32, #1e2527);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            color: #2a2f32;
-        }
-
-        .dark-mode .logo {
-            color: #d0d7de;
-        }
-
-        nav a {
-            margin-left: 1.5rem;
-            text-decoration: none;
-            color: #1a73e8;
+        .nav-link {
+            color: #000;
+            font-size: 1.1rem;
             transition: color 0.3s;
         }
 
-        nav a:hover {
-            color: #1557b0;
-        }
-
-        .dark-mode nav a {
-            color: #8ab4f8;
-        }
-
-        .dark-mode nav a:hover {
-            color: #c6d7f8;
+        .nav-link:hover {
+            color: #3b82f6;
         }
 
         main {
@@ -114,48 +77,6 @@
 
         .dark-mode .account-section h2 {
             color: #d0d7de;
-        }
-
-        .profile-pic-container {
-            position: relative;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #000000;
-            transition: opacity 0.3s;
-        }
-
-        .upload-overlay {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            color: #ffffff;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .profile-pic-container:hover .upload-overlay {
-            opacity: 1;
-        }
-
-        .upload-overlay span {
-            text-align: center;
         }
 
         .form-group {
@@ -281,23 +202,20 @@
             .account-section {
                 padding: 1.5rem;
             }
-
-            .profile-pic {
-                width: 100px;
-                height: 100px;
-            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">Linq</div>
-        <nav>
-            <a href="index.html#news">News</a>
-            <a href="favorites.html">Favorites</a>
-            <a href="community.html">Community</a>
-            <a id="authLink" href="login.html">Login</a>
-        </nav>
+    <header class="bg-white py-4 shadow fixed top-0 left-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <a href="index.html" class="text-4xl text-black">Linq</a>
+            <div class="flex items-center space-x-6">
+                <a href="index.html#news" class="nav-link">News</a>
+                <a href="favorites.html" class="nav-link">Favorites</a>
+                <a href="community.html" class="nav-link">Community</a>
+                <a id="authLink" href="login.html" class="nav-link">Login</a>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -306,13 +224,6 @@
         <!-- Profile Information -->
         <div class="account-section">
             <h2>Profile Information</h2>
-            <div class="profile-pic-container">
-                <img id="profile-pic" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" alt="Profile Picture">
-                <div class="upload-overlay" onclick="document.getElementById('profile-pic-upload').click()">
-                    <span>Click or Drag<br>to Upload</span>
-                </div>
-                <input type="file" id="profile-pic-upload" accept="image/*" onchange="updateProfilePic()" style="display: none;">
-            </div>
             <div class="form-group">
                 <label for="display-email">Email</label>
                 <input type="email" id="display-email" readonly>
@@ -365,7 +276,7 @@
     </main>
 
     <footer>
-        <div>© 2025 LINQ. All rights reserved.</div>
+        <div>© 2025 Linq. All rights reserved.</div>
         <div>
             <a href="#" onclick="showTerms(event)">Terms of Service</a>
             <a href="#" onclick="showPrivacy(event)">Privacy Policy</a>
@@ -395,7 +306,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
     <script>
         // Firebase Configuration
         const firebaseConfig = {
@@ -411,10 +321,6 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const storage = firebase.storage();
-
-        // Default profile picture
-        const defaultProfilePic = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106";
 
         // Check Authentication State
         function checkAuthState() {
@@ -445,7 +351,6 @@
                 document.getElementById('display-email').value = user.email || 'Not available';
                 document.getElementById('edit-name').value = userData.name || '';
                 document.getElementById('edit-bio').value = userData.bio || '';
-                document.getElementById('profile-pic').src = userData.profilePic || defaultProfilePic;
                 document.getElementById('email-notifications').checked = userData.emailNotifications !== false;
             } catch (error) {
                 console.error('Error loading user profile:', error);
@@ -466,37 +371,12 @@
                 await db.collection('users').doc(user.uid).set({
                     name: newName,
                     bio: newBio,
-                    profilePic: document.getElementById('profile-pic').src,
                     emailNotifications: document.getElementById('email-notifications').checked
                 }, { merge: true });
                 alert('Profile updated successfully!');
             } catch (error) {
                 console.error('Error updating profile:', error);
                 alert('Error updating profile: ' + error.message);
-            }
-        }
-
-        // Update Profile Picture
-        async function updateProfilePic() {
-            const ')' {
-                alert('No user logged in.');
-                return;
-            }
-            const fileInput = document.getElementById('profile-pic-upload');
-            if (fileInput.files && fileInput.files[0]) {
-                try {
-                    const file = fileInput.files[0];
-                    const storageRef = storage.ref(`profile_pics/${user.uid}/${file.name}`);
-                    await storageRef.put(file);
-                    const downloadURL = await storageRef.getDownloadURL();
-                    document.getElementById('profile-pic').src = downloadURL;
-                    await db.collection('users').doc(user.uid).set({
-                        profilePic: downloadURL
-                    }, { merge: true });
-                } catch (error) {
-                    console.error('Error uploading profile picture:', error);
-                    alert('Error uploading profile picture: ' + error.message);
-                }
             }
         }
 
