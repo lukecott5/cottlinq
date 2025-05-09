@@ -486,5 +486,47 @@
         // Initialize favorites on page load
         document.addEventListener('DOMContentLoaded', renderFavorites);
     </script>
+    <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyC76M6U4ZxO2AUr_IZlJ2C2SHzg0yS6zqM",
+      authDomain: "linq-news.firebaseapp.com",
+      projectId: "linq-news",
+    });
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    
+    auth.onAuthStateChanged(user => {
+      if (!user) return window.location.href = "login.html";
+    
+      const newsContainer = document.getElementById("newsFavorites");
+      const communityContainer = document.getElementById("communityFavorites");
+    
+      db.collection("users").doc(user.uid).collection("favorites").get().then(snapshot => {
+        if (snapshot.empty) {
+          newsContainer.innerHTML = "<div class='no-favorites'>You haven’t saved any favorites yet.</div>";
+          return;
+        }
+    
+        snapshot.forEach(doc => {
+          const item = doc.data();
+          const div = document.createElement("div");
+          div.className = item.link.includes("twitter.com") ? "community-card" : "news-card";
+    
+          div.innerHTML = `
+            <div class="${item.link.includes('twitter.com') ? 'community-title' : 'news-title'}">${item.title}</div>
+            <div class="${item.link.includes('twitter.com') ? 'community-meta' : 'news-meta'}">${item.date} • ${item.source || ''}</div>
+            ${item.image ? `<img src="${item.image}" class="news-image mb-3"/>` : ""}
+            <a href="${item.link}" class="news-link" target="_blank">Read more</a>
+          `;
+    
+          if (item.link.includes("twitter.com")) {
+            communityContainer.appendChild(div);
+          } else {
+            newsContainer.appendChild(div);
+          }
+        });
+      });
+    });
+    </script>
 </body>
 </html>
