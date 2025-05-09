@@ -536,8 +536,12 @@
           } else {
             authLink.textContent = 'Login';
             authLink.href = 'login.html';
-            if (window.location.pathname.includes('profile.html')) {
-              window.location.href = 'login.html';
+            if (!user && window.location.pathname.includes('profile.html')) {
+    setTimeout(() => {
+        window.location.href = 'login.html';
+    }, 100);
+}
+
             }
           }
         });
@@ -630,8 +634,11 @@
       // Logout
       window.logout = async () => {
         try {
-          await signOut(auth);
+        await signOut(auth);
+        setTimeout(() => {
           window.location.href = 'login.html';
+        }, 200);
+
         } catch (error) {
           console.error('Logout failed:', error);
           alert('Logout error: ' + error.message);
