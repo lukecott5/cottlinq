@@ -325,19 +325,25 @@
 
         // Check Authentication State
         // Check Authentication State
-        function checkAuthState() {
-        auth.onAuthStateChanged(user => {
-            const authLink = document.getElementById('authLink');
-            if (user) {
-                authLink.textContent = 'Profile';
-                authLink.href = 'profile.html';
-                loadUserProfile(user);
-            } else {
-                authLink.textContent = 'Login';
-                authLink.href = 'login.html';
+    function checkAuthState() {
+    const authLink = document.getElementById('authLink');
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            authLink.textContent = 'Profile';
+            authLink.href = 'profile.html';
+        } else {
+            authLink.textContent = 'Login';
+            authLink.href = 'login.html';
+
+            // Optional: if on profile page, redirect to login
+            if (window.location.pathname.includes('profile.html')) {
+                window.location.href = 'login.html';
             }
-        });
-    }
+        }
+    });
+}
+
+
 
 
 
