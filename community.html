@@ -313,12 +313,12 @@
             <div class="posts-section">
                 <h2>The <span class="highlight">Linq</span> to Your Community</h2>
                 <p class="community-subtitle">Real-Time Posts from Energy Experts</p>
-                <div class="search-container">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <input type="text" id="searchInput" placeholder="Search posts or authors..." class="text-gray-800">
-                </div>
+                      <div class="search-container mb-6 relative max-w-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Search posts..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500">
+                      </div>
                 <div class="post-card" data-category="Crude Oil">
                     <p class="post-title">If Saudis and OPEC+ maintain production levels without increasing output</p>
                     <p class="post-meta">May 4, 2025 • JH (@CRUDEOIL231) <span class="category-label">Crude oil</span></p>
@@ -326,6 +326,13 @@
                         <p lang="en" dir="ltr">If Saudis and OPEC+ maintain production levels without increasing output, and as a result, Brent crude prices barely hold steady around $70/bbl, would that be favorable for your positions?<br><br>Of course the best-case scenario is for prices to remain high, but that seems unlikely.…</p>
                         — JH (@CRUDEOIL231) <a href="https://twitter.com/CRUDEOIL231/status/1919070053825495266?ref_src=twsrc%5Etfw">May 4, 2025</a>
                     </blockquote>
+                    <button
+                        class="share-btn"
+                        data-title="If Saudis and OPEC+ maintain production levels..."
+                        data-url="https://twitter.com/CRUDEOIL231/status/1919070053825495266"
+                    >
+                        Share
+                    </button>
                     <div class="post-footer">
                         <button class="share-btn">Share</button>
                         <button class="favorite-btn" data-url="https://twitter.com/CRUDEOIL231/status/1919070053825495266?ref_src=twsrc%5Etfw">☆</button>
@@ -677,6 +684,39 @@
             event.preventDefault();
             alert('Please view Privacy Policy on the main page.');
         }
+    </script>
+    <script>
+      document.getElementById('searchInput').addEventListener('input', function () {
+        const query = this.value.toLowerCase();
+        const posts = document.querySelectorAll('.post-card');
+    
+        posts.forEach(post => {
+          const title = post.querySelector('.post-title')?.textContent.toLowerCase() || '';
+          const category = post.dataset.category?.toLowerCase() || '';
+          const matches = title.includes(query) || category.includes(query);
+          post.style.display = matches ? 'block' : 'none';
+        });
+      });
+    </script>
+    <script>
+      document.querySelectorAll('.share-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const title = button.getAttribute('data-title');
+          const url = button.getAttribute('data-url');
+    
+          if (navigator.share) {
+            navigator.share({
+              title: title,
+              text: title,
+              url: url
+            }).catch(err => {
+              if (err.name !== 'AbortError') console.error('Sharing failed:', err);
+            });
+          } else {
+            alert('Sharing is not supported on this device/browser.');
+          }
+        });
+      });
     </script>
 </body>
 </html>
