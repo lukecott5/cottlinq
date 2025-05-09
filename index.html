@@ -704,5 +704,26 @@
         }
       });
     </script>
+    <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyC76M6U4ZxO2AUr_IZlJ2C2SHzg0yS6zqM",
+      authDomain: "linq-news.firebaseapp.com",
+      projectId: "linq-news",
+    });
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    
+    function addFavorite(article) {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("You must be logged in to save favorites.");
+        return;
+      }
+    
+      db.collection("users").doc(user.uid).collection("favorites").doc(article.id.toString()).set(article)
+        .then(() => alert("Added to favorites!"))
+        .catch(err => console.error("Favorite error:", err));
+    }
+    </script>
 </body>
 </html>
