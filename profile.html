@@ -309,14 +309,15 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
     <script>
         // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyC76M6U4ZxO2AUr_IZlJ2C2SHzg0yS6zqM",
-            authDomain: "linq-news.firebaseapp.com",
-            projectId: "linq-news",
-            storageBucket: "linq-news.appspot.com",
-            messagingSenderId: "210614100652",
-            appId: "1:210614100652:web:1b47329f8437a04eabf087"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyD_FCx8sIkrCoQMoKm5xQIvlyAmlqptETk",
+        authDomain: "linq-b27a8.firebaseapp.com",
+        projectId: "linq-b27a8",
+        storageBucket: "linq-b27a8.firebasestorage.app",
+        messagingSenderId: "1067901051826",
+        appId: "1:1067901051826:web:44452d1339cdbe2af07aab"
+    };
+
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -504,6 +505,180 @@
                 closePrivacy();
             }
         };
+    </script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut, updatePassword, deleteUser } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+      import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+    
+      // Firebase config (from login.html / linq-b27a8)
+      const firebaseConfig = {
+        apiKey: "AIzaSyD_FCx8sIkrCoQMoKm5xQIvlyAmlqptETk",
+        authDomain: "linq-b27a8.firebaseapp.com",
+        projectId: "linq-b27a8",
+        storageBucket: "linq-b27a8.firebasestorage.app",
+        messagingSenderId: "1067901051826",
+        appId: "1:1067901051826:web:44452d1339cdbe2af07aab"
+      };
+    
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+    
+      // Auth check
+      function checkAuthState() {
+        const authLink = document.getElementById('authLink');
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            authLink.textContent = 'Profile';
+            authLink.href = 'profile.html';
+            await loadUserProfile(user);
+          } else {
+            authLink.textContent = 'Login';
+            authLink.href = 'login.html';
+            if (window.location.pathname.includes('profile.html')) {
+              window.location.href = 'login.html';
+            }
+          }
+        });
+      }
+    
+      // Load profile
+      async function loadUserProfile(user) {
+        try {
+          const userRef = doc(db, 'users', user.uid);
+          const userSnap = await getDoc(userRef);
+          const data = userSnap.exists() ? userSnap.data() : {};
+    
+          document.getElementById('display-email').value = user.email || '';
+          document.getElementById('edit-name').value = data.name || '';
+          document.getElementById('edit-bio').value = data.bio || '';
+          document.getElementById('email-notifications').checked = data.emailNotifications !== false;
+        } catch (error) {
+          console.error('Failed to load profile:', error);
+          alert('Failed to load profile: ' + error.message);
+        }
+      }
+    
+      // Update profile
+      window.updateProfile = async () => {
+        const user = auth.currentUser;
+        if (!user) return alert('No user logged in.');
+    
+        try {
+          const userRef = doc(db, 'users', user.uid);
+          await setDoc(userRef, {
+            name: document.getElementById('edit-name').value,
+            bio: document.getElementById('edit-bio').value,
+            emailNotifications: document.getElementById('email-notifications').checked
+          }, { merge: true });
+    
+          alert('Profile updated.');
+        } catch (error) {
+          console.error(error);
+          alert('Error updating profile: ' + error.message);
+        }
+      };
+    
+      // Update password
+      window.updateSecurity = async () => {
+        const user = auth.currentUser;
+        const newPassword = document.getElementById('edit-password').value;
+    
+        if (!user) return alert('No user logged in.');
+        if (!newPassword || newPassword.length < 6) return alert('Password must be at least 6 characters.');
+    
+        try {
+          await updatePassword(user, newPassword);
+          alert('Password updated!');
+          document.getElementById('edit-password').value = '';
+        } catch (error) {
+          console.error(error);
+          alert('Error updating password: ' + error.message);
+        }
+      };
+    
+      // Notifications toggle
+      window.updateNotifications = async () => {
+        const user = auth.currentUser;
+        if (!user) return alert('No user logged in.');
+    
+        try {
+          const userRef = doc(db, 'users', user.uid);
+          await setDoc(userRef, {
+            emailNotifications: document.getElementById('email-notifications').checked
+          }, { merge: true });
+        } catch (error) {
+          console.error(error);
+          alert('Error saving preference: ' + error.message);
+        }
+      };
+    
+      // Dark mode
+      window.toggleDarkMode = () => {
+        const isDark = document.getElementById('dark-mode').checked;
+        document.body.classList.toggle('dark-mode', isDark);
+        localStorage.setItem('darkMode', isDark);
+      };
+    
+      function loadPreferences() {
+        const dark = localStorage.getItem('darkMode') === 'true';
+        document.getElementById('dark-mode').checked = dark;
+        document.body.classList.toggle('dark-mode', dark);
+      }
+    
+      // Logout
+      window.logout = async () => {
+        try {
+          await signOut(auth);
+          window.location.href = 'login.html';
+        } catch (error) {
+          console.error('Logout failed:', error);
+          alert('Logout error: ' + error.message);
+        }
+      };
+    
+      // Delete account
+      window.deleteAccount = async () => {
+        const user = auth.currentUser;
+        if (!user) return alert('No user logged in.');
+        if (!confirm('Are you sure you want to delete your account?')) return;
+    
+        try {
+          await deleteDoc(doc(db, 'users', user.uid));
+          await deleteUser(user);
+          alert('Account deleted.');
+          window.location.href = 'login.html';
+        } catch (error) {
+          console.error(error);
+          alert('Error deleting account: ' + error.message);
+        }
+      };
+    
+      // Terms & privacy modals
+      window.showTerms = (e) => {
+        e.preventDefault();
+        document.getElementById('termsContent').style.display = 'flex';
+      };
+      window.closeTerms = () => document.getElementById('termsContent').style.display = 'none';
+    
+      window.showPrivacy = (e) => {
+        e.preventDefault();
+        document.getElementById('privacyContent').style.display = 'flex';
+      };
+      window.closePrivacy = () => document.getElementById('privacyContent').style.display = 'none';
+    
+      // Outside modal click close
+      window.onclick = (e) => {
+        if (e.target === document.getElementById('termsContent')) closeTerms();
+        if (e.target === document.getElementById('privacyContent')) closePrivacy();
+      };
+    
+      // Init
+      window.addEventListener('load', () => {
+        checkAuthState();
+        loadPreferences();
+      });
     </script>
 </body>
 </html>
