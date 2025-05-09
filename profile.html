@@ -213,7 +213,7 @@
           <a href="index.html#news" class="nav-link text-base">News</a>
           <a href="favorites.html" class="nav-link text-base">Favorites</a>
           <a href="community.html" class="nav-link text-base">Community</a>
-          <a href="#" class="nav-link invisible" id="authLink">...</a>
+          <a href="login.html" id="authLink" class="nav-link">Login</a>
         </div>
       </div>
     </header>
@@ -322,9 +322,8 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Check Authentication State
+        const db = firebase.firestore():
+        
         // Check Authentication State
     function checkAuthState() {
     const authLink = document.getElementById('authLink');
@@ -341,7 +340,6 @@
                 window.location.href = 'login.html';
             }
         }
-        authLink.classList.remove('invisible');
     });
 }
 
