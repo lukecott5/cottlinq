@@ -5,180 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linq - Favorites</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-    <script>
-        const firebaseConfig = {
-          apiKey: "AIzaSyD_FCx8sIkrCoQMoKm5xQIvlyAmlqptETk",
-          authDomain: "linq-b27a8.firebaseapp.com",
-          projectId: "linq-b27a8",
-          storageBucket: "linq-b27a8.firebasestorage.app",
-          messagingSenderId: "1067901051826",
-          appId: "1:1067901051826:web:44452d1339cdbe2af07aab"
-        };
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-    </script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-    <script>
-      const db = firebase.firestore();
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Lexend', sans-serif;
             font-weight: 400;
-            background-color: #f9fafb;
-            color: #1f2937;
-        }
-        .favorites-section {
-            padding: 3rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            max-width: 1400px;
-            margin: 2rem auto;
-        }
-        .favorites-section h1 {
-            font-size: 2.4rem;
-            font-weight: 400;
-            grid-column: span 2;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            letter-spacing: 1px;
-            color: #000000;
-        }
-        .favorites-section .highlight {
-            color: #3b82f6;
-            text-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-        }
-        .news-section, .community-section {
-            min-width: 0;
-            padding: 1.5rem;
-        }
-        .news-section:hover, .community-section:hover {
-            transform: translateY(-5px);
-        }
-        .news-section h2, .community-section h2 {
-            font-size: 1.75rem;
-            font-weight: 400;
-            color: #111827;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #3b82f6;
-            padding-bottom: 0.5rem;
-        }
-        .news-card, .community-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-        .news-card:hover, .community-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            border-color: #3b82f6;
-        }
-        .news-title, .community-title {
-            font-size: 1.3rem;
-            font-weight: 500;
-            color: #1f2937;
-            margin: 0 0 0.75rem;
-            line-height: 1.5;
-        }
-        .news-meta, .community-meta {
-            font-size: 0.9rem;
-            color: #6b7280;
-            margin: 0.5rem 0;
-        }
-        .category-label {
-            background: #dbeafe;
-            color: #1e40af;
-            padding: 0.3rem 0.9rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-left: 0.5rem;
-        }
-        .news-link {
-            color: #3b82f6;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        .news-link:hover {
-            color: #1e40af;
-            text-decoration: underline;
-        }
-        .twitter-tweet {
-            margin-top: 0.75rem;
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 8px;
-            border-left: 4px solid #3b82f6;
-        }
-        .twitter-tweet a {
-            color: #3b82f6;
-            text-decoration: none;
-        }
-        .twitter-tweet a:hover {
-            text-decoration: underline;
-        }
-        .button-container {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 1rem;
-            gap: 0.5rem;
-        }
-        .favorite-btn {
-            background: #ffffff;
-            border: 1px solid #3b82f6;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: #3b82f6;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 0.5rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .favorite-btn:hover {
-            background: #3b82f6;
-            color: #ffffff;
-        }
-        .favorite-btn.favorited {
-            background: #facc15;
-            color: #1f2937;
-            border-color: #facc15;
-            font-weight: 600;
-        }
-        .favorite-confirmation {
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-            color: #6b7280;
-            display: none;
-            align-self: flex-end;
-        }
-        .favorite-confirmation:not(.hidden) {
-            display: block;
-        }
-        .no-favorites {
-            font-size: 1.1rem;
-            color: #6b7280;
-            text-align: center;
-            padding: 2rem;
-            background: #f1f5f9;
-            border-radius: 12px;
+            background-color: #ffffff;
+            color: #333333;
         }
         .nav-link {
             transition: color 0.2s ease;
-            color: #1f2937;
-            font-weight: 500;
+            color: #333333;
         }
         .nav-link:hover {
-            color: #3b82f6;
+            color: #60a5fa;
+        }
+        article {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #f9f9f9;
+        }
+        article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .filter-panel {
+            height: fit-content;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            order: 2;
+            position: sticky;
+            top: 120px;
+            z-index: 30;
+        }
+        .category-tag {
+            display: inline-block;
+            background: #e5e5e5;
+            color: #333333;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            margin-left: 0.5rem;
         }
         .news-image {
             width: 150px;
@@ -190,57 +61,50 @@
         .news-image:hover {
             transform: scale(1.05);
         }
-        @media (max-width: 1024px) {
-            .favorites-section {
-                grid-template-columns: 1fr;
-                padding: 2rem;
-            }
-            .favorites-section h1 {
-                font-size: 2.5rem;
-                grid-column: span 1;
-            }
-            .news-section, .community-section {
-                padding: 1rem;
-            }
-            .news-section h2, .community-section h2 {
-                font-size: 1.5rem;
-            }
-            .news-card, .community-card {
-                padding: 1.2rem;
-            }
-            .news-title, .community-title {
-                font-size: 1.2rem;
-            }
-            .news-meta, .community-meta {
-                font-size: 0.85rem;
-            }
-            .category-label {
-                font-size: 0.8rem;
-            }
-            .favorite-btn {
-                font-size: 0.85rem;
-                padding: 0.4rem 0.8rem;
-            }
+        .ticker-banner {
+            background: #333333;
+            color: #ffffff;
+            padding: 0.5rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            top: 0;
+            width: 100%;
+            z-index: 40;
+            margin-top: 80px;
+            font-size: 0.9rem;
+            line-height: 1.2;
         }
-        @media (max-width: 640px) {
-            .favorites-section {
-                padding: 1.5rem;
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: ticker-scroll 60s linear infinite;
+        }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-item {
+            display: inline-block;
+            margin-right: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
             }
-            .favorites-section h1 {
-                font-size: 2rem;
+            .filter-panel {
+                order: 0;
+                width: 100%;
+                max-width: none;
+                position: static;
             }
-            .news-section h2, .community-section h2 {
-                font-size: 1.25rem;
+            #favorites {
+                order: 1;
             }
-            .news-card, .community-card {
-                padding: 1rem;
-            }
-            .news-title, .community-title {
-                font-size: 1.1rem;
-            }
-            .favorite-btn {
-                font-size: 0.8rem;
-                padding: 0.3rem 0.7rem;
+            .ticker-banner {
+                margin-top: 72px;
+                padding: 0.4rem 0;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -258,356 +122,202 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        <div class="favorites-section">
-            <h1>Your Favorite <span class="highlight">Linqs</span></h1>
-            <div class="news-section">
-                <h2>News</h2>
-                <div id="newsFavorites"></div>
+    <div class="ticker-banner">
+        <div class="ticker-content" id="tickerContent"></div>
+    </div>
+
+    <main class="max-w-7xl mx-auto pt-8 sm:px-6 lg:px-8 flex flex-wrap gap-6">
+        <section id="favorites" class="flex-1 order-1 py-10">
+            <h2 class="text-3xl text-gray-800 mb-6">Your Favorited Articles</h2>
+            <div id="favoritesGrid" class="space-y-6"></div>
+        </section>
+        <aside class="filter-panel bg-white rounded-2xl shadow-xl p-6 w-80 order-2">
+            <h2 class="text-2xl text-center text-gray-800 mb-6">Filter by Category</h2>
+            <div id="categoryList" class="space-y-3">
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md" data-category="All">All</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md" data-category="Company News">Company News</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md" data-category="Power">Power</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md" data-category="Crude Oil">Crude Oil</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md" data-category="Natural Gas">Natural Gas</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md" data-category="Petrochemicals">Petrochemicals</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md" data-category="Renewables">Renewables</button>
+                <button class="category w-full py-2 rounded-lg border border-gray-300 text-gray-800 font-medium transition-all shadow-sm hover:shadow-md" data-category="Earnings">Earnings</button>
             </div>
-            <div class="community-section">
-                <h2>Community</h2>
-                <div id="communityFavorites"></div>
-            </div>
-        </div>
+        </aside>
     </main>
 
     <footer class="bg-white text-gray-600 py-6 shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
             <p>© 2025 Linq. All rights reserved.</p>
             <div class="mt-4 md:mt-0 space-x-4">
-                <a href="index.html#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
-                <a href="index.html#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
-                <a href="#" class="hover:text-gray-800 transition-colors">Contact Us</a>
+                <a href="#terms" class="hover:text-gray-800 transition-colors" onclick="showTerms(event)">Terms of Service</a>
+                <a href="#privacy" class="hover:text-gray-800 transition-colors" onclick="showPrivacy(event)">Privacy Policy</a>
+                <a href="mailto:support@linq.com" class="hover:text-gray-800 transition-colors">Contact Us</a>
             </div>
         </div>
     </footer>
 
+    <div id="termsContent" class="terms-privacy-content">
+        <span class="close-btn" onclick="closeTerms()">×</span>
+        <h2 class="text-2xl text-gray-800 mb-4">Terms of Service</h2>
+        <p>Welcome to Linq. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. These terms govern your use of the site and any services provided.</p>
+        <p class="mt-4">1. <strong>Acceptance of Terms</strong>: By using this site, you accept these terms in full. If you disagree, please do not use the site.</p>
+        <p class="mt-2">2. <strong>User Conduct</strong>: You agree not to use the site for illegal or unauthorized purposes.</p>
+        <p class="mt-2">3. <strong>Content Ownership</strong>: All content on this site is owned by Linq or its licensors unless otherwise stated.</p>
+        <p class="mt-2">4. <strong>Limitation of Liability</strong>: We are not liable for any indirect or consequential damages arising from your use of the site.</p>
+        <p class="mt-2">For the most current version, please contact us at <a href="mailto:support@linq.com">support@linq.com</a>.</p>
+    </div>
+    <div id="privacyContent" class="terms-privacy-content">
+        <span class="close-btn" onclick="closePrivacy()">×</span>
+        <h2 class="text-2xl text-gray-800 mb-4">Privacy Policy</h2>
+        <p>At Linq, we are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your information.</p>
+        <p class="mt-4">1. <strong>Information Collection</strong>: We collect personal information such as your name and email when you sign up or submit articles.</p>
+        <p class="mt-2">2. <strong>Use of Information</strong>: Your data is used to personalize your experience and improve our services.</p>
+        <p class="mt-2">3. <strong>Data Security</strong>: We implement reasonable measures to protect your information from unauthorized access.</p>
+        <p class="mt-2">4. <strong>Third-Party Sharing</strong>: We do not sell or share your personal data with third parties except as required by law.</p>
+        <p class="mt-2">For questions, contact us at <a href="mailto:support@linq.com">support@linq.com</a>.</p>
+    </div>
+
     <script>
-        // News articles shared with index.html
-        const newsArticles = [
-            { id: 1, category: 'Crude Oil', title: 'Oil Prices Surge Amid Supply Concerns', date: 'May 3, 2025', source: 'Reuters', link: 'https://www.reuters.com/markets/commodities/oil-prices-set-weekly-loss-potential-more-global-supply-2025-04-25/', image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=150&auto=format&fit=crop' },
-            { id: 19, category: 'Earnings', title: 'Google Reports Record Earnings', date: 'May 3, 2025', source: 'Financial Times', link: 'https://example.com/article-19', image: 'https://images.unsplash.com/photo-1516321310764-9f22c22d2f67?q=80&w=150&auto=format&fit=crop' },
-            { id: 20, category: 'Earnings', title: 'Microsoft Beats Earnings Expectations', date: 'May 3, 2025', source: 'BBC', link: 'https://example.com/article-20', image: 'https://images.unsplash.com/photo-1551288049-b1bd52206d29?q=80&w=150&auto=format&fit=crop' },
-            { id: 21, category: 'Earnings', title: 'ExxonMobil Posts Strong Q1 Results', date: 'May 3, 2025', source: 'Reuters', link: 'https://example.com/article-21', image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782e?q=80&w=150&auto=format&fit=crop' }
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_FCx8sIkrCoQMoKm5xQIvlyAmlqptETk",
+            authDomain: "linq-b27a8.firebaseapp.com",
+            projectId: "linq-b27a8",
+            storageBucket: "linq-b27a8.appspot.com",
+            messagingSenderId: "1067901051826",
+            appId: "1:1067901051826:web:44452d1339cdbe2af07aab"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const FINNHUB_API_KEY = 'd0d0dlpr01qm2sk76g3gd0d0dlpr01qm2sk76g40';
+        const ENERGY_STOCKS = [
+            'XOM', 'CVX', 'COP', 'OXY', 'SLB', 'HAL', 'PSX', 'VLO', 'MPC', 'BKR',
+            'KMI', 'WMB', 'PXD', 'EOG', 'HES', 'DVN', 'APA', 'FANG', 'CHRD', 'CTRA',
+            'MTDR', 'CLR', 'SM', 'CIVI', 'HP'
         ];
 
-        // Community posts from community.html
-        const communityPosts = [
-            {
-                url: 'https://twitter.com/CRUDEOIL231/status/1919070053825495266',
-                title: 'If Saudis and OPEC+ maintain production levels without increasing output',
-                meta: 'May 4, 2025 • JH (@CRUDEOIL231) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">If Saudis and OPEC+ maintain production levels without increasing output, and as a result, Brent crude prices barely hold steady around $70/bbl, would that be favorable for your positions?<br><br>Of course the best-case scenario is for prices to remain high, but that seems unlikely.…</p>',
-                author: 'JH (@CRUDEOIL231)',
-                date: 'May 4, 2025'
-            },
-            {
-                url: 'https://twitter.com/LinqNews/status/1919171857409855978',
-                title: 'India\'s oil consumption rose 4.5% YoY in March',
-                meta: 'May 4, 2025 • Linq (@LinqNews) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">India\'s oil consumption rose 4.5% YoY in March. Infrastructure buildout and strong GDP expectations place it as key global demand anchor in 2025.<a href="https://twitter.com/hashtag/India?src=hash&ref_src=twsrc%5Etfw">#India</a> <a href="https://twitter.com/hashtag/EnergyDemand?src=hash&ref_src=twsrc%5Etfw">#EnergyDemand</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p>',
-                author: 'Linq (@LinqNews)',
-                date: 'May 4, 2025'
-            },
-            {
-                url: 'https://twitter.com/Rory_Johnston/status/1919158874172530712',
-                title: 'Crude gaps down >$2/bbl—Brent back in the $50s',
-                meta: 'May 4, 2025 • Rory Johnston (@Rory_Johnston) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">Crude gaps down >$2/bbl—Brent back in the $50s—on Asia open following OPEC headline-filled weekend.<br><br>Hard to know what, exactly, was priced in going into weekend—even if the ~400 kbpd June production hike was priced in, the entire unwind by November threat/rumour certainly wasn’t <a href="https://t.co/oMqvcPx0U8">pic.twitter.com/oMqvcPx0U8</a></p>',
-                author: 'Rory Johnston (@Rory_Johnston)',
-                date: 'May 4, 2025'
-            },
-            {
-                url: 'https://twitter.com/UnintendedCons5/status/1918857944579408366',
-                title: 'OPEC has now returned 0.96 of the 2.2mmbpd of the voluntary cuts',
-                meta: 'May 4, 2025 • Unintended Consequence (@UnintendedCons5) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">OPEC has now returned 0.96 of the 2.2mmbpd of the voluntary cuts.<br><br>However OPEC has been over producing 1.1mmpbd since Feb. As many have mentioned the only volumes returning are Saudis (436kbpd).</p>',
-                author: 'Unintended Consequence (@UnintendedCons5)',
-                date: 'May 4, 2025'
-            },
-            {
-                url: 'https://twitter.com/Amena__Bakr/status/1918614082099286340',
-                title: 'OPEC plus 8 states: agree to add 411000 bpd in June',
-                meta: 'May 3, 2025 • Amena Bakr (@Amena__Bakr) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">OPEC plus 8 states: agree to add 411000 bpd in June <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/Opec?src=hash&ref_src=twsrc%5Etfw">#Opec</a></p>',
-                author: 'Amena Bakr (@Amena__Bakr)',
-                date: 'May 3, 2025'
-            },
-            {
-                url: 'https://twitter.com/aeberman12/status/1919396685362373026',
-                title: 'Riyadh’s strategic oil play',
-                meta: 'May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>',
-                tweet: '<p lang="en" dir="ltr">My take:<br><br>Riyadh is betting that looming sanctions and tighter supply will push oil prices higher.<br><br>It’s a preemptive move to shape sentiment, not just follow it.<a href="https://t.co/g98C6IMwWl">https://t.co/g98C6IMwWl</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a> <a href="https://twitter.com/hashtag/fintwit?src=hash&ref_src=twsrc%5Etfw">#fintwit</a> <a href="https://twitter.com/hashtag/OPEC?src=hash&ref_src=twsrc%5Etfw">#OPEC</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/commoditiesmarket?src=hash&ref_src=twsrc%5Etfw">#commoditiesmarket</a> <a href="https://t.co/qhfZgyHTnM">pic.twitter.com/qhfZgyHTnM</a></p>',
-                author: 'Art Berman (@aeberman12)',
-                date: 'May 5, 2025'
-            },
-            {
-                url: 'https://twitter.com/Amena__Bakr/status/1919381986092667322',
-                title: 'OPEC’s production challenges',
-                meta: 'May 5, 2025 • Amena Bakr (@Amena__Bakr) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">The deputy minister also said that cutting production is a “hard task” for them and wasn’t able to lay out the future plan to cut output. <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/Opec?src=hash&ref_src=twsrc%5Etfw">#Opec</a> <a href="https://t.co/krzSjDrRrN">https://t.co/krzSjDrRrN</a></p>',
-                author: 'Amena Bakr (@Amena__Bakr)',
-                date: 'May 5, 2025'
-            },
-            {
-                url: 'https://twitter.com/JavierBlas/status/1919157364831248518',
-                title: 'Oil market drop',
-                meta: 'May 4, 2025 • Javier Blas (@JavierBlas) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">OIL MARKET: Brent and WTI crude down ~4% in early trading after OPEC+ production increase (Brent is below $59 a barrel and WTI below $56 a barrel) <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p>',
-                author: 'Javier Blas (@JavierBlas)',
-                date: 'May 4, 2025'
-            },
-            {
-                url: 'https://twitter.com/JavierBlas/status/1918726353475563979',
-                title: 'Saudi Arabia’s oil strategy',
-                meta: 'May 3, 2025 • Javier Blas (@JavierBlas) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">As Saudi Arabia today led the OPEC+ cartel to boost oil production significantly, I’m re-upping my <a href="https://twitter.com/opinion?ref_src=twsrc%5Etfw">@Opinion</a> column from earlier this week on Riyadh’s motivations.<br><br>“Saudi oil policy is multidimensional: it may have several objectives at once”<a href="https://t.co/5y2Ktc9jyU">https://t.co/5y2Ktc9jyU</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a></p>',
-                author: 'Javier Blas (@JavierBlas)',
-                date: 'May 3, 2025'
-            },
-            {
-                url: 'https://twitter.com/aeberman12/status/1919537549501968799',
-                title: 'U.S. shale peak concerns',
-                meta: 'May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>',
-                tweet: '<p lang="en" dir="ltr">“We’re at a tipping point for U.S. oil—geology now outweighs tech Gains,” says Travis Stice, CEO, Diamondback Energy<br><br>U.S. shale has likely peaked, with decline driven by low prices, tight margins, and geology.<a href="https://t.co/FKVAY4WazT">https://t.co/FKVAY4WazT</a><a href="https://twitter.com/hashtag/energy?src=hash&ref_src=twsrc%5Etfw">#energy</a> <a href="https://twitter.com/hashtag/OOTT?src=hash&ref_src=twsrc%5Etfw">#OOTT</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/WTI?src=hash&ref_src=twsrc%5Etfw">#WTI</a> <a href="https://twitter.com/hashtag/CrudeOil?src=hash&ref_src=twsrc%5Etfw">#CrudeOil</a>… <a href="https://t.co/FTrFNYXaML">pic.twitter.com/FTrFNYXaML</a></p>',
-                author: 'Art Berman (@aeberman12)',
-                date: 'May 5, 2025'
-            },
-            {
-                url: 'https://twitter.com/IPAAaccess/status/1919510569553432731',
-                title: 'IPAA supports budget reconciliation provisions',
-                meta: 'May 5, 2025 • IPAA American Energy (@IPAAaccess) <span class="category-label">Energy</span>',
-                tweet: '<p lang="en" dir="ltr">IPAA and a coalition of energy trade groups wrote to <a href="https://twitter.com/SpeakerJohnson?ref_src=twsrc%5Etfw">@SpeakerJohnson</a> expressing strong support for the <a href="https://twitter.com/hashtag/budgetreconciliation?src=hash&ref_src=twsrc%5Etfw">#budgetreconciliation</a> provisions currently under consideration by the <a href="https://twitter.com/NatResources?ref_src=twsrc%5Etfw">@NatResources</a>. "These provisions, included in the House Natural Resources bill text will increase domestic… <a href="https://t.co/QQIcQvG64S">pic.twitter.com/QQIcQvG64S</a></p>',
-                author: 'IPAA American Energy (@IPAAaccess)',
-                date: 'May 5, 2025'
-            },
-            {
-                url: 'https://twitter.com/aeberman12/status/1919540144354275464',
-                title: 'Peabody may scrap $3.78B Anglo deal',
-                meta: 'May 5, 2025 • Art Berman (@aeberman12) <span class="category-label">Energy</span>',
-                tweet: '<p lang="en" dir="ltr">Peabody may scrap its $3.78B Anglo deal after a mine fire shut Moranbah North, raising doubts amid weak steel coal demand and rising risks.<a href="https://t.co/eaXOaF0Vvl">https://t.co/eaXOaF0Vvl</a><a href="https://twitter.com/hashtag/CoalTwitter?src=hash&ref_src=twsrc%5Etfw">#CoalTwitter</a> <a href="https://twitter.com/hashtag/Fossilfuels?src=hash&ref_src=twsrc%5Etfw">#Fossilfuels</a> <a href="https://twitter.com/hashtag/netzero?src=hash&ref_src=twsrc%5Etfw">#netzero</a> <a href="https://twitter.com/hashtag/renewables?src=hash&ref_src=twsrc%5Etfw">#renewables</a> <a href="https://twitter.com/hashtag/oilandgas?src=hash&ref_src=twsrc%5Etfw">#oilandgas</a> <a href="https://twitter.com/hashtag/Commodities?src=hash&ref_src=twsrc%5Etfw">#Commodities</a> <a href="https://twitter.com/hashtag/energytransition?src=hash&ref_src=twsrc%5Etfw">#energytransition</a> <a href="https://twitter.com/hashtag/EnergyCrisis?src=hash&ref_src=twsrc%5Etfw">#EnergyCrisis</a>… <a href="https://t.co/hQSj2x54iZ">pic.twitter.com/hQSj2x54iZ</a></p>',
-                author: 'Art Berman (@aeberman12)',
-                date: 'May 5, 2025'
-            },
-            {
-                url: 'https://twitter.com/Rory_Johnston/status/1918995918264623502',
-                title: 'OPEC+ plans to accelerate oil output hikes',
-                meta: 'May 4, 2025 • Rory Johnston (@Rory_Johnston) <span class="category-label">Crude oil</span>',
-                tweet: '<p lang="en" dir="ltr">👀 “OPEC+ plans to further accelerate oil output hikes and could unwind its 2.2 million barrels per day of voluntary cuts by the end of October if members do not improve compliance with their production quota”<br><br>💀 That’d be… bad for prices. <a href="https://t.co/nZwF83qaGZ">pic.twitter.com/nZwF83qaGZ</a></p>',
-                author: 'Rory Johnston (@Rory_Johnston)',
-                date: 'May 4, 2025'
+        async function fetchFinnhubQuote(symbol) {
+            const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return { price: data.c, change: data.d, percent: data.dp };
+            } catch (err) {
+                console.error(`Error fetching ${symbol}:`, err);
+                return { price: 'N/A', change: 'N/A', percent: 'N/A' };
             }
-        ];
+        }
 
-            document.addEventListener('DOMContentLoaded', () => {
-              renderFavorites();
-            });
+        async function updateTickerBanner() {
+            const tickerContent = document.getElementById('tickerContent');
+            tickerContent.innerHTML = '';
+            for (const symbol of ENERGY_STOCKS) {
+                const data = await fetchFinnhubQuote(symbol);
+                const changeClass = data.percent !== 'N/A' ? (data.percent >= 0 ? 'positive' : 'negative') : '';
+                const tickerItem = document.createElement('span');
+                tickerItem.className = 'ticker-item';
+                tickerItem.innerHTML = `${symbol}: $${data.price} <span class="${changeClass}">${data.percent !== 'N/A' ? `${data.percent >= 0 ? '+' : ''}${data.percent.toFixed(2)}%` : 'N/A'}</span>`;
+                tickerContent.appendChild(tickerItem);
+            }
+            tickerContent.innerHTML = tickerContent.innerHTML.repeat(8);
+        }
 
-            function renderFavorites() {
-              const favoritesContainer = document.getElementById('newsFavoritesContainer');
-              // 1) load the saved article objects
-              const favoriteArticles = JSON.parse(localStorage.getItem('favoriteArticles')) || [];
-            
-              // 2) if none, show a placeholder
-              if (!favoriteArticles.length) {
-                favoritesContainer.innerHTML = '<p class="no-favorites">No favorites yet.</p>';
+        async function fetchFavorites() {
+            const user = auth.currentUser;
+            if (!user) {
+                window.location.href = 'login.html';
+                return [];
+            }
+
+            const userRef = db.collection('users').doc(user.uid);
+            try {
+                const doc = await userRef.get();
+                return doc.exists && doc.data().favorites ? doc.data().favorites.articles || [] : [];
+            } catch (error) {
+                console.error('Error fetching favorites:', error);
+                return [];
+            }
+        }
+
+        function renderFavorites(articles, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            if (articles.length === 0) {
+                container.innerHTML = '<p class="text-gray-600">No favorited articles yet.</p>';
                 return;
-              }
-            
-              // 3) otherwise build each card from the object fields
-              favoritesContainer.innerHTML = favoriteArticles.map(article => `
-                <div class="news-card" data-id="${article.id}">
-                  <img src="${article.image}" alt="${article.title}" class="news-image" />
-                  <div class="news-content">
-                    <p class="news-title">${article.title}</p>
-                    <p class="news-meta">${article.category} • ${article.date} • ${article.source}</p>
-                    <a href="${article.link}" class="news-link" target="_blank">Read more</a>
-                  </div>
-                </div>
-              `).join('');
             }
-
-            // Render community favorites
-            const favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
-            communityFavoritesContainer.innerHTML = '';
-            if (favoritePosts.length === 0) {
-                communityFavoritesContainer.innerHTML = '<p class="no-favorites">No favorited community posts yet.</p>';
-            } else {
-                favoritePosts.forEach(url => {
-                    const post = communityPosts.find(p => p.url === url);
-                    if (post) {
-                        communityFavoritesContainer.innerHTML += `
-                            <div class="community-card" data-url="${post.url}">
-                                <p class="community-title">${post.title}</p>
-                                <p class="community-meta">${post.meta}</p>
-                                <blockquote class="twitter-tweet" data-theme="dark">
-                                    ${post.tweet}
-                                    — ${post.author} <a href="${post.url}?ref_src=twsrc%5Etfw">${post.date}</a>
-                                </blockquote>
-                                <div class="button-container">
-                                    <button class="favorite-btn favorited">☆</button>
-                                </div>
-                                <span class="favorite-confirmation hidden">Removed from favorites!</span>
-                            </div>
-                        `;
-                    }
-                });
-                // Load Twitter widget script after rendering tweets
-                const script = document.createElement('script');
-                script.src = 'https://platform.twitter.com/widgets.js';
-                script.async = true;
-                document.body.appendChild(script);
-            }
-
-            // Add event listeners for favorite buttons
-            document.querySelectorAll('.favorite-btn').forEach(btn => {
-                btn.addEventListener('click', toggleFavorite);
+            articles.forEach(article => {
+                const articleElement = document.createElement('article');
+                articleElement.className = 'p-6 rounded-xl bg-gray-50';
+                articleElement.innerHTML = `
+                    <div class="flex gap-4">
+                        ${article.image ? `<img src="${article.image}" alt="${article.title}" class="news-image rounded-lg">` : ''}
+                        <div class="flex-1">
+                            <h3 class="text-xl text-gray-800 font-medium">
+                                <a href="${article.link}" target="_blank" class="hover:text-blue-600 transition-colors">${article.title}</a>
+                            </h3>
+                            <p class="text-gray-600 mt-2">${article.date} • ${article.source} <span class="category-tag">${article.category || 'Uncategorized'}</span></p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(articleElement);
             });
         }
 
-        function toggleFavorite(event) {
-            const card = event.target.closest('.news-card') || event.target.closest('.community-card');
-            const confirmation = card.querySelector('.favorite-confirmation');
-
-            if (card.classList.contains('news-card')) {
-                const newsId = parseInt(card.getAttribute('data-id'));
-                let favoriteNews = JSON.parse(localStorage.getItem('favorites') || '[]');
-                favoriteNews = favoriteNews.filter(id => id !== newsId);
-                localStorage.setItem('favorites', JSON.stringify(favoriteNews));
-            } else if (card.classList.contains('community-card')) {
-                const url = card.getAttribute('data-url');
-                let favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
-                favoritePosts = favoritePosts.filter(fav => fav !== url);
-                localStorage.setItem('favoritePosts', JSON.stringify(favoritePosts));
-            }
-
-            confirmation.textContent = 'Removed from favorites!';
-            confirmation.classList.remove('hidden');
-            setTimeout(() => confirmation.classList.add('hidden'), 2000);
-
-            // Re-render favorites after removal
-            renderFavorites();
+        function filterFavorites(articles, category) {
+            const filtered = category === 'All'
+                ? articles
+                : articles.filter(article => article.category === category);
+            renderFavorites(filtered, 'favoritesGrid');
         }
 
         function showTerms(event) {
             event.preventDefault();
-            alert('Please view Terms of Service on the main page.');
+            document.getElementById('termsContent').style.display = 'block';
+        }
+
+        function closeTerms() {
+            document.getElementById('termsContent').style.display = 'none';
         }
 
         function showPrivacy(event) {
             event.preventDefault();
-            alert('Please view Privacy Policy on the main page.');
+            document.getElementById('privacyContent').style.display = 'block';
         }
 
-        // Initialize favorites on page load
-        document.addEventListener('DOMContentLoaded', renderFavorites);
-    </script>
-    <script>
-    firebase.initializeApp({
-      apiKey: "AIzaSyC76M6U4ZxO2AUr_IZlJ2C2SHzg0yS6zqM",
-      authDomain: "linq-news.firebaseapp.com",
-      projectId: "linq-news",
-    });
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    
-    auth.onAuthStateChanged(user => {
-      if (!user) return window.location.href = "login.html";
-    
-      const newsContainer = document.getElementById("newsFavorites");
-      const communityContainer = document.getElementById("communityFavorites");
-    
-      db.collection("users").doc(user.uid).collection("favorites").get().then(snapshot => {
-        if (snapshot.empty) {
-          newsContainer.innerHTML = "<div class='no-favorites'>You haven’t saved any favorites yet.</div>";
-          return;
+        function closePrivacy() {
+            document.getElementById('privacyContent').style.display = 'none';
         }
-    
-        snapshot.forEach(doc => {
-          const item = doc.data();
-          const div = document.createElement("div");
-          div.className = item.link.includes("twitter.com") ? "community-card" : "news-card";
-    
-          div.innerHTML = `
-            <div class="${item.link.includes('twitter.com') ? 'community-title' : 'news-title'}">${item.title}</div>
-            <div class="${item.link.includes('twitter.com') ? 'community-meta' : 'news-meta'}">${item.date} • ${item.source || ''}</div>
-            ${item.image ? `<img src="${item.image}" class="news-image mb-3"/>` : ""}
-            <a href="${item.link}" class="news-link" target="_blank">Read more</a>
-          `;
-    
-          if (item.link.includes("twitter.com")) {
-            communityContainer.appendChild(div);
-          } else {
-            newsContainer.appendChild(div);
-          }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            auth.onAuthStateChanged(async user => {
+                const authLink = document.getElementById('authLink');
+                if (user) {
+                    authLink.textContent = 'Profile';
+                    authLink.href = 'profile.html';
+                    const favorites = await fetchFavorites();
+                    renderFavorites(favorites, 'favoritesGrid');
+                } else {
+                    authLink.textContent = 'Login';
+                    authLink.href = 'login.html';
+                    window.location.href = 'login.html';
+                }
+            });
+
+            updateTickerBanner();
+
+            document.getElementById('categoryList').addEventListener('click', async (e) => {
+                if (e.target.classList.contains('category')) {
+                    document.querySelectorAll('.category').forEach(btn => btn.classList.remove('bg-gray-200'));
+                    e.target.classList.add('bg-gray-200');
+                    const favorites = await fetchFavorites();
+                    filterFavorites(favorites, e.target.dataset.category);
+                }
+            });
         });
-      });
-    });
-    </script>
-    <script>
-      function checkAuthState() {
-        const authLink = document.getElementById('authLink');
-        auth.onAuthStateChanged(user => {
-          if (user) {
-            authLink.textContent = 'Profile';
-            authLink.href = 'profile.html';
-          } else {
-            authLink.textContent = 'Login';
-            authLink.href = 'login.html';
-          }
-        });
-      }
-      checkAuthState();
-    </script>
-    <script>
-      function loadFavorites() {
-        auth.onAuthStateChanged(async user => {
-          if (!user) return;
-    
-          const newsContainer = document.getElementById("newsFavorites");
-          const communityContainer = document.getElementById("communityFavorites");
-    
-          // Clear current content
-          newsContainer.innerHTML = '';
-          communityContainer.innerHTML = '';
-    
-          const newsSnapshot = await db.collection("users").doc(user.uid).collection("favorites").doc("articles").get();
-          const postsSnapshot = await db.collection("users").doc(user.uid).collection("favorites").doc("posts").get();
-    
-          const newsArray = newsSnapshot.exists ? newsSnapshot.data().items : [];
-          const postsArray = postsSnapshot.exists ? postsSnapshot.data().items : [];
-    
-          newsArray.forEach(article => {
-            const div = document.createElement("div");
-            div.className = "news-card";
-            div.innerHTML = `
-              <img src="${article.image}" alt="${article.title}" class="news-image mb-3 rounded">
-              <div class="news-title">${article.title}</div>
-              <div class="news-meta">${article.date} • ${article.source}</div>
-              <a href="${article.link}" target="_blank" class="news-link">Read More</a>
-            `;
-            newsContainer.appendChild(div);
-          });
-    
-          postsArray.forEach(post => {
-            const div = document.createElement("div");
-            div.className = "community-card";
-            div.innerHTML = `
-              <div class="community-title">${post.title}</div>
-              <div class="community-meta">${post.meta}</div>
-              <div class="twitter-tweet">${post.tweet}</div>
-              <a href="${post.url}" target="_blank" class="news-link">View on X</a>
-            `;
-            communityContainer.appendChild(div);
-          });
-    
-          if (newsArray.length === 0) newsContainer.innerHTML = '<div class="no-favorites">No favorite articles yet.</div>';
-          if (postsArray.length === 0) communityContainer.innerHTML = '<div class="no-favorites">No favorite posts yet.</div>';
-        });
-      }
-    
-      loadFavorites();
     </script>
 </body>
 </html>
