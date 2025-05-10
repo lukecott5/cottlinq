@@ -15,6 +15,8 @@
             font-weight: 400;
             background-color: #ffffff;
             color: #333333;
+            margin: 0;
+            padding: 0;
         }
         strong {
             font-weight: inherit;
@@ -105,6 +107,7 @@
             text-align: center;
             font-size: 2.5rem;
             color: #2563eb;
+            padding: 2rem 0;
         }
         .tagline .highlight {
             color: #000000;
@@ -115,6 +118,7 @@
             margin-top: 2rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            clear: both;
         }
         .market-tabs {
             display: flex;
@@ -401,7 +405,7 @@
         </section>
     </main>
 
-    <footer class="bg-white text-gray-600 py-6 shadow">
+    <footer class="bg-white text-gray-600 py-6 shadow mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
             <p>© 2025 Linq. All rights reserved.</p>
             <div class="mt-4 md:mt-0 space-x-4">
@@ -1176,7 +1180,7 @@ adIkKpZneP82pkGNe6UnT9JCU3pSICGdw72RZqYU
         function showNewsSection() {
             document.getElementById('news').classList.remove('hidden');
             document.getElementById('favorites').classList.add('hidden');
-            document.getElementById('news').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('news').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         const marketTabs = document.querySelectorAll('.market-tab');
