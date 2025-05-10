@@ -18,7 +18,7 @@
         strong {
             font-weight: inherit;
         }
-        .terms-privacy-content {tfghyr
+        .terms-privacy-content {
             display: none;
             position: fixed;
             top: 50%;
@@ -580,19 +580,27 @@
         const favoritesGrid = document.getElementById('favoritesGrid');
 
         function toggleFavorite(articleId) {
-            const index = favorites.indexOf(articleId);
-            const button = document.querySelector(`button[onclick="toggleFavorite(${articleId})"]`);
-            if (index === -1) {
-                favorites.push(articleId);
-                button.classList.add('favorited');
-            } else {
-                favorites.splice(index, 1);
-                button.classList.remove('favorited');
-            }
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            updateFavoritesSection();
+          // 1) load the saved array (or start empty)
+          let favoriteArticles = JSON.parse(localStorage.getItem('favoriteArticles')) || [];
+        
+          // 2) see if this article is already in there
+          const idx = favoriteArticles.findIndex(a => a.id === articleId);
+        
+          if (idx === -1) {
+            // not a favorite yet → find it in articlesData and add it
+            const article = articlesData.find(a => a.id === articleId);
+            if (article) favoriteArticles.push(article);
+          } else {
+            // already favorited → remove it
+            favoriteArticles.splice(idx, 1);
+          }
+        
+          // 3) save back to localStorage
+          localStorage.setItem('favoriteArticles', JSON.stringify(favoriteArticles));
+        
+          // 4) update the UI (icon state, etc.)
+          updateFavoriteIcon(articleId, idx === -1);
         }
-
         function updateFavoritesSection() {
             favoritesGrid.innerHTML = '';
             const favoritedArticles = displayedArticles.filter(article => favorites.includes(article.id));
