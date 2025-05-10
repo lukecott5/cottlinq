@@ -400,36 +400,54 @@
             }
         ];
 
-            document.addEventListener('DOMContentLoaded', () => {
-              renderFavorites();
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuthState();
+            renderFavorites();
+        });
 
-            function renderFavorites() {
-              const favoritesContainer = document.getElementById('newsFavoritesContainer');
-              // 1) load the saved article objects
-              const favoriteArticles = JSON.parse(localStorage.getItem('favoriteArticles')) || [];
-            
-              // 2) if none, show a placeholder
-              if (!favoriteArticles.length) {
-                favoritesContainer.innerHTML = '<p class="no-favorites">No favorites yet.</p>';
-                return;
-              }
-            
-              // 3) otherwise build each card from the object fields
-              favoritesContainer.innerHTML = favoriteArticles.map(article => `
-                <div class="news-card" data-id="${article.id}">
-                  <img src="${article.image}" alt="${article.title}" class="news-image" />
-                  <div class="news-content">
-                    <p class="news-title">${article.title}</p>
-                    <p class="news-meta">${article.category} • ${article.date} • ${article.source}</p>
-                    <a href="${article.link}" class="news-link" target="_blank">Read more</a>
-                  </div>
-                </div>
-              `).join('');
+        function checkAuthState() {
+            const authLink = document.getElementById('authLink');
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    authLink.textContent = 'Profile';
+                    authLink.href = 'profile.html';
+                } else {
+                    authLink.textContent = 'Login';
+                    authLink.href = 'login.html';
+                }
+            });
+        }
+
+        function renderFavorites() {
+            const newsFavoritesContainer = document.getElementById('newsFavorites');
+            const communityFavoritesContainer = document.getElementById('communityFavorites');
+
+            // Render news favorites
+            const favoriteArticles = JSON.parse(localStorage.getItem('favoriteArticles')) || [];
+            newsFavoritesContainer.innerHTML = '';
+            if (favoriteArticles.length === 0) {
+                newsFavoritesContainer.innerHTML = '<p class="no-favorites">No favorite articles yet.</p>';
+            } else {
+                favoriteArticles.forEach(article => {
+                    newsFavoritesContainer.innerHTML += `
+                        <div class="news-card" data-id="${article.id}">
+                            <img src="${article.image}" alt="${article.title}" class="news-image" />
+                            <div class="news-content">
+                                <p class="news-title">${article.title}</p>
+                                <p class="news-meta">${article.category} • ${article.date} • ${article.source}</p>
+                                <a href="${article.link}" class="news-link" target="_blank">Read more</a>
+                                <div class="button-container">
+                                    <button class="favorite-btn favorited" onclick="toggleFavorite(${article.id}, 'news')">☆</button>
+                                </div>
+                                <span class="favorite-confirmation hidden">Removed from favorites!</span>
+                            </div>
+                        </div>
+                    `;
+                });
             }
 
             // Render community favorites
-            const favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
+            const favoritePosts = JSON.parse(localStorage.getItem('favoritePosts')) || [];
             communityFavoritesContainer.innerHTML = '';
             if (favoritePosts.length === 0) {
                 communityFavoritesContainer.innerHTML = '<p class="no-favorites">No favorited community posts yet.</p>';
@@ -446,7 +464,7 @@
                                     — ${post.author} <a href="${post.url}?ref_src=twsrc%5Etfw">${post.date}</a>
                                 </blockquote>
                                 <div class="button-container">
-                                    <button class="favorite-btn favorited">☆</button>
+                                    <button class="favorite-btn favorited" onclick="toggleFavorite('${post.url}', 'community')">☆</button>
                                 </div>
                                 <span class="favorite-confirmation hidden">Removed from favorites!</span>
                             </div>
@@ -459,26 +477,19 @@
                 script.async = true;
                 document.body.appendChild(script);
             }
-
-            // Add event listeners for favorite buttons
-            document.querySelectorAll('.favorite-btn').forEach(btn => {
-                btn.addEventListener('click', toggleFavorite);
-            });
         }
 
-        function toggleFavorite(event) {
-            const card = event.target.closest('.news-card') || event.target.closest('.community-card');
+        function toggleFavorite(id, type) {
+            const card = document.querySelector(`[data-${type === 'news' ? 'id' : 'url'}="${id}"]`);
             const confirmation = card.querySelector('.favorite-confirmation');
 
-            if (card.classList.contains('news-card')) {
-                const newsId = parseInt(card.getAttribute('data-id'));
-                let favoriteNews = JSON.parse(localStorage.getItem('favorites') || '[]');
-                favoriteNews = favoriteNews.filter(id => id !== newsId);
-                localStorage.setItem('favorites', JSON.stringify(favoriteNews));
-            } else if (card.classList.contains('community-card')) {
-                const url = card.getAttribute('data-url');
-                let favoritePosts = JSON.parse(localStorage.getItem('favoritePosts') || '[]');
-                favoritePosts = favoritePosts.filter(fav => fav !== url);
+            if (type === 'news') {
+                let favoriteArticles = JSON.parse(localStorage.getItem('favoriteArticles')) || [];
+                favoriteArticles = favoriteArticles.filter(article => article.id !== id);
+                localStorage.setItem('favoriteArticles', JSON.stringify(favoriteArticles));
+            } else if (type === 'community') {
+                let favoritePosts = JSON.parse(localStorage.getItem('favoritePosts')) || [];
+                favoritePosts = favoritePosts.filter(url => url !== id);
                 localStorage.setItem('favoritePosts', JSON.stringify(favoritePosts));
             }
 
@@ -499,115 +510,6 @@
             event.preventDefault();
             alert('Please view Privacy Policy on the main page.');
         }
-
-        // Initialize favorites on page load
-        document.addEventListener('DOMContentLoaded', renderFavorites);
     </script>
-    <script>
-    firebase.initializeApp({
-      apiKey: "AIzaSyC76M6U4ZxO2AUr_IZlJ2C2SHzg0yS6zqM",
-      authDomain: "linq-news.firebaseapp.com",
-      projectId: "linq-news",
-    });
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    
-    auth.onAuthStateChanged(user => {
-      if (!user) return window.location.href = "login.html";
-    
-      const newsContainer = document.getElementById("newsFavorites");
-      const communityContainer = document.getElementById("communityFavorites");
-    
-      db.collection("users").doc(user.uid).collection("favorites").get().then(snapshot => {
-        if (snapshot.empty) {
-          newsContainer.innerHTML = "<div class='no-favorites'>You haven’t saved any favorites yet.</div>";
-          return;
-        }
-    
-        snapshot.forEach(doc => {
-          const item = doc.data();
-          const div = document.createElement("div");
-          div.className = item.link.includes("twitter.com") ? "community-card" : "news-card";
-    
-          div.innerHTML = `
-            <div class="${item.link.includes('twitter.com') ? 'community-title' : 'news-title'}">${item.title}</div>
-            <div class="${item.link.includes('twitter.com') ? 'community-meta' : 'news-meta'}">${item.date} • ${item.source || ''}</div>
-            ${item.image ? `<img src="${item.image}" class="news-image mb-3"/>` : ""}
-            <a href="${item.link}" class="news-link" target="_blank">Read more</a>
-          `;
-    
-          if (item.link.includes("twitter.com")) {
-            communityContainer.appendChild(div);
-          } else {
-            newsContainer.appendChild(div);
-          }
-        });
-      });
-    });
-    </script>
-    <script>
-      function checkAuthState() {
-        const authLink = document.getElementById('authLink');
-        auth.onAuthStateChanged(user => {
-          if (user) {
-            authLink.textContent = 'Profile';
-            authLink.href = 'profile.html';
-          } else {
-            authLink.textContent = 'Login';
-            authLink.href = 'login.html';
-          }
-        });
-      }
-      checkAuthState();
-    </script>
-    <script>
-      function loadFavorites() {
-        auth.onAuthStateChanged(async user => {
-          if (!user) return;
-    
-          const newsContainer = document.getElementById("newsFavorites");
-          const communityContainer = document.getElementById("communityFavorites");
-    
-          // Clear current content
-          newsContainer.innerHTML = '';
-          communityContainer.innerHTML = '';
-    
-          const newsSnapshot = await db.collection("users").doc(user.uid).collection("favorites").doc("articles").get();
-          const postsSnapshot = await db.collection("users").doc(user.uid).collection("favorites").doc("posts").get();
-    
-          const newsArray = newsSnapshot.exists ? newsSnapshot.data().items : [];
-          const postsArray = postsSnapshot.exists ? postsSnapshot.data().items : [];
-    
-          newsArray.forEach(article => {
-            const div = document.createElement("div");
-            div.className = "news-card";
-            div.innerHTML = `
-              <img src="${article.image}" alt="${article.title}" class="news-image mb-3 rounded">
-              <div class="news-title">${article.title}</div>
-              <div class="news-meta">${article.date} • ${article.source}</div>
-              <a href="${article.link}" target="_blank" class="news-link">Read More</a>
-            `;
-            newsContainer.appendChild(div);
-          });
-    
-          postsArray.forEach(post => {
-            const div = document.createElement("div");
-            div.className = "community-card";
-            div.innerHTML = `
-              <div class="community-title">${post.title}</div>
-              <div class="community-meta">${post.meta}</div>
-              <div class="twitter-tweet">${post.tweet}</div>
-              <a href="${post.url}" target="_blank" class="news-link">View on X</a>
-            `;
-            communityContainer.appendChild(div);
-          });
-    
-          if (newsArray.length === 0) newsContainer.innerHTML = '<div class="no-favorites">No favorite articles yet.</div>';
-          if (postsArray.length === 0) communityContainer.innerHTML = '<div class="no-favorites">No favorite posts yet.</div>';
-        });
-      }
-    
-      loadFavorites();
-    </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93d5e1e429dfdd1c',t:'MTc0Njg0MjgzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
