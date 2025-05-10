@@ -19,7 +19,10 @@
       firebase.initializeApp(firebaseConfig);
       const auth = firebase.auth();
     </script>
-
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script>
+      const db = firebase.firestore();
+    </script>
     <style>
         body {
             font-family: 'Lexend', sans-serif;
@@ -556,6 +559,55 @@
         });
       }
       checkAuthState();
+    </script>
+    <script>
+      function loadFavorites() {
+        auth.onAuthStateChanged(async user => {
+          if (!user) return;
+    
+          const newsContainer = document.getElementById("newsFavorites");
+          const communityContainer = document.getElementById("communityFavorites");
+    
+          // Clear current content
+          newsContainer.innerHTML = '';
+          communityContainer.innerHTML = '';
+    
+          const newsSnapshot = await db.collection("users").doc(user.uid).collection("favorites").doc("articles").get();
+          const postsSnapshot = await db.collection("users").doc(user.uid).collection("favorites").doc("posts").get();
+    
+          const newsArray = newsSnapshot.exists ? newsSnapshot.data().items : [];
+          const postsArray = postsSnapshot.exists ? postsSnapshot.data().items : [];
+    
+          newsArray.forEach(article => {
+            const div = document.createElement("div");
+            div.className = "news-card";
+            div.innerHTML = `
+              <img src="${article.image}" alt="${article.title}" class="news-image mb-3 rounded">
+              <div class="news-title">${article.title}</div>
+              <div class="news-meta">${article.date} • ${article.source}</div>
+              <a href="${article.link}" target="_blank" class="news-link">Read More</a>
+            `;
+            newsContainer.appendChild(div);
+          });
+    
+          postsArray.forEach(post => {
+            const div = document.createElement("div");
+            div.className = "community-card";
+            div.innerHTML = `
+              <div class="community-title">${post.title}</div>
+              <div class="community-meta">${post.meta}</div>
+              <div class="twitter-tweet">${post.tweet}</div>
+              <a href="${post.url}" target="_blank" class="news-link">View on X</a>
+            `;
+            communityContainer.appendChild(div);
+          });
+    
+          if (newsArray.length === 0) newsContainer.innerHTML = '<div class="no-favorites">No favorite articles yet.</div>';
+          if (postsArray.length === 0) communityContainer.innerHTML = '<div class="no-favorites">No favorite posts yet.</div>';
+        });
+      }
+    
+      loadFavorites();
     </script>
 </body>
 </html>
